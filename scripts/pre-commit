@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Running Ktlint before git commit is committed"
+echo "Running Ktlint before git commit."
 
 ./gradlew ktlintFormat
 

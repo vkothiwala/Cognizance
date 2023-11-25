@@ -20,6 +20,7 @@ tasks.register("copyGitHooks", Copy::class.java) {
     from("$rootDir/scripts/")
     into("$rootDir/.git/hooks/")
 }
+
 tasks.register("installGitHooks", Exec::class.java) {
     description = "Installs the pre-commit git hooks from /git-hooks."
     group = "git hooks"
@@ -31,3 +32,5 @@ tasks.register("installGitHooks", Exec::class.java) {
         logger.info("Git hook installed successfully.")
     }
 }
+
+tasks.getByPath(":app:preBuild").dependsOn(":installGitHooks")
