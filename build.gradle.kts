@@ -8,3 +8,8 @@ plugins {
 allprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint-idea")
 }
+
+ktlint {
+    android.set(true)
+    ignoreFailures.set(false)
+}
