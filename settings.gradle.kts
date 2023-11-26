@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Cognizance"
 include(":app")
+include(":ui")
