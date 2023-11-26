@@ -6,12 +6,13 @@ plugins {
 }
 
 allprojects {
-    apply(plugin = "org.jlleitschuh.gradle.ktlint-idea")
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
 }
 
 ktlint {
     android.set(true)
     ignoreFailures.set(false)
+    outputColorName.set("RED")
 }
 
 tasks.register("copyGitHooks", Copy::class.java) {
