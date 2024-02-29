@@ -1,8 +1,10 @@
 package com.example.cognizance.ui.screens
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.ui.viewmodel.MovieListViewModel
+import com.example.cognizance.utils.TMDBImage
 
 @Composable
 fun MovieListScreen(
@@ -133,16 +136,35 @@ fun MovieRow(movie: Movie) = with(movie) {
         Column(
             modifier = Modifier.padding(all = 10.dp)
         ) {
+            Row(
+                modifier = Modifier
+                    .height(100.dp)
+                    .fillMaxWidth()
+            ) {
+                TMDBImage(url = posterPath)
+                Column(
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    Text(
+                        text = "Language: $originalLanguage",
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                    Text(
+                        text = "Releasing on $releaseDate",
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = title,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = "Release date: $releaseDate",
-                style = MaterialTheme.typography.labelSmall
-            )
-            Text(
-                text = "Overview: $overview",
+                text = overview,
                 style = MaterialTheme.typography.bodySmall
             )
         }

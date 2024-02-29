@@ -1,9 +1,9 @@
 package com.example.cognizance.data.repositories
 
 import com.example.cognizance.data.localsources.MovieLocalSource
+import com.example.cognizance.data.mappers.toEntityMovie
 import com.example.cognizance.data.mappers.toMovie
 import com.example.cognizance.data.models.EntityMovie
-import com.example.cognizance.data.models.toEntityMovie
 import com.example.cognizance.data.remotesources.MovieRemoteSource
 import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.domain.repositories.MovieRepository

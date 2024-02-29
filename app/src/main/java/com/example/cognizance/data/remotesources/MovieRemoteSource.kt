@@ -11,7 +11,7 @@ class MovieRemoteSource @Inject constructor(
 
     suspend fun getMovies(): Response<List<ApiMovie>> {
         return try {
-            moviesApi.getMovies(page = 1)
+            moviesApi.getMovies(page = (1..10).random())
                 .body()?.let {
                     Response.Success(it.results)
                 } ?: run {
