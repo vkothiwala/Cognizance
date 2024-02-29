@@ -14,7 +14,7 @@ import javax.inject.Inject
 @OptIn(ExperimentalPagingApi::class)
 class MoviesRemoteMediator @Inject constructor(
     private val moviesApi: MoviesApi,
-    private val movieDatabase: MoviesDatabase
+    private val moviesDatabase: MoviesDatabase
 ) : RemoteMediator<Int, EntityMovie>() {
 
     override suspend fun initialize(): InitializeAction {
@@ -48,9 +48,9 @@ class MoviesRemoteMediator @Inject constructor(
             val movies = apiMovieResponse.results
             val endOfPaginationReached = movies.isEmpty()
 
-            movieDatabase.withTransaction {
+            moviesDatabase.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    movieDatabase.getMovieDao().deleteAll()
+                    moviesDatabase.getMovieDao().deleteAll()
                 }
                 val entityMovies = movies.map {
                     it.toEntityMovie(
@@ -58,7 +58,7 @@ class MoviesRemoteMediator @Inject constructor(
                         totalPages = apiMovieResponse.totalResults
                     )
                 }
-                movieDatabase.getMovieDao().insertAll(entityMovies)
+                moviesDatabase.getMovieDao().insertAll(entityMovies)
             }
             MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (error: Exception) {

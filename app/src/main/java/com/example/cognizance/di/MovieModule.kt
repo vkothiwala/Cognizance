@@ -7,6 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.room.Room
 import com.example.cognizance.MoviesDatabase
 import com.example.cognizance.data.localsources.MovieDao
+import com.example.cognizance.data.localsources.MoviesBookmarkDao
 import com.example.cognizance.data.localsources.MoviesRemoteMediator
 import com.example.cognizance.data.models.ApiMovie
 import com.example.cognizance.data.models.EntityMovie
@@ -79,6 +80,11 @@ class DatabaseModule {
     fun provideMovieDao(movieDatabase: MoviesDatabase): MovieDao {
         return movieDatabase.getMovieDao()
     }
+
+    @Provides
+    fun provideMoviesBookmarkDao(movieDatabase: MoviesDatabase): MoviesBookmarkDao {
+        return movieDatabase.getMoviesBookmarkDao()
+    }
 }
 
 @Module
@@ -90,17 +96,17 @@ class PagingSourceModule {
     @Singleton
     @Named("movies_remote_mediator")
     fun provideMoviesRemoteMediator(
-        movieDatabase: MoviesDatabase,
+        moviesDatabase: MoviesDatabase,
         moviesApi: MoviesApi
     ): Pager<Int, EntityMovie> {
         return Pager(
             config = PagingConfig(pageSize = 30),
             remoteMediator = MoviesRemoteMediator(
                 moviesApi = moviesApi,
-                movieDatabase = movieDatabase
+                moviesDatabase = moviesDatabase
             ),
             pagingSourceFactory = {
-                movieDatabase.getMovieDao().getMovies()
+                moviesDatabase.getMovieDao().getMovies()
             }
         )
     }

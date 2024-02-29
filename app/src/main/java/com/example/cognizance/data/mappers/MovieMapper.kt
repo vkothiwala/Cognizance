@@ -4,7 +4,7 @@ import com.example.cognizance.data.models.ApiMovie
 import com.example.cognizance.data.models.EntityMovie
 import com.example.cognizance.domain.models.Movie
 
-fun EntityMovie.toMovie(): Movie = with(this) {
+fun EntityMovie.toMovie(flag: Boolean): Movie = with(this) {
     Movie(
         id = id,
         originalLanguage = originalLanguage,
@@ -12,11 +12,12 @@ fun EntityMovie.toMovie(): Movie = with(this) {
         overview = overview,
         posterPath = posterPath,
         releaseDate = releaseDate,
-        voteAverage = voteAverage
+        voteAverage = voteAverage,
+        flag = flag
     )
 }
 
-fun ApiMovie.toMovie(): Movie = with(this) {
+fun ApiMovie.toMovie(flag: Boolean): Movie = with(this) {
     Movie(
         id = id,
         originalLanguage = originalLanguage,
@@ -24,6 +25,7 @@ fun ApiMovie.toMovie(): Movie = with(this) {
         overview = overview,
         posterPath = posterPath,
         releaseDate = releaseDate,
-        voteAverage = voteAverage
+        voteAverage = voteAverage,
+        flag = flag
     )
 }

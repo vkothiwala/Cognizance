@@ -1,19 +1,22 @@
 package com.example.cognizance.ui.screens
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,6 +25,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
@@ -30,6 +34,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.ui.composables.TMDBImage
 import com.example.cognizance.ui.viewmodel.MovieListViewModel
+import com.example.cognizance.utils.toDateString
+import com.example.ui.composables.WingSpacer
 
 @Composable
 fun MovieListScreen(
@@ -37,8 +43,10 @@ fun MovieListScreen(
 ) {
     val uiState: LazyPagingItems<Movie> = viewModel.uiState.collectAsLazyPagingItems()
 
+    println("Response: ${uiState.itemSnapshotList.items}")
     MovieListContent(
-        movies = uiState
+        movies = uiState,
+        onFavouriteClick = viewModel::onFavouriteClick
     )
 }
 
@@ -56,25 +64,25 @@ fun ProgressIndicator() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MovieListContent(movies: LazyPagingItems<Movie>) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = "Now playing movies")
-                },
-                colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
-                )
+fun MovieListContent(movies: LazyPagingItems<Movie>, onFavouriteClick: (Int) -> Unit) {
+    Scaffold(topBar = {
+        TopAppBar(
+            title = {
+                Text(text = "Now playing movies")
+            },
+            colors = TopAppBarDefaults.smallTopAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer
             )
-        }
-    ) { paddingValues ->
+        )
+    }) { paddingValues ->
         LazyColumn(modifier = Modifier.padding(paddingValues)) {
-            items(movies.itemCount) { movie ->
-                MovieRow(movie = movies[movie]!!)
+            items(movies.itemCount) { index ->
+                MovieRow(movie = movies[index]!!, onFavouriteClick = {
+                    onFavouriteClick(movies[index]!!.id)
+                })
             }
             item {
-                Spacer(modifier = Modifier.height(8.dp))
+                WingSpacer(height = 8.dp)
             }
 
             item {
@@ -87,47 +95,57 @@ fun MovieListContent(movies: LazyPagingItems<Movie>) {
 }
 
 @Composable
-fun MovieRow(movie: Movie) = with(movie) {
+fun MovieRow(movie: Movie, onFavouriteClick: () -> Unit) = with(movie) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 8.dp, start = 8.dp, end = 8.dp)
-            .wrapContentHeight(),
+        modifier = Modifier.padding(top = 8.dp, start = 8.dp, end = 8.dp),
         border = BorderStroke(
             width = 1.dp,
             color = MaterialTheme.colorScheme.primaryContainer
         ),
-        shape = MaterialTheme.shapes.medium
+        shape = MaterialTheme.shapes.large
     ) {
-        Column(
-            modifier = Modifier.padding(all = 10.dp)
+        Row(
+            modifier = Modifier
+                .wrapContentSize()
+                .padding(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth()
+            TMDBImage(url = posterPath)
+            Column(
+                modifier = Modifier.weight(1f)
             ) {
-                TMDBImage(url = posterPath)
-                Column(
-                    modifier = Modifier.padding(start = 8.dp)
-                ) {
-                    Text(
-                        text = title,
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                    Text(
-                        text = "Language: $originalLanguage",
-                        style = MaterialTheme.typography.labelSmall
-                    )
-                    Text(
-                        text = "Releasing on $releaseDate",
-                        style = MaterialTheme.typography.labelSmall
-                    )
-                }
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleLarge
+                )
+                WingSpacer(height = 2.dp)
+                Text(
+                    text = "Language: $originalLanguage",
+                    style = MaterialTheme.typography.labelSmall
+                )
+                WingSpacer(height = 2.dp)
+                Text(
+                    text = releaseDate.toDateString(),
+                    style = MaterialTheme.typography.labelSmall
+                )
+                WingSpacer(height = 4.dp)
+                Text(
+                    text = overview,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.bodySmall
+                )
             }
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = overview,
-                style = MaterialTheme.typography.bodySmall
-            )
+            IconButton(onClick = onFavouriteClick) {
+                Icon(
+                    imageVector = if (movie.flag) {
+                        Icons.Filled.Check
+                    } else {
+                        Icons.Filled.Star
+                    },
+                    contentDescription = null
+                )
+            }
         }
     }
 }

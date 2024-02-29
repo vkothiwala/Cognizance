@@ -96,6 +96,9 @@ dependencies {
 
     // Paging 3 compose
     implementation("androidx.paging:paging-compose:3.2.1")
+
+    // Threeten
+    implementation("com.jakewharton.threetenabp:threetenabp:1.4.6")
 }
 
 // Allow references to generated code

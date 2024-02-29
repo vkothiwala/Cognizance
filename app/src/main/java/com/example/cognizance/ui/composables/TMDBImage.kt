@@ -28,7 +28,7 @@ fun TMDBImage(modifier: Modifier = Modifier, url: String?) {
         contentScale = ContentScale.Crop,
         modifier = modifier
             .clip(CircleShape)
-            .width(100.dp)
-            .height(100.dp)
+            .width(80.dp)
+            .height(120.dp)
     )
 }
