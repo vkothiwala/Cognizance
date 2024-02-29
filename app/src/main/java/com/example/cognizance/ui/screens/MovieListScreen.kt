@@ -40,7 +40,7 @@ import com.example.cognizance.utils.TMDBImage
 
 @Composable
 fun MovieListScreen(
-    viewModel: MovieListViewModel = hiltViewModel()
+    viewModel: MovieListViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -137,16 +137,11 @@ fun MovieRow(movie: Movie) = with(movie) {
             modifier = Modifier.padding(all = 10.dp)
         ) {
             Row(
-                modifier = Modifier
-                    .height(100.dp)
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             ) {
                 TMDBImage(url = posterPath)
                 Column(
-                    modifier = Modifier
-                        .padding(start = 8.dp)
-                        .fillMaxSize(),
-                    verticalArrangement = Arrangement.Center
+                    modifier = Modifier.padding(start = 8.dp)
                 ) {
                     Text(
                         text = title,
