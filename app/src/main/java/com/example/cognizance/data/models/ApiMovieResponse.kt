@@ -7,7 +7,7 @@ data class ApiMovieResponse(
     @SerializedName("page") var page: Int,
     @SerializedName("total_pages") var totalPages: Int,
     @SerializedName("total_results") var totalResults: Int,
-    @SerializedName("dates") var dates: Dates,
+    @SerializedName("dates") var dates: Dates
 ) {
     data class Dates(
         var maximum: String,
