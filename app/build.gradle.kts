@@ -89,12 +89,13 @@ dependencies {
     kapt("androidx.room:room-compiler:$roomVersion")
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$roomVersion")
+    implementation("androidx.room:room-paging:$roomVersion")
 
     // Coil
     implementation("io.coil-kt:coil-compose:2.6.0")
 
-    // Paging 3
-    implementation("androidx.paging:paging-compose:3.3.0-alpha03")
+    // Paging 3 compose
+    implementation("androidx.paging:paging-compose:3.2.1")
 }
 
 // Allow references to generated code

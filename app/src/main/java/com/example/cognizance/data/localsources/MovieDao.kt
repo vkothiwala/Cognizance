@@ -1,18 +1,19 @@
-package com.example.cognizance.data.services
+package com.example.cognizance.data.localsources
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.cognizance.data.models.EntityMovie
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
 
     @Query("SELECT * FROM movie")
-    fun getMovies(): Flow<List<EntityMovie>>
+    fun getMovies(): PagingSource<Int, EntityMovie>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(entityMovies: List<EntityMovie>)
 
     @Query("DELETE FROM movie")

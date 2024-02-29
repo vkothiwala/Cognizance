@@ -1,11 +1,18 @@
 package com.example.cognizance.di
 
 import android.content.Context
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.room.Room
-import com.example.cognizance.MovieDatabase
+import com.example.cognizance.MoviesDatabase
+import com.example.cognizance.data.localsources.MovieDao
+import com.example.cognizance.data.localsources.MoviesRemoteMediator
+import com.example.cognizance.data.models.ApiMovie
+import com.example.cognizance.data.models.EntityMovie
+import com.example.cognizance.data.remotesources.MoviesApi
+import com.example.cognizance.data.remotesources.MoviesPagingSource
 import com.example.cognizance.data.repositories.MovieRepositoryImpl
-import com.example.cognizance.data.services.MovieDao
-import com.example.cognizance.data.services.MoviesApi
 import com.example.cognizance.domain.repositories.MovieRepository
 import dagger.Binds
 import dagger.Module
@@ -17,6 +24,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 private const val BASE_URL = "https://api.themoviedb.org/"
@@ -59,16 +67,54 @@ class DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideMovieDatabase(@ApplicationContext context: Context): MovieDatabase {
+    fun provideMovieDatabase(@ApplicationContext context: Context): MoviesDatabase {
         return Room.databaseBuilder(
             context = context,
-            MovieDatabase::class.java,
+            MoviesDatabase::class.java,
             name = "movie_database"
         ).build()
     }
 
     @Provides
-    fun provideChannelDao(movieDatabase: MovieDatabase): MovieDao {
-        return movieDatabase.movieDao()
+    fun provideMovieDao(movieDatabase: MoviesDatabase): MovieDao {
+        return movieDatabase.getMovieDao()
+    }
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+class PagingSourceModule {
+
+    @OptIn(ExperimentalPagingApi::class)
+    @Provides
+    @Singleton
+    @Named("movies_remote_mediator")
+    fun provideMoviesRemoteMediator(
+        movieDatabase: MoviesDatabase,
+        moviesApi: MoviesApi
+    ): Pager<Int, EntityMovie> {
+        return Pager(
+            config = PagingConfig(pageSize = 30),
+            remoteMediator = MoviesRemoteMediator(
+                moviesApi = moviesApi,
+                movieDatabase = movieDatabase
+            ),
+            pagingSourceFactory = {
+                movieDatabase.getMovieDao().getMovies()
+            }
+        )
+    }
+
+    @Provides
+    @Named("movies_paging_source")
+    fun provideMoviesPagingSource(
+        moviesApi: MoviesApi
+    ): Pager<Int, ApiMovie> {
+        return Pager(
+            config = PagingConfig(pageSize = 30),
+            pagingSourceFactory = {
+                MoviesPagingSource(moviesApi)
+            }
+        )
     }
 }

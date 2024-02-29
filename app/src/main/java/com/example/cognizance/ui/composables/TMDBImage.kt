@@ -1,4 +1,4 @@
-package com.example.cognizance.utils
+package com.example.cognizance.ui.composables
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
