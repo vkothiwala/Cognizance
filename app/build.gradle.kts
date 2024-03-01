@@ -99,6 +99,10 @@ dependencies {
 
     // Threeten
     implementation("com.jakewharton.threetenabp:threetenabp:1.4.6")
+
+    // Compose navigation
+    val nav_version = "2.7.7"
+    implementation("androidx.navigation:navigation-compose:$nav_version")
 }
 
 // Allow references to generated code

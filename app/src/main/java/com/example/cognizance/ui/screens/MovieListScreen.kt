@@ -1,49 +1,49 @@
 package com.example.cognizance.ui.screens
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.cognizance.R
 import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.domain.models.MovieBookmark
+import com.example.cognizance.ui.composables.TMDBCard
 import com.example.cognizance.ui.composables.TMDBImage
 import com.example.cognizance.ui.viewmodel.MovieListViewModel
 import com.example.cognizance.ui.viewmodel.UiEvent
 import com.example.cognizance.utils.toDateString
+import com.example.ui.composables.WingScaffold
 import com.example.ui.composables.WingSpacer
 
 @Composable
 fun MovieListScreen(
-    viewModel: MovieListViewModel = hiltViewModel()
+    viewModel: MovieListViewModel = hiltViewModel(),
+    backPressAction: () -> Unit
 ) {
     val movies: LazyPagingItems<Movie> = viewModel.movies.collectAsLazyPagingItems()
     val bookmarks by viewModel.bookmarks.collectAsState()
@@ -51,19 +51,21 @@ fun MovieListScreen(
     MovieListContent(
         movies = movies,
         bookmarks = bookmarks,
-        onEvent = viewModel::onEvent
+        onEvent = viewModel::onEvent,
+        onBackPress = backPressAction
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MovieListContent(
+private fun MovieListContent(
     movies: LazyPagingItems<Movie>,
     bookmarks: List<MovieBookmark>,
-    onEvent: (UiEvent) -> Unit
+    onEvent: (UiEvent) -> Unit,
+    onBackPress: () -> Unit
 ) {
-    Scaffold(
-        topBar = { TopAppbar() }
+    WingScaffold(
+        title = stringResource(R.string.now_playing_movies),
+        onBackPress = onBackPress
     ) { paddingValues ->
         LazyColumn(modifier = Modifier.padding(paddingValues)) {
             items(movies.itemCount) { index ->
@@ -88,21 +90,8 @@ fun MovieListContent(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppbar() {
-    TopAppBar(
-        title = {
-            Text(text = "Now playing movies")
-        },
-        colors = TopAppBarDefaults.smallTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
-        )
-    )
-}
-
-@Composable
-fun ProgressIndicator() {
+private fun ProgressIndicator() {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -114,18 +103,16 @@ fun ProgressIndicator() {
 }
 
 @Composable
-fun MovieRow(
+private fun MovieRow(
     movie: Movie,
     bookmarks: List<MovieBookmark>,
     onBookmarkClick: (UiEvent.OnBookmarkClick) -> Unit
 ) {
-    Card(
-        modifier = Modifier.padding(top = 8.dp, start = 8.dp, end = 8.dp),
-        border = BorderStroke(
-            width = 1.dp,
-            color = MaterialTheme.colorScheme.primaryContainer
-        ),
-        shape = MaterialTheme.shapes.large
+    TMDBCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp)
+            .padding(horizontal = 8.dp)
     ) {
         Row(
             modifier = Modifier
