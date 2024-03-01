@@ -4,6 +4,5 @@ import com.example.cognizance.data.models.EntityMoviesBookmark
 import com.example.cognizance.domain.models.MovieBookmark
 
 fun EntityMoviesBookmark.toMovieBookmark() = MovieBookmark(
-    id = id,
-    bookmark = bookmark
+    id = id
 )

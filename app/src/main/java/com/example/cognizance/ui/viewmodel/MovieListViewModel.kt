@@ -26,7 +26,7 @@ class MovieListViewModel @Inject constructor(
         when (event) {
             is UiEvent.OnBookmarkClick -> {
                 viewModelScope.launch {
-                    movieRepository.onFavouriteClick(event.movieId)
+                    movieRepository.onBookmarkClick(event.movieId)
                 }
             }
         }

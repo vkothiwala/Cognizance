@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface MovieRepository {
     val movies: Flow<PagingData<Movie>>
     val bookmarks: Flow<List<MovieBookmark>>
-    suspend fun onFavouriteClick(movieId: Int)
+    suspend fun onBookmarkClick(movieId: Int)
 }

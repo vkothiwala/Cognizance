@@ -160,9 +160,7 @@ fun MovieRow(
                 )
             }
 
-            val bookmarkedMovie = bookmarks.find { it.id == movie.id }
-            val isBookmarked = bookmarkedMovie?.bookmark == true
-
+            val isBookmarked = bookmarks.contains(MovieBookmark(movie.id))
             val bookmarkVector = if (isBookmarked) {
                 Icons.Filled.Check
             } else {

@@ -40,16 +40,31 @@ class MovieRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun onFavouriteClick(movieId: Int) {
+    /**
+     * Bookmark is a local feature. It has no remote support. Deleting storage will
+     * result in loss of bookmarks.
+     * Bookmark storage keeps track of movieId. If movieId is found in storage then it
+     * has been bookmarked.
+     * */
+    override suspend fun onBookmarkClick(movieId: Int) {
         movieDatabase.withTransaction {
             val bookmarkDao = movieDatabase.getMoviesBookmarkDao()
-            val bookmarkStatus: Boolean = bookmarkDao.getBookmarkStatus(movieId = movieId) ?: false
-            bookmarkDao.bookmarkMovie(
-                EntityMoviesBookmark(
-                    id = movieId,
-                    bookmark = bookmarkStatus.not()
+            val entityMoviesBookmark = bookmarkDao.findMovie(movieId = movieId)
+            if (entityMoviesBookmark == null) {
+                // If movie being bookmarked is not found in table, then bookmark it by adding it to table.
+                bookmarkDao.addMovie(
+                    EntityMoviesBookmark(
+                        id = movieId
+                    )
                 )
-            )
+            } else {
+                // If movie being bookmarked exists in table, un-bookmark it by deleting it from table.
+                bookmarkDao.deleteMovie(
+                    EntityMoviesBookmark(
+                        id = movieId
+                    )
+                )
+            }
         }
     }
 }
