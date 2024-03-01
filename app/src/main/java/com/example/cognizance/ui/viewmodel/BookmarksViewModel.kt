@@ -2,26 +2,32 @@ package com.example.cognizance.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.domain.repositories.BookmarksRepository
+import com.example.cognizance.ui.models.UiEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class BookmarksViewModel @Inject constructor(
-    bookmarksRepository: BookmarksRepository
+    private val bookmarksRepository: BookmarksRepository
 ) : ViewModel() {
+    val bookmarkedMovies = bookmarksRepository
+        .bookmarkedMovies
+        .stateIn(
+            scope = viewModelScope,
+            initialValue = emptyList(),
+            started = SharingStarted.WhileSubscribed(2000)
+        )
 
-    private val _bookmarkedMovies = MutableStateFlow(emptyList<Movie>())
-    val bookmarkedMovies = _bookmarkedMovies.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            bookmarksRepository.getBookmarkedMovies().collect {
-                _bookmarkedMovies.value = it
+    fun onEvent(event: UiEvents) {
+        when (event) {
+            is UiEvents.OnBookmarkClick -> {
+                viewModelScope.launch {
+                    bookmarksRepository.onBookmarkClick(event.movieId)
+                }
             }
         }
     }

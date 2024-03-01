@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.example.cognizance.domain.repositories.BookmarksRepository
 import com.example.cognizance.domain.repositories.MoviesRepository
+import com.example.cognizance.ui.models.UiEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -24,17 +25,13 @@ class MovieListViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(2000)
     )
 
-    fun onEvent(event: UiEvent) {
+    fun onEvent(event: UiEvents) {
         when (event) {
-            is UiEvent.OnBookmarkClick -> {
+            is UiEvents.OnBookmarkClick -> {
                 viewModelScope.launch {
                     bookmarksRepository.onBookmarkClick(event.movieId)
                 }
             }
         }
     }
-}
-
-sealed class UiEvent {
-    data class OnBookmarkClick(val movieId: Int) : UiEvent()
 }

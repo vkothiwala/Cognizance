@@ -34,8 +34,8 @@ import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.domain.models.MovieBookmark
 import com.example.cognizance.ui.composables.TMDBCard
 import com.example.cognizance.ui.composables.TMDBImage
+import com.example.cognizance.ui.models.UiEvents
 import com.example.cognizance.ui.viewmodel.MovieListViewModel
-import com.example.cognizance.ui.viewmodel.UiEvent
 import com.example.cognizance.utils.toDateString
 import com.example.ui.composables.WingScaffold
 import com.example.ui.composables.WingSpacer
@@ -60,7 +60,7 @@ fun MovieListScreen(
 private fun MovieListContent(
     movies: LazyPagingItems<Movie>,
     bookmarks: List<MovieBookmark>,
-    onEvent: (UiEvent) -> Unit,
+    onEvent: (UiEvents) -> Unit,
     onBackPress: () -> Unit
 ) {
     WingScaffold(
@@ -106,7 +106,7 @@ private fun ProgressIndicator() {
 private fun MovieRow(
     movie: Movie,
     bookmarks: List<MovieBookmark>,
-    onBookmarkClick: (UiEvent.OnBookmarkClick) -> Unit
+    onBookmarkClick: (UiEvents.OnBookmarkClick) -> Unit
 ) {
     TMDBCard(
         modifier = Modifier
@@ -155,7 +155,7 @@ private fun MovieRow(
             }
             IconButton(
                 onClick = {
-                    onBookmarkClick(UiEvent.OnBookmarkClick(movie.id))
+                    onBookmarkClick(UiEvents.OnBookmarkClick(movie.id))
                 }
             ) {
                 Icon(

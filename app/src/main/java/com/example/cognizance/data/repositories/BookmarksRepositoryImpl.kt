@@ -2,7 +2,6 @@ package com.example.cognizance.data.repositories
 
 import androidx.room.withTransaction
 import com.example.cognizance.MoviesDatabase
-import com.example.cognizance.data.local.models.EntityMovie
 import com.example.cognizance.data.local.models.EntityMoviesBookmark
 import com.example.cognizance.data.mappers.toMovie
 import com.example.cognizance.data.mappers.toMovieBookmark
@@ -10,7 +9,6 @@ import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.domain.models.MovieBookmark
 import com.example.cognizance.domain.repositories.BookmarksRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -24,6 +22,16 @@ class BookmarksRepositoryImpl @Inject constructor(
         .map { entityBookmarks ->
             entityBookmarks.map {
                 it.toMovieBookmark()
+            }
+        }
+
+    override val bookmarkedMovies: Flow<List<Movie>> = moviesDatabase.getMoviesBookmarkDao()
+        .getAllMoviesBookmark()
+        .map { entityBookmarks ->
+            entityBookmarks.map {
+                moviesDatabase.withTransaction {
+                    moviesDatabase.getMovieDao().getMovieById(it.id)
+                }.toMovie()
             }
         }
 
@@ -53,20 +61,5 @@ class BookmarksRepositoryImpl @Inject constructor(
                 )
             }
         }
-    }
-
-    override val bookmarkedMovies: Flow<List<Movie>> = flow { }
-
-    override suspend fun getBookmarkedMovies(): Flow<List<Movie>> = flow {
-        val bookmarkedMovies = mutableListOf<EntityMovie>()
-        moviesDatabase.withTransaction {
-            val bookmarks: List<EntityMoviesBookmark> =
-                moviesDatabase.getMoviesBookmarkDao().getAllMoviesBookmarkNonFlow()
-            bookmarks.forEach {
-                val entityMovie = moviesDatabase.getMovieDao().getMovieById(it.id)
-                bookmarkedMovies.add(entityMovie)
-            }
-        }
-        emit(bookmarkedMovies.map { it.toMovie() })
     }
 }
