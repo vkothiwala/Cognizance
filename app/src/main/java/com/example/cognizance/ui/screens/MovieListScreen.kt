@@ -44,7 +44,7 @@ fun MovieListScreen(
     val uiState: LazyPagingItems<Movie> = viewModel.uiState.collectAsLazyPagingItems()
 
     MovieListContent(
-        movies = uiState,
+        uiState = uiState,
         onFavouriteClick = viewModel::onFavouriteClick
     )
 }
@@ -63,7 +63,7 @@ fun ProgressIndicator() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MovieListContent(movies: LazyPagingItems<Movie>, onFavouriteClick: (Int) -> Unit) {
+fun MovieListContent(uiState: LazyPagingItems<Movie>, onFavouriteClick: (Int) -> Unit) {
     Scaffold(topBar = {
         TopAppBar(
             title = {
@@ -75,17 +75,19 @@ fun MovieListContent(movies: LazyPagingItems<Movie>, onFavouriteClick: (Int) -> 
         )
     }) { paddingValues ->
         LazyColumn(modifier = Modifier.padding(paddingValues)) {
-            items(movies.itemCount) { index ->
-                MovieRow(movie = movies[index]!!, onFavouriteClick = {
-                    onFavouriteClick(movies[index]!!.id)
-                })
+            items(uiState.itemCount) { index ->
+                uiState[index]?.let { movie ->
+                    MovieRow(movie = movie, onFavouriteClick = {
+                        onFavouriteClick(movie.id)
+                    })
+                }
             }
             item {
                 WingSpacer(height = 8.dp)
             }
 
             item {
-                if (movies.loadState.append is LoadState.Loading) {
+                if (uiState.loadState.append is LoadState.Loading) {
                     ProgressIndicator()
                 }
             }

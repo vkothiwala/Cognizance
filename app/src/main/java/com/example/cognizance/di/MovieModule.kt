@@ -102,8 +102,8 @@ class PagingSourceModule {
         return Pager(
             config = PagingConfig(
                 pageSize = 30,
-                initialLoadSize = 30,
-                prefetchDistance = 1
+                prefetchDistance = 5,
+                initialLoadSize = 1
             ),
             remoteMediator = MoviesRemoteMediator(
                 moviesApi = moviesApi,
