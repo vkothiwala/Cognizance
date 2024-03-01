@@ -6,7 +6,7 @@ import com.example.cognizance.domain.models.Movie
 
 fun EntityMovie.toMovie(flag: Boolean): Movie = with(this) {
     Movie(
-        id = id,
+        id = movieId,
         originalLanguage = originalLanguage,
         title = title,
         overview = overview,
@@ -19,7 +19,7 @@ fun EntityMovie.toMovie(flag: Boolean): Movie = with(this) {
 
 fun ApiMovie.toMovie(flag: Boolean): Movie = with(this) {
     Movie(
-        id = id,
+        id = movieId,
         originalLanguage = originalLanguage,
         title = title,
         overview = overview,

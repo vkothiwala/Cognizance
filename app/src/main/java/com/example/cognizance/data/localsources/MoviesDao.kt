@@ -8,7 +8,7 @@ import androidx.room.Query
 import com.example.cognizance.data.models.EntityMovie
 
 @Dao
-interface MovieDao {
+interface MoviesDao {
 
     @Query("SELECT * FROM movie")
     fun getMovies(): PagingSource<Int, EntityMovie>
@@ -18,4 +18,7 @@ interface MovieDao {
 
     @Query("DELETE FROM movie")
     fun deleteAll()
+
+    @Query("DELETE FROM sqlite_sequence WHERE name = 'movie'")
+    fun resetPrimaryKeyAutoIncrementValue()
 }

@@ -3,12 +3,10 @@ package com.example.cognizance.data.repositories
 import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.map
-import androidx.room.withTransaction
 import com.example.cognizance.MoviesDatabase
 import com.example.cognizance.data.mappers.toMovie
 import com.example.cognizance.data.models.ApiMovie
 import com.example.cognizance.data.models.EntityMovie
-import com.example.cognizance.data.models.EntityMoviesBookmark
 import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.domain.repositories.MovieRepository
 import kotlinx.coroutines.flow.Flow
@@ -31,23 +29,23 @@ class MovieRepositoryImpl @Inject constructor(
         .map { pagingData ->
             pagingData.map {
                 it.toMovie(
-                    flag = movieDatabase.withTransaction {
+                    flag = false /*movieDatabase.withTransaction {
                         movieDatabase.getMoviesBookmarkDao().getBookmarkStatus(it.id) ?: false
-                    }
+                    }*/
                 )
             }
         }
 
     override suspend fun onFavouriteClick(movieId: Int) {
-        movieDatabase.withTransaction {
+        /*movieDatabase.withTransaction {
             val bookmarkDao = movieDatabase.getMoviesBookmarkDao()
             val bookmarkStatus: Boolean = bookmarkDao.getBookmarkStatus(movieId = movieId) ?: false
-            bookmarkDao.bookmark(
-                EntityMoviesBookmark(
+            bookmarkDao.bookmarkMovie(
+                EntityMovieBookmark(
                     id = movieId,
-                    flag = bookmarkStatus.not()
+                    bookmark = bookmarkStatus.not()
                 )
             )
-        }
+        }*/
     }
 }

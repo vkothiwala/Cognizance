@@ -17,12 +17,6 @@ class MoviesRemoteMediator @Inject constructor(
     private val moviesDatabase: MoviesDatabase
 ) : RemoteMediator<Int, EntityMovie>() {
 
-    override suspend fun initialize(): InitializeAction {
-        // Require that remote REFRESH is launched on initial load and succeeds before launching
-        // remote PREPEND / APPEND.
-        return InitializeAction.LAUNCH_INITIAL_REFRESH
-    }
-
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, EntityMovie>
@@ -34,8 +28,8 @@ class MoviesRemoteMediator @Inject constructor(
             )
 
             LoadType.APPEND -> {
-                val lastItem = state.lastItemOrNull()
-                if (lastItem == null) {
+                println("Varun append ${state.lastItemOrNull()}")
+                val lastItem = state.lastItemOrNull() ?: run {
                     return MediatorResult.Success(endOfPaginationReached = true)
                 }
                 lastItem.currentPage + 1
@@ -51,11 +45,11 @@ class MoviesRemoteMediator @Inject constructor(
             moviesDatabase.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     moviesDatabase.getMovieDao().deleteAll()
+                    moviesDatabase.getMovieDao().resetPrimaryKeyAutoIncrementValue()
                 }
                 val entityMovies = movies.map {
                     it.toEntityMovie(
-                        currentPage = apiMovieResponse.page,
-                        totalPages = apiMovieResponse.totalResults
+                        currentPage = apiMovieResponse.page
                     )
                 }
                 moviesDatabase.getMovieDao().insertAll(entityMovies)

@@ -12,5 +12,5 @@ interface MoviesBookmarkDao {
     fun getBookmarkStatus(movieId: Int): Boolean?
 
     @Upsert
-    fun bookmark(movie: EntityMoviesBookmark)
+    fun bookmarkMovie(movie: EntityMoviesBookmark)
 }
