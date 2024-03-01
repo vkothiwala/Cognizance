@@ -28,7 +28,6 @@ class MoviesRemoteMediator @Inject constructor(
             )
 
             LoadType.APPEND -> {
-                println("Varun append ${state.lastItemOrNull()}")
                 val lastItem = state.lastItemOrNull() ?: run {
                     return MediatorResult.Success(endOfPaginationReached = true)
                 }

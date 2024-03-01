@@ -43,7 +43,6 @@ fun MovieListScreen(
 ) {
     val uiState: LazyPagingItems<Movie> = viewModel.uiState.collectAsLazyPagingItems()
 
-    println("Response: ${uiState.itemSnapshotList.items}")
     MovieListContent(
         movies = uiState,
         onFavouriteClick = viewModel::onFavouriteClick
