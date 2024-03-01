@@ -6,10 +6,12 @@ import androidx.paging.map
 import androidx.room.withTransaction
 import com.example.cognizance.MoviesDatabase
 import com.example.cognizance.data.mappers.toMovie
+import com.example.cognizance.data.mappers.toMovieBookmark
 import com.example.cognizance.data.models.ApiMovie
 import com.example.cognizance.data.models.EntityMovie
 import com.example.cognizance.data.models.EntityMoviesBookmark
 import com.example.cognizance.domain.models.Movie
+import com.example.cognizance.domain.models.MovieBookmark
 import com.example.cognizance.domain.repositories.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -22,9 +24,14 @@ class MovieRepositoryImpl @Inject constructor(
     private val movieDatabase: MoviesDatabase
 ) : MovieRepository {
 
-    override val bookmarks: Flow<List<EntityMoviesBookmark>> = movieDatabase
+    override val bookmarks: Flow<List<MovieBookmark>> = movieDatabase
         .getMoviesBookmarkDao()
         .getAllMoviesBookmark()
+        .map { entityBookmarks ->
+            entityBookmarks.map {
+                it.toMovieBookmark()
+            }
+        }
 
     override val movies: Flow<PagingData<Movie>> = remoteMediator.flow
         .map { pagingData ->

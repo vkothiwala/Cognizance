@@ -7,6 +7,5 @@ data class Movie(
     var originalLanguage: String,
     var posterPath: String?,
     var releaseDate: String,
-    var voteAverage: Float,
-    var flag: Boolean
+    var voteAverage: Float
 )
