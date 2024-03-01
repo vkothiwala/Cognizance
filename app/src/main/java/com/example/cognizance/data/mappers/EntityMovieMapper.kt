@@ -1,7 +1,7 @@
 package com.example.cognizance.data.mappers
 
-import com.example.cognizance.data.models.ApiMovie
-import com.example.cognizance.data.models.EntityMovie
+import com.example.cognizance.data.local.models.EntityMovie
+import com.example.cognizance.data.remote.models.ApiMovie
 
 fun ApiMovie.toEntityMovie(currentPage: Int) = EntityMovie(
     movieId = movieId,

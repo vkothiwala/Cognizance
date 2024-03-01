@@ -1,12 +1,12 @@
-package com.example.cognizance.data.remotesources
+package com.example.cognizance.data.remote
 
-import com.example.cognizance.data.models.ApiMoviesResponse
+import com.example.cognizance.data.remote.models.ApiMoviesResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface MoviesApi {
 
-    @GET("3/movie/now_playing")
+    @GET("movie/now_playing")
     suspend fun getMovies(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = EN_US,

@@ -1,4 +1,4 @@
-package com.example.cognizance.data.models
+package com.example.cognizance.data.remote.models
 
 import com.google.gson.annotations.SerializedName
 

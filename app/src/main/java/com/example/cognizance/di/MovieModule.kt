@@ -6,13 +6,13 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.room.Room
 import com.example.cognizance.MoviesDatabase
-import com.example.cognizance.data.localsources.MoviesBookmarkDao
-import com.example.cognizance.data.localsources.MoviesDao
-import com.example.cognizance.data.localsources.MoviesRemoteMediator
-import com.example.cognizance.data.models.ApiMovie
-import com.example.cognizance.data.models.EntityMovie
-import com.example.cognizance.data.remotesources.MoviesApi
-import com.example.cognizance.data.remotesources.MoviesPagingSource
+import com.example.cognizance.data.local.MoviesRemoteMediator
+import com.example.cognizance.data.local.dao.MoviesBookmarkDao
+import com.example.cognizance.data.local.dao.MoviesDao
+import com.example.cognizance.data.local.models.EntityMovie
+import com.example.cognizance.data.remote.MoviesApi
+import com.example.cognizance.data.remote.MoviesPagingSource
+import com.example.cognizance.data.remote.models.ApiMovie
 import com.example.cognizance.data.repositories.BookmarksRepositoryImpl
 import com.example.cognizance.data.repositories.MoviesRepositoryImpl
 import com.example.cognizance.domain.repositories.BookmarksRepository
@@ -30,7 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
-private const val BASE_URL = "https://api.themoviedb.org/"
+private const val BASE_URL = "https://api.themoviedb.org/3/"
 
 @Module
 @InstallIn(SingletonComponent::class)

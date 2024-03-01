@@ -2,10 +2,10 @@ package com.example.cognizance
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.cognizance.data.localsources.MoviesBookmarkDao
-import com.example.cognizance.data.localsources.MoviesDao
-import com.example.cognizance.data.models.EntityMovie
-import com.example.cognizance.data.models.EntityMoviesBookmark
+import com.example.cognizance.data.local.dao.MoviesBookmarkDao
+import com.example.cognizance.data.local.dao.MoviesDao
+import com.example.cognizance.data.local.models.EntityMovie
+import com.example.cognizance.data.local.models.EntityMoviesBookmark
 
 @Database(
     entities = [EntityMovie::class, EntityMoviesBookmark::class],

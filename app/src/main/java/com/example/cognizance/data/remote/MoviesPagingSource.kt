@@ -1,8 +1,8 @@
-package com.example.cognizance.data.remotesources
+package com.example.cognizance.data.remote
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.cognizance.data.models.ApiMovie
+import com.example.cognizance.data.remote.models.ApiMovie
 import javax.inject.Inject
 
 class MoviesPagingSource @Inject constructor(
