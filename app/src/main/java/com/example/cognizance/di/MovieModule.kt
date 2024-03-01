@@ -13,8 +13,10 @@ import com.example.cognizance.data.models.ApiMovie
 import com.example.cognizance.data.models.EntityMovie
 import com.example.cognizance.data.remotesources.MoviesApi
 import com.example.cognizance.data.remotesources.MoviesPagingSource
-import com.example.cognizance.data.repositories.MovieRepositoryImpl
-import com.example.cognizance.domain.repositories.MovieRepository
+import com.example.cognizance.data.repositories.BookmarksRepositoryImpl
+import com.example.cognizance.data.repositories.MoviesRepositoryImpl
+import com.example.cognizance.domain.repositories.BookmarksRepository
+import com.example.cognizance.domain.repositories.MoviesRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -35,7 +37,10 @@ private const val BASE_URL = "https://api.themoviedb.org/"
 abstract class MovieBindModule {
 
     @Binds
-    abstract fun bindMovieRepository(movieRepositoryImpl: MovieRepositoryImpl): MovieRepository
+    abstract fun bindMoviesRepository(moviesRepositoryImpl: MoviesRepositoryImpl): MoviesRepository
+
+    @Binds
+    abstract fun bindBookmarksRepository(bookmarksRepositoryImpl: BookmarksRepositoryImpl): BookmarksRepository
 }
 
 @Module
