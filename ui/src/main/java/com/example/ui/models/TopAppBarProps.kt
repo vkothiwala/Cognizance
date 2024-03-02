@@ -1,4 +1,4 @@
-package com.example.cognizance.ui.models
+package com.example.ui.models
 
 data class TopAppBarProps(
     val title: String,

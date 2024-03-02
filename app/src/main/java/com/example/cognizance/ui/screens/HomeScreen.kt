@@ -13,8 +13,8 @@ import androidx.compose.ui.unit.dp
 import com.example.cognizance.R
 import com.example.cognizance.ui.composables.AppBarActions
 import com.example.cognizance.ui.composables.MovieCard
-import com.example.cognizance.ui.models.AppBarActionProps
 import com.example.ui.composables.WingScaffold
+import com.example.ui.models.AppBarActionProps
 
 @Composable
 fun HomeScreen(
