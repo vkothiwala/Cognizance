@@ -13,10 +13,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.example.ui.models.AppBarActionProps
+import com.example.ui.models.WingTopAppBarActionProps
 
 @Composable
-fun AppBarActions(actionProps: List<AppBarActionProps>) {
+fun WingTopAppBarActions(actionProps: List<WingTopAppBarActionProps>) {
     if (actionProps.isEmpty()) return
     var isActionMenuExpanded by remember { mutableStateOf(false) }
     IconButton(onClick = { isActionMenuExpanded = !isActionMenuExpanded }) {

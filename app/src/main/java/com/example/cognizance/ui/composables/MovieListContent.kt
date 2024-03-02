@@ -12,25 +12,25 @@ import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.domain.models.MovieBookmark
 import com.example.cognizance.ui.models.BookmarkIconProps
 import com.example.cognizance.ui.models.MovieCardClickEvent
-import com.example.ui.composables.AppBarActions
 import com.example.ui.composables.WingScaffold
 import com.example.ui.composables.WingSpacer
-import com.example.ui.models.TopAppBarProps
+import com.example.ui.composables.WingTopAppBarActions
+import com.example.ui.models.WingTopAppBarProps
 
 @Composable
 fun MovieListContent(
-    topAppBarProps: TopAppBarProps,
+    wingTopAppBarProps: WingTopAppBarProps,
     movies: LazyPagingItems<Movie>,
     bookmarks: List<MovieBookmark>?,
     onClick: (MovieCardClickEvent) -> Unit,
     onCardClick: (Int) -> Unit
 ) {
     WingScaffold(
-        title = topAppBarProps.title,
-        onBackPress = topAppBarProps.onBackPress,
+        title = wingTopAppBarProps.title,
+        onBackPress = wingTopAppBarProps.onBackPress,
         actions = {
-            AppBarActions(
-                actionProps = topAppBarProps.actionProps
+            WingTopAppBarActions(
+                actionProps = wingTopAppBarProps.actionProps
             )
         }
     ) { paddingValues ->

@@ -11,8 +11,8 @@ import com.example.cognizance.R
 import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.ui.composables.MovieListContent
 import com.example.cognizance.ui.viewmodel.MovieListViewModel
-import com.example.ui.models.AppBarActionProps
-import com.example.ui.models.TopAppBarProps
+import com.example.ui.models.WingTopAppBarActionProps
+import com.example.ui.models.WingTopAppBarProps
 
 @Composable
 fun UpcomingMoviesScreen(
@@ -25,11 +25,11 @@ fun UpcomingMoviesScreen(
     val bookmarks by viewModel.bookmarks.collectAsState()
 
     MovieListContent(
-        topAppBarProps = TopAppBarProps(
+        wingTopAppBarProps = WingTopAppBarProps(
             title = stringResource(R.string.upcoming),
             onBackPress = onBackPress,
             actionProps = listOf(
-                AppBarActionProps(
+                WingTopAppBarActionProps(
                     actionTitle = stringResource(R.string.bookmarks),
                     onActionClick = onBookmarkClick
                 )

@@ -9,7 +9,7 @@ import com.example.cognizance.R
 import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.ui.composables.MovieListContent
 import com.example.cognizance.ui.viewmodel.MovieListViewModel
-import com.example.ui.models.TopAppBarProps
+import com.example.ui.models.WingTopAppBarProps
 
 @Composable
 fun PopularMoviesScreen(
@@ -20,7 +20,7 @@ fun PopularMoviesScreen(
     val movies: LazyPagingItems<Movie> = viewModel.popularMovies.collectAsLazyPagingItems()
 
     MovieListContent(
-        topAppBarProps = TopAppBarProps(
+        wingTopAppBarProps = WingTopAppBarProps(
             title = stringResource(R.string.popular),
             onBackPress = onBackPress
         ),

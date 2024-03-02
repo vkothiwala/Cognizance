@@ -12,9 +12,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.cognizance.R
 import com.example.cognizance.ui.composables.MovieCard
-import com.example.ui.composables.AppBarActions
 import com.example.ui.composables.WingScaffold
-import com.example.ui.models.AppBarActionProps
+import com.example.ui.composables.WingTopAppBarActions
+import com.example.ui.models.WingTopAppBarActionProps
 
 @Composable
 fun HomeScreen(
@@ -27,9 +27,9 @@ fun HomeScreen(
         title = stringResource(R.string.home),
         onBackPress = backPressAction,
         actions = {
-            AppBarActions(
+            WingTopAppBarActions(
                 actionProps = listOf(
-                    AppBarActionProps(
+                    WingTopAppBarActionProps(
                         actionTitle = stringResource(R.string.bookmarks),
                         onActionClick = onBookmarkClick
                     )
