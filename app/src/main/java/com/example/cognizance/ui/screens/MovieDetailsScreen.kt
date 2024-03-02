@@ -18,14 +18,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cognizance.R
+import com.example.cognizance.ui.composables.BoldTitleTextTile
 import com.example.cognizance.ui.composables.MoviePoster
 import com.example.cognizance.ui.viewmodel.MovieDetailsViewModel
 import com.example.cognizance.utils.Response
@@ -87,7 +84,7 @@ fun MovieDetailsScreen(
                             .height(300.dp),
                         url = backdropPath
                     )
-                    TextTile(
+                    BoldTitleTextTile(
                         modifier = Modifier
                             .padding(start = 8.dp)
                             .padding(top = 4.dp),
@@ -95,7 +92,7 @@ fun MovieDetailsScreen(
                         message = overview,
                         textStyle = MaterialTheme.typography.bodyMedium
                     )
-                    TextTile(
+                    BoldTitleTextTile(
                         modifier = Modifier
                             .padding(horizontal = 8.dp)
                             .padding(top = 8.dp),
@@ -103,7 +100,7 @@ fun MovieDetailsScreen(
                         message = releaseDate.toDateString(),
                         textStyle = MaterialTheme.typography.bodyMedium
                     )
-                    TextTile(
+                    BoldTitleTextTile(
                         modifier = Modifier
                             .padding(horizontal = 8.dp)
                             .padding(top = 8.dp),
@@ -111,7 +108,7 @@ fun MovieDetailsScreen(
                         message = status,
                         textStyle = MaterialTheme.typography.bodyMedium
                     )
-                    TextTile(
+                    BoldTitleTextTile(
                         modifier = Modifier
                             .padding(horizontal = 8.dp)
                             .padding(top = 8.dp),
@@ -119,7 +116,7 @@ fun MovieDetailsScreen(
                         message = voteAverage.toString(),
                         textStyle = MaterialTheme.typography.bodyMedium
                     )
-                    TextTile(
+                    BoldTitleTextTile(
                         modifier = Modifier
                             .padding(horizontal = 8.dp)
                             .padding(top = 8.dp),
@@ -127,7 +124,7 @@ fun MovieDetailsScreen(
                         message = "$runtime mins",
                         textStyle = MaterialTheme.typography.bodyMedium
                     )
-                    TextTile(
+                    BoldTitleTextTile(
                         modifier = Modifier
                             .padding(horizontal = 8.dp)
                             .padding(top = 8.dp),
@@ -139,28 +136,4 @@ fun MovieDetailsScreen(
             }
         }
     }
-}
-
-@Composable
-fun TextTile(
-    title: String,
-    message: String,
-    textStyle: TextStyle,
-    modifier: Modifier = Modifier
-) {
-    Text(
-        modifier = modifier,
-        text = buildAnnotatedString {
-            withStyle(
-                style = textStyle.copy(fontWeight = FontWeight.Bold).toSpanStyle()
-            ) {
-                append(title)
-            }
-            withStyle(
-                textStyle.toSpanStyle()
-            ) {
-                append(message)
-            }
-        }
-    )
 }
