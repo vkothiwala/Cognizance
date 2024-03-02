@@ -24,7 +24,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cognizance.R
-import com.example.cognizance.ui.composables.TMDBImage
+import com.example.cognizance.ui.composables.MoviePoster
 import com.example.cognizance.ui.viewmodel.MovieDetailsViewModel
 import com.example.cognizance.utils.Response
 import com.example.cognizance.utils.toDateString
@@ -66,7 +66,7 @@ fun MovieDetailsScreen(
                         .padding(paddingValues)
                         .padding(all = 2.dp)
                 ) {
-                    TMDBImage(
+                    MoviePoster(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
                             .fillMaxWidth()

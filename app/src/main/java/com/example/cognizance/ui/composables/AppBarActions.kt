@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import com.example.cognizance.R
 
 @Composable
-fun TMDBActions(bookmarkClickAction: () -> Unit) {
+fun AppBarActions(bookmarkClickAction: () -> Unit) {
     var isActionMenuExpanded by remember { mutableStateOf(false) }
     IconButton(onClick = { isActionMenuExpanded = !isActionMenuExpanded }) {
         Icon(

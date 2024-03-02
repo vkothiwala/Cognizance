@@ -1,12 +1,9 @@
 package com.example.cognizance.ui.composables
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
@@ -31,7 +28,7 @@ fun MovieListContent(
         title = title,
         onBackPress = onBackPress,
         actions = {
-            TMDBActions(
+            AppBarActions(
                 bookmarkClickAction = bookmarkClickAction
             )
         }
@@ -55,21 +52,13 @@ fun MovieListContent(
 
             if (movies.loadState.append is LoadState.Loading) {
                 item {
-                    ProgressIndicator()
+                    ProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(bottom = 8.dp)
+                    )
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun ProgressIndicator() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(bottom = 8.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
     }
 }

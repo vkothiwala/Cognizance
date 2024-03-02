@@ -12,7 +12,7 @@ import com.example.cognizance.R
 const val PATH = "https://image.tmdb.org/t/p/original/"
 
 @Composable
-fun TMDBImage(modifier: Modifier = Modifier, url: String?) {
+fun MoviePoster(modifier: Modifier = Modifier, url: String?) {
     AsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
             .data("$PATH$url")

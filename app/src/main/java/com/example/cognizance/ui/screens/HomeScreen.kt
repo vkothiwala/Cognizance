@@ -11,14 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.cognizance.R
-import com.example.cognizance.ui.composables.TMDBActions
-import com.example.cognizance.ui.composables.TMDBCard
+import com.example.cognizance.ui.composables.AppBarActions
+import com.example.cognizance.ui.composables.MovieCard
 import com.example.ui.composables.WingScaffold
 
 @Composable
 fun HomeScreen(
     backPressAction: () -> Unit,
-    navigateToNowPlayingAction: () -> Unit,
+    navigateToUpcomingAction: () -> Unit,
     navigateToPopularAction: () -> Unit,
     bookmarkClickAction: () -> Unit
 ) {
@@ -26,7 +26,7 @@ fun HomeScreen(
         title = stringResource(R.string.home),
         onBackPress = backPressAction,
         actions = {
-            TMDBActions(
+            AppBarActions(
                 bookmarkClickAction = bookmarkClickAction
             )
         }
@@ -35,12 +35,12 @@ fun HomeScreen(
             modifier = Modifier.padding(paddingValues)
         ) {
             HomeCard(
-                title = stringResource(R.string.now_playing),
-                onClick = navigateToNowPlayingAction
-            )
-            HomeCard(
                 title = stringResource(R.string.popular),
                 onClick = navigateToPopularAction
+            )
+            HomeCard(
+                title = stringResource(R.string.upcoming),
+                onClick = navigateToUpcomingAction
             )
         }
     }
@@ -48,7 +48,7 @@ fun HomeScreen(
 
 @Composable
 private fun HomeCard(title: String, onClick: () -> Unit) {
-    TMDBCard(
+    MovieCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 8.dp)

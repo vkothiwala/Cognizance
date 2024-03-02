@@ -33,7 +33,7 @@ fun MovieRow(
     onBookmarkClick: (UiEvents.OnBookmarkClick) -> Unit,
     onCardClick: () -> Unit
 ) {
-    TMDBCard(
+    MovieCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 8.dp)
@@ -45,7 +45,7 @@ fun MovieRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TMDBImage(
+            MoviePoster(
                 modifier = Modifier
                     .clip(CircleShape)
                     .width(90.dp)

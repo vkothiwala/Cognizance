@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TMDBCard(
+fun MovieCard(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     content: @Composable ColumnScope.() -> Unit

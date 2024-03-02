@@ -7,7 +7,7 @@ import com.example.cognizance.utils.Response
 import kotlinx.coroutines.flow.Flow
 
 interface MoviesRepository {
-    val nowPlayingMovies: Flow<PagingData<Movie>>
+    val upcomingMovies: Flow<PagingData<Movie>>
     val popularMovies: Flow<PagingData<Movie>>
     suspend fun getMovieDetails(movieId: Int): Response<MovieDetails>
 }

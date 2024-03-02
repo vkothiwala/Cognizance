@@ -18,7 +18,7 @@ class MovieListViewModel @Inject constructor(
     private val bookmarksRepository: BookmarksRepository
 ) : ViewModel() {
 
-    val nowPlayingMovies = moviesRepository.nowPlayingMovies.cachedIn(viewModelScope)
+    val upcomingMovies = moviesRepository.upcomingMovies.cachedIn(viewModelScope)
     val popularMovies = moviesRepository.popularMovies.cachedIn(viewModelScope)
     val bookmarks = bookmarksRepository.bookmarks.stateIn(
         scope = viewModelScope,

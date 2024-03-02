@@ -13,17 +13,17 @@ import com.example.cognizance.ui.composables.MovieListContent
 import com.example.cognizance.ui.viewmodel.MovieListViewModel
 
 @Composable
-fun NowPlayingMoviesScreen(
+fun UpcomingMoviesScreen(
     viewModel: MovieListViewModel = hiltViewModel(),
     backPressAction: () -> Unit,
     bookmarkClickAction: () -> Unit,
     cardClickAction: (Int) -> Unit
 ) {
-    val movies: LazyPagingItems<Movie> = viewModel.nowPlayingMovies.collectAsLazyPagingItems()
+    val movies: LazyPagingItems<Movie> = viewModel.upcomingMovies.collectAsLazyPagingItems()
     val bookmarks by viewModel.bookmarks.collectAsState()
 
     MovieListContent(
-        title = stringResource(R.string.now_playing),
+        title = stringResource(R.string.upcoming),
         movies = movies,
         bookmarks = bookmarks,
         onEvent = viewModel::onEvent,

@@ -8,8 +8,8 @@ import retrofit2.http.Query
 
 interface MoviesApi {
 
-    @GET("movie/now_playing")
-    suspend fun getNowPlayingMovies(
+    @GET("movie/upcoming")
+    suspend fun getUpcomingMovies(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = EN_US,
         @Query("page") page: Int

@@ -16,8 +16,8 @@ import com.example.cognizance.ui.models.NavGraph
 import com.example.cognizance.ui.screens.BookmarkScreen
 import com.example.cognizance.ui.screens.HomeScreen
 import com.example.cognizance.ui.screens.MovieDetailsScreen
-import com.example.cognizance.ui.screens.NowPlayingMoviesScreen
 import com.example.cognizance.ui.screens.PopularMoviesScreen
+import com.example.cognizance.ui.screens.UpcomingMoviesScreen
 import com.example.ui.theme.WingTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,8 +36,8 @@ class MovieActivity : ComponentActivity() {
                         composable(NavGraph.Home.route) {
                             HomeScreen(
                                 backPressAction = onBackPressedDispatcher::onBackPressed,
-                                navigateToNowPlayingAction = {
-                                    navController.navigate(NavGraph.NowPlaying.route)
+                                navigateToUpcomingAction = {
+                                    navController.navigate(NavGraph.Upcoming.route)
                                 },
                                 navigateToPopularAction = {
                                     navController.navigate(NavGraph.Popular.route)
@@ -59,8 +59,8 @@ class MovieActivity : ComponentActivity() {
                                 }
                             )
                         }
-                        composable(NavGraph.NowPlaying.route) {
-                            NowPlayingMoviesScreen(
+                        composable(NavGraph.Upcoming.route) {
+                            UpcomingMoviesScreen(
                                 backPressAction = onBackPressedDispatcher::onBackPressed,
                                 bookmarkClickAction = {
                                     navController.navigate(NavGraph.Bookmarks.route)

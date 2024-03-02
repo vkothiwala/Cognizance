@@ -24,7 +24,7 @@ class MoviesRepositoryImpl @Inject constructor(
     private val moviesRemoteSource: MoviesRemoteSource
 ) : MoviesRepository {
 
-    override val nowPlayingMovies: Flow<PagingData<Movie>> = remoteMediator.flow
+    override val upcomingMovies: Flow<PagingData<Movie>> = remoteMediator.flow
         .map { pagingData ->
             pagingData.map {
                 it.toMovie()
