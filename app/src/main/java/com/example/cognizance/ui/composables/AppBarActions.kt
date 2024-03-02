@@ -13,11 +13,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.res.stringResource
-import com.example.cognizance.R
+import com.example.cognizance.ui.models.AppBarActionProps
 
 @Composable
-fun AppBarActions(bookmarkClickAction: () -> Unit) {
+fun AppBarActions(actionProps: List<AppBarActionProps>) {
+    if (actionProps.isEmpty()) return
     var isActionMenuExpanded by remember { mutableStateOf(false) }
     IconButton(onClick = { isActionMenuExpanded = !isActionMenuExpanded }) {
         Icon(
@@ -29,17 +29,19 @@ fun AppBarActions(bookmarkClickAction: () -> Unit) {
         expanded = isActionMenuExpanded,
         onDismissRequest = { isActionMenuExpanded = false }
     ) {
-        DropdownMenuItem(
-            text = {
-                Text(
-                    style = MaterialTheme.typography.bodyMedium,
-                    text = stringResource(R.string.bookmarks)
-                )
-            },
-            onClick = {
-                isActionMenuExpanded = false
-                bookmarkClickAction()
-            }
-        )
+        actionProps.forEach {
+            DropdownMenuItem(
+                text = {
+                    Text(
+                        style = MaterialTheme.typography.bodyMedium,
+                        text = it.actionTitle
+                    )
+                },
+                onClick = {
+                    isActionMenuExpanded = false
+                    it.onActionClick()
+                }
+            )
+        }
     }
 }

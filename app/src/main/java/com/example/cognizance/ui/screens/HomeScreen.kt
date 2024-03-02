@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.example.cognizance.R
 import com.example.cognizance.ui.composables.AppBarActions
 import com.example.cognizance.ui.composables.MovieCard
+import com.example.cognizance.ui.models.AppBarActionProps
 import com.example.ui.composables.WingScaffold
 
 @Composable
@@ -20,14 +21,19 @@ fun HomeScreen(
     backPressAction: () -> Unit,
     navigateToUpcomingAction: () -> Unit,
     navigateToPopularAction: () -> Unit,
-    bookmarkClickAction: () -> Unit
+    onBookmarkClick: () -> Unit
 ) {
     WingScaffold(
         title = stringResource(R.string.home),
         onBackPress = backPressAction,
         actions = {
             AppBarActions(
-                bookmarkClickAction = bookmarkClickAction
+                actionProps = listOf(
+                    AppBarActionProps(
+                        actionTitle = stringResource(R.string.bookmarks),
+                        onActionClick = onBookmarkClick
+                    )
+                )
             )
         }
     ) { paddingValues ->

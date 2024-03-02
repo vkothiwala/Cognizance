@@ -8,9 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -22,15 +19,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.cognizance.domain.models.Movie
-import com.example.cognizance.ui.models.UiEvents
+import com.example.cognizance.ui.models.BookmarkIconProps
 import com.example.cognizance.utils.toDateString
 import com.example.ui.composables.WingSpacer
 
 @Composable
 fun MovieRow(
     movie: Movie,
-    isBookmarked: Boolean,
-    onBookmarkClick: (UiEvents.OnBookmarkClick) -> Unit,
+    bookmarkIconProps: BookmarkIconProps?,
     onCardClick: () -> Unit
 ) {
     MovieCard(
@@ -73,16 +69,15 @@ fun MovieRow(
                 )
             }
 
-            IconButton(
-                onClick = { onBookmarkClick(UiEvents.OnBookmarkClick(movie.id)) }
-            ) {
-                Icon(
-                    imageVector = when {
-                        isBookmarked -> Icons.Filled.Check
-                        else -> Icons.Filled.Star
-                    },
-                    contentDescription = null
-                )
+            bookmarkIconProps?.let { props ->
+                IconButton(
+                    onClick = props.onBookmarkClick
+                ) {
+                    Icon(
+                        imageVector = props.imageVector,
+                        contentDescription = null
+                    )
+                }
             }
         }
     }

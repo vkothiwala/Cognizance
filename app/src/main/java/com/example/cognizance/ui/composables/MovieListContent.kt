@@ -10,26 +10,26 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.domain.models.MovieBookmark
-import com.example.cognizance.ui.models.UiEvents
+import com.example.cognizance.ui.models.BookmarkIconProps
+import com.example.cognizance.ui.models.MovieCardClickEvent
+import com.example.cognizance.ui.models.TopAppBarProps
 import com.example.ui.composables.WingScaffold
 import com.example.ui.composables.WingSpacer
 
 @Composable
 fun MovieListContent(
-    title: String,
+    topAppBarProps: TopAppBarProps,
     movies: LazyPagingItems<Movie>,
-    bookmarks: List<MovieBookmark>,
-    onEvent: (UiEvents) -> Unit,
-    onBackPress: () -> Unit,
-    bookmarkClickAction: () -> Unit,
-    cardClickAction: (Int) -> Unit
+    bookmarks: List<MovieBookmark>?,
+    onClick: (MovieCardClickEvent) -> Unit,
+    onCardClick: (Int) -> Unit
 ) {
     WingScaffold(
-        title = title,
-        onBackPress = onBackPress,
+        title = topAppBarProps.title,
+        onBackPress = topAppBarProps.onBackPress,
         actions = {
             AppBarActions(
-                bookmarkClickAction = bookmarkClickAction
+                actionProps = topAppBarProps.actionProps
             )
         }
     ) { paddingValues ->
@@ -38,10 +38,16 @@ fun MovieListContent(
                 movies[index]?.let { movie ->
                     MovieRow(
                         movie = movie,
-                        isBookmarked = bookmarks.contains(MovieBookmark(movie.id)),
-                        onBookmarkClick = onEvent,
+                        bookmarkIconProps = bookmarks?.let {
+                            BookmarkIconProps(
+                                isBookmarked = it.contains(MovieBookmark(movie.id)),
+                                onBookmarkClick = {
+                                    onClick(MovieCardClickEvent.OnBookmarkIconClick(movie.id))
+                                }
+                            )
+                        },
                         onCardClick = {
-                            cardClickAction(movie.id)
+                            onCardClick(movie.id)
                         }
                     )
                 }

@@ -10,25 +10,34 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.cognizance.R
 import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.ui.composables.MovieListContent
+import com.example.cognizance.ui.models.AppBarActionProps
+import com.example.cognizance.ui.models.TopAppBarProps
 import com.example.cognizance.ui.viewmodel.MovieListViewModel
 
 @Composable
 fun UpcomingMoviesScreen(
     viewModel: MovieListViewModel = hiltViewModel(),
-    backPressAction: () -> Unit,
-    bookmarkClickAction: () -> Unit,
-    cardClickAction: (Int) -> Unit
+    onBackPress: () -> Unit,
+    onCardClick: (Int) -> Unit,
+    onBookmarkClick: () -> Unit
 ) {
     val movies: LazyPagingItems<Movie> = viewModel.upcomingMovies.collectAsLazyPagingItems()
     val bookmarks by viewModel.bookmarks.collectAsState()
 
     MovieListContent(
-        title = stringResource(R.string.upcoming),
+        topAppBarProps = TopAppBarProps(
+            title = stringResource(R.string.upcoming),
+            onBackPress = onBackPress,
+            actionProps = listOf(
+                AppBarActionProps(
+                    actionTitle = stringResource(R.string.bookmarks),
+                    onActionClick = onBookmarkClick
+                )
+            )
+        ),
         movies = movies,
         bookmarks = bookmarks,
-        onEvent = viewModel::onEvent,
-        onBackPress = backPressAction,
-        bookmarkClickAction = bookmarkClickAction,
-        cardClickAction = cardClickAction
+        onClick = viewModel::onClick,
+        onCardClick = onCardClick
     )
 }

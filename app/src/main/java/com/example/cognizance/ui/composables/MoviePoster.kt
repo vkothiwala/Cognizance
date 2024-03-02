@@ -18,6 +18,7 @@ fun MoviePoster(modifier: Modifier = Modifier, url: String?) {
             .data("$PATH$url")
             .crossfade(true)
             .build(),
+        fallback = painterResource(R.drawable.ic_launcher_foreground),
         placeholder = painterResource(R.drawable.ic_launcher_foreground),
         contentDescription = null,
         contentScale = ContentScale.Crop,

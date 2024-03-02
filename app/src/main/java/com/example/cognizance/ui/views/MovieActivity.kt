@@ -42,15 +42,15 @@ class MovieActivity : ComponentActivity() {
                                 navigateToPopularAction = {
                                     navController.navigate(NavGraph.Popular.route)
                                 },
-                                bookmarkClickAction = {
+                                onBookmarkClick = {
                                     navController.navigate(NavGraph.Bookmarks.route)
                                 }
                             )
                         }
                         composable(NavGraph.Bookmarks.route) {
                             BookmarkScreen(
-                                backPressAction = onBackPressedDispatcher::onBackPressed,
-                                cardClickAction = { movieId ->
+                                onBackPress = onBackPressedDispatcher::onBackPressed,
+                                onCardClick = { movieId ->
                                     navController.navigate(
                                         NavGraph.Details.getRouteWithParam(
                                             movieId
@@ -61,11 +61,11 @@ class MovieActivity : ComponentActivity() {
                         }
                         composable(NavGraph.Upcoming.route) {
                             UpcomingMoviesScreen(
-                                backPressAction = onBackPressedDispatcher::onBackPressed,
-                                bookmarkClickAction = {
+                                onBackPress = onBackPressedDispatcher::onBackPressed,
+                                onBookmarkClick = {
                                     navController.navigate(NavGraph.Bookmarks.route)
                                 },
-                                cardClickAction = { movieId ->
+                                onCardClick = { movieId ->
                                     navController.navigate(
                                         NavGraph.Details.getRouteWithParam(
                                             movieId
@@ -76,11 +76,8 @@ class MovieActivity : ComponentActivity() {
                         }
                         composable(NavGraph.Popular.route) {
                             PopularMoviesScreen(
-                                backPressAction = onBackPressedDispatcher::onBackPressed,
-                                bookmarkClickAction = {
-                                    navController.navigate(NavGraph.Bookmarks.route)
-                                },
-                                cardClickAction = { movieId ->
+                                onBackPress = onBackPressedDispatcher::onBackPressed,
+                                onCardClick = { movieId ->
                                     navController.navigate(
                                         NavGraph.Details.getRouteWithParam(
                                             movieId

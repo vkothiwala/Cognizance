@@ -19,7 +19,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cognizance.R
 import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.ui.composables.MovieRow
-import com.example.cognizance.ui.models.UiEvents
+import com.example.cognizance.ui.models.BookmarkIconProps
+import com.example.cognizance.ui.models.MovieCardClickEvent
 import com.example.cognizance.ui.viewmodel.BookmarksViewModel
 import com.example.ui.composables.WingScaffold
 import com.example.ui.composables.WingSpacer
@@ -27,31 +28,30 @@ import com.example.ui.composables.WingSpacer
 @Composable
 fun BookmarkScreen(
     viewModel: BookmarksViewModel = hiltViewModel(),
-    backPressAction: () -> Unit,
-    cardClickAction: (Int) -> Unit
+    onBackPress: () -> Unit,
+    onCardClick: (Int) -> Unit
 ) {
     val bookmarkedMovies by viewModel.bookmarkedMovies.collectAsState()
 
     Content(
         bookmarkedMovies = bookmarkedMovies,
-        backPressAction = backPressAction,
-        onEvent = viewModel::onEvent,
-        onCardClick = cardClickAction
+        onBackPress = onBackPress,
+        onCardClick = onCardClick,
+        onClick = viewModel::onClick
     )
 }
 
 @Composable
 private fun Content(
     bookmarkedMovies: List<Movie>,
-    backPressAction: () -> Unit,
-    onEvent: (UiEvents) -> Unit,
-    onCardClick: (Int) -> Unit
+    onBackPress: () -> Unit,
+    onCardClick: (Int) -> Unit,
+    onClick: (MovieCardClickEvent) -> Unit
 ) {
     WingScaffold(
         title = stringResource(R.string.bookmarks),
-        onBackPress = backPressAction
+        onBackPress = onBackPress
     ) { paddingValues ->
-
         if (bookmarkedMovies.isEmpty()) {
             Box(
                 modifier = Modifier
@@ -72,8 +72,12 @@ private fun Content(
                 items(bookmarkedMovies) {
                     MovieRow(
                         movie = it,
-                        isBookmarked = true,
-                        onBookmarkClick = onEvent,
+                        bookmarkIconProps = BookmarkIconProps(
+                            isBookmarked = true,
+                            onBookmarkClick = {
+                                onClick(MovieCardClickEvent.OnBookmarkIconClick(it.id))
+                            }
+                        ),
                         onCardClick = {
                             onCardClick(it.id)
                         }
