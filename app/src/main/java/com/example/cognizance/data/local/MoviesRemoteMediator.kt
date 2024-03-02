@@ -36,7 +36,7 @@ class MoviesRemoteMediator @Inject constructor(
         }
 
         return try {
-            val apiMovieResponse = moviesApi.getMovies(page = page)
+            val apiMovieResponse = moviesApi.getNowPlayingMovies(page = page)
 
             val movies = apiMovieResponse.results
             val endOfPaginationReached = movies.isEmpty()

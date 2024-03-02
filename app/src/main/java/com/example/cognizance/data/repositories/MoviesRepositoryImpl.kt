@@ -18,7 +18,14 @@ class MoviesRepositoryImpl @Inject constructor(
     @Named("movies_remote_mediator") remoteMediator: Pager<Int, EntityMovie>
 ) : MoviesRepository {
 
-    override val movies: Flow<PagingData<Movie>> = remoteMediator.flow
+    override val nowPlayingMovies: Flow<PagingData<Movie>> = remoteMediator.flow
+        .map { pagingData ->
+            pagingData.map {
+                it.toMovie()
+            }
+        }
+
+    override val popularMovies: Flow<PagingData<Movie>> = pagingSource.flow
         .map { pagingData ->
             pagingData.map {
                 it.toMovie()

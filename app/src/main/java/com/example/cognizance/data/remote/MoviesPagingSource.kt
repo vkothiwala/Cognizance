@@ -16,7 +16,7 @@ class MoviesPagingSource @Inject constructor(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ApiMovie> {
         return try {
             val page = params.key ?: 1
-            val apiMovieResponse = moviesApi.getMovies(page = page)
+            val apiMovieResponse = moviesApi.getPopularMovies(page = page)
 
             LoadResult.Page(
                 data = apiMovieResponse.results,

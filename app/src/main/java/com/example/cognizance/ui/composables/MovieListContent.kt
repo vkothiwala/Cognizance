@@ -1,4 +1,4 @@
-package com.example.cognizance.ui.screens
+package com.example.cognizance.ui.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,49 +18,22 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.cognizance.R
 import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.domain.models.MovieBookmark
-import com.example.cognizance.ui.composables.TMDBActions
-import com.example.cognizance.ui.composables.TMDBCard
-import com.example.cognizance.ui.composables.TMDBImage
 import com.example.cognizance.ui.models.UiEvents
-import com.example.cognizance.ui.viewmodel.MovieListViewModel
 import com.example.cognizance.utils.toDateString
 import com.example.ui.composables.WingScaffold
 import com.example.ui.composables.WingSpacer
 
 @Composable
-fun MovieListScreen(
-    viewModel: MovieListViewModel = hiltViewModel(),
-    backPressAction: () -> Unit,
-    bookmarkClickAction: () -> Unit
-) {
-    val movies: LazyPagingItems<Movie> = viewModel.movies.collectAsLazyPagingItems()
-    val bookmarks by viewModel.bookmarks.collectAsState()
-
-    MovieListContent(
-        movies = movies,
-        bookmarks = bookmarks,
-        onEvent = viewModel::onEvent,
-        onBackPress = backPressAction,
-        bookmarkClickAction = bookmarkClickAction
-    )
-}
-
-@Composable
-private fun MovieListContent(
+fun MovieListContent(
+    title: String,
     movies: LazyPagingItems<Movie>,
     bookmarks: List<MovieBookmark>,
     onEvent: (UiEvents) -> Unit,
@@ -68,7 +41,7 @@ private fun MovieListContent(
     bookmarkClickAction: () -> Unit
 ) {
     WingScaffold(
-        title = stringResource(R.string.now_playing),
+        title = title,
         onBackPress = onBackPress,
         actions = {
             TMDBActions(

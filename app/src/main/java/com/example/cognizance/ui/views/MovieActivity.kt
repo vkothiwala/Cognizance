@@ -12,7 +12,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cognizance.ui.screens.BookmarkScreen
 import com.example.cognizance.ui.screens.HomeScreen
-import com.example.cognizance.ui.screens.MovieListScreen
+import com.example.cognizance.ui.screens.NowPlayingMoviesScreen
+import com.example.cognizance.ui.screens.PopularMoviesScreen
 import com.example.ui.theme.WingTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,17 +40,25 @@ class MovieActivity : ComponentActivity() {
                                 }
                             )
                         }
+                        composable(NavGraph.Bookmarks.route) {
+                            BookmarkScreen(
+                                backPressAction = onBackPressedDispatcher::onBackPressed
+                            )
+                        }
                         composable(NavGraph.NowPlaying.route) {
-                            MovieListScreen(
+                            NowPlayingMoviesScreen(
                                 backPressAction = onBackPressedDispatcher::onBackPressed,
                                 bookmarkClickAction = {
                                     navController.navigate(NavGraph.Bookmarks.route)
                                 }
                             )
                         }
-                        composable(NavGraph.Bookmarks.route) {
-                            BookmarkScreen(
-                                backPressAction = onBackPressedDispatcher::onBackPressed
+                        composable(NavGraph.Popular.route) {
+                            PopularMoviesScreen(
+                                backPressAction = onBackPressedDispatcher::onBackPressed,
+                                bookmarkClickAction = {
+                                    navController.navigate(NavGraph.Bookmarks.route)
+                                }
                             )
                         }
                     }
@@ -61,6 +70,7 @@ class MovieActivity : ComponentActivity() {
 
 sealed class NavGraph(val route: String) {
     object Home : NavGraph("home")
+    object Bookmarks : NavGraph("bookmarks")
     object NowPlaying : NavGraph("nowplaying")
-    object Bookmarks : NavGraph("bookmark")
+    object Popular : NavGraph("popular")
 }

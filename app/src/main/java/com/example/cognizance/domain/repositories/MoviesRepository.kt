@@ -5,5 +5,6 @@ import com.example.cognizance.domain.models.Movie
 import kotlinx.coroutines.flow.Flow
 
 interface MoviesRepository {
-    val movies: Flow<PagingData<Movie>>
+    val nowPlayingMovies: Flow<PagingData<Movie>>
+    val popularMovies: Flow<PagingData<Movie>>
 }
