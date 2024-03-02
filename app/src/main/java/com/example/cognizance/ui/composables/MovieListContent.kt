@@ -1,36 +1,19 @@
 package com.example.cognizance.ui.composables
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.domain.models.MovieBookmark
 import com.example.cognizance.ui.models.UiEvents
-import com.example.cognizance.utils.toDateString
 import com.example.ui.composables.WingScaffold
 import com.example.ui.composables.WingSpacer
 
@@ -58,7 +41,7 @@ fun MovieListContent(
                 movies[index]?.let { movie ->
                     MovieRow(
                         movie = movie,
-                        bookmarks = bookmarks,
+                        isBookmarked = bookmarks.contains(MovieBookmark(movie.id)),
                         onBookmarkClick = onEvent,
                         onCardClick = {
                             cardClickAction(movie.id)
@@ -88,71 +71,5 @@ private fun ProgressIndicator() {
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
-    }
-}
-
-@Composable
-private fun MovieRow(
-    movie: Movie,
-    bookmarks: List<MovieBookmark>,
-    onBookmarkClick: (UiEvents.OnBookmarkClick) -> Unit,
-    onCardClick: () -> Unit
-) {
-    TMDBCard(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 8.dp)
-            .padding(horizontal = 8.dp),
-        onClick = onCardClick
-    ) {
-        Row(
-            modifier = Modifier
-                .wrapContentSize()
-                .padding(8.dp)
-        ) {
-            TMDBImage(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .width(100.dp)
-                    .height(120.dp),
-                url = movie.posterPath
-            )
-            WingSpacer(width = 8.dp)
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = movie.title,
-                    style = MaterialTheme.typography.titleMedium
-                )
-                WingSpacer(height = 4.dp)
-                Text(
-                    text = movie.releaseDate.toDateString(),
-                    style = MaterialTheme.typography.labelSmall
-                )
-                WingSpacer(height = 4.dp)
-                Text(
-                    text = movie.overview,
-                    maxLines = 5,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
-
-            val isBookmarked = bookmarks.contains(MovieBookmark(movie.id))
-            val bookmarkVector = if (isBookmarked) {
-                Icons.Filled.Check
-            } else {
-                Icons.Filled.Star
-            }
-            IconButton(
-                onClick = { onBookmarkClick(UiEvents.OnBookmarkClick(movie.id)) }
-            ) {
-                Icon(
-                    imageVector = bookmarkVector,
-                    contentDescription = null
-                )
-            }
-        }
     }
 }
