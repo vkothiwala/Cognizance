@@ -41,16 +41,15 @@ class MovieActivity : ComponentActivity() {
                         }
                         composable(NavGraph.NowPlaying.route) {
                             MovieListScreen(
-                                backPressAction = {
-                                    onBackPressedDispatcher.onBackPressed()
+                                backPressAction = onBackPressedDispatcher::onBackPressed,
+                                bookmarkClickAction = {
+                                    navController.navigate(NavGraph.Bookmarks.route)
                                 }
                             )
                         }
                         composable(NavGraph.Bookmarks.route) {
                             BookmarkScreen(
-                                backPressAction = {
-                                    onBackPressedDispatcher.onBackPressed()
-                                }
+                                backPressAction = onBackPressedDispatcher::onBackPressed
                             )
                         }
                     }

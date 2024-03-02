@@ -3,4 +3,5 @@
     <string name="home">Home</string>
     <string name="now_playing_movies">Now playing movies</string>
     <string name="bookmarks">Bookmarks</string>
+    <string name="empty_bookmarks">No bookmarked movies found!</string>
 </resources>

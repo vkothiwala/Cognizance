@@ -32,6 +32,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.cognizance.R
 import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.domain.models.MovieBookmark
+import com.example.cognizance.ui.composables.TMDBActions
 import com.example.cognizance.ui.composables.TMDBCard
 import com.example.cognizance.ui.composables.TMDBImage
 import com.example.cognizance.ui.models.UiEvents
@@ -43,7 +44,8 @@ import com.example.ui.composables.WingSpacer
 @Composable
 fun MovieListScreen(
     viewModel: MovieListViewModel = hiltViewModel(),
-    backPressAction: () -> Unit
+    backPressAction: () -> Unit,
+    bookmarkClickAction: () -> Unit
 ) {
     val movies: LazyPagingItems<Movie> = viewModel.movies.collectAsLazyPagingItems()
     val bookmarks by viewModel.bookmarks.collectAsState()
@@ -52,7 +54,8 @@ fun MovieListScreen(
         movies = movies,
         bookmarks = bookmarks,
         onEvent = viewModel::onEvent,
-        onBackPress = backPressAction
+        onBackPress = backPressAction,
+        bookmarkClickAction = bookmarkClickAction
     )
 }
 
@@ -61,11 +64,17 @@ private fun MovieListContent(
     movies: LazyPagingItems<Movie>,
     bookmarks: List<MovieBookmark>,
     onEvent: (UiEvents) -> Unit,
-    onBackPress: () -> Unit
+    onBackPress: () -> Unit,
+    bookmarkClickAction: () -> Unit
 ) {
     WingScaffold(
         title = stringResource(R.string.now_playing_movies),
-        onBackPress = onBackPress
+        onBackPress = onBackPress,
+        actions = {
+            TMDBActions(
+                bookmarkClickAction = bookmarkClickAction
+            )
+        }
     ) { paddingValues ->
         LazyColumn(modifier = Modifier.padding(paddingValues)) {
             items(movies.itemCount) { index ->
