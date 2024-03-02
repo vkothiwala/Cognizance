@@ -1,7 +1,5 @@
 package com.example.ui.composables
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,11 +27,13 @@ fun WingTopAppbar(
             )
         },
         navigationIcon = {
-            IconButton(onClick = topAppBarProps.onBackPress) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = null
-                )
+            topAppBarProps.navigationProps?.let { props ->
+                IconButton(onClick = props.onClick) {
+                    Icon(
+                        imageVector = props.imageVector,
+                        contentDescription = null
+                    )
+                }
             }
         },
         actions = {

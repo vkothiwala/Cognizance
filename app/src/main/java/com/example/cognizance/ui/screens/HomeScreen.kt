@@ -3,6 +3,8 @@ package com.example.cognizance.ui.screens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,11 +16,11 @@ import com.example.cognizance.R
 import com.example.cognizance.ui.composables.MovieCard
 import com.example.ui.composables.WingScaffold
 import com.example.ui.models.WingTopAppBarActionProps
+import com.example.ui.models.WingTopAppBarNavigationProps
 import com.example.ui.models.WingTopAppBarProps
 
 @Composable
 fun HomeScreen(
-    backPressAction: () -> Unit,
     navigateToUpcomingAction: () -> Unit,
     navigateToPopularAction: () -> Unit,
     onBookmarkClick: () -> Unit
@@ -26,7 +28,10 @@ fun HomeScreen(
     WingScaffold(
         topAppBarProps = WingTopAppBarProps(
             title = stringResource(R.string.home),
-            onBackPress = backPressAction,
+            navigationProps = WingTopAppBarNavigationProps(
+                imageVector = Icons.Default.Home,
+                onClick = {}
+            ),
             actionProps = listOf(
                 WingTopAppBarActionProps(
                     actionTitle = stringResource(R.string.bookmarks),

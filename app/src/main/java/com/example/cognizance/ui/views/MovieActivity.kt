@@ -35,7 +35,6 @@ class MovieActivity : ComponentActivity() {
                     NavHost(navController = navController, startDestination = NavGraph.Home.route) {
                         composable(NavGraph.Home.route) {
                             HomeScreen(
-                                backPressAction = onBackPressedDispatcher::onBackPressed,
                                 navigateToUpcomingAction = {
                                     navController.navigate(NavGraph.Upcoming.route)
                                 },

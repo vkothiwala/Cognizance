@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -24,6 +26,7 @@ import com.example.cognizance.ui.models.MovieCardClickEvent
 import com.example.cognizance.ui.viewmodel.BookmarksViewModel
 import com.example.ui.composables.WingScaffold
 import com.example.ui.composables.WingSpacer
+import com.example.ui.models.WingTopAppBarNavigationProps
 import com.example.ui.models.WingTopAppBarProps
 
 @Composable
@@ -52,7 +55,10 @@ private fun Content(
     WingScaffold(
         topAppBarProps = WingTopAppBarProps(
             title = stringResource(R.string.bookmarks),
-            onBackPress = onBackPress
+            navigationProps = WingTopAppBarNavigationProps(
+                imageVector = Icons.Default.ArrowBack,
+                onClick = onBackPress
+            )
         )
     ) { paddingValues ->
         if (bookmarkedMovies.isEmpty()) {

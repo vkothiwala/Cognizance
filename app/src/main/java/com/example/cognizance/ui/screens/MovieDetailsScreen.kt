@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +31,7 @@ import com.example.cognizance.ui.viewmodel.MovieDetailsViewModel
 import com.example.cognizance.utils.Response
 import com.example.cognizance.utils.toDateString
 import com.example.ui.composables.WingScaffold
+import com.example.ui.models.WingTopAppBarNavigationProps
 import com.example.ui.models.WingTopAppBarProps
 
 @Composable
@@ -42,7 +45,10 @@ fun MovieDetailsScreen(
         WingScaffold(
             topAppBarProps = WingTopAppBarProps(
                 title = stringResource(R.string.bookmarks),
-                onBackPress = onBackPress
+                navigationProps = WingTopAppBarNavigationProps(
+                    imageVector = Icons.Default.ArrowBack,
+                    onClick = onBackPress
+                )
             )
         ) { paddingValues ->
             Box(
@@ -63,7 +69,10 @@ fun MovieDetailsScreen(
             WingScaffold(
                 topAppBarProps = WingTopAppBarProps(
                     title = title,
-                    onBackPress = onBackPress
+                    navigationProps = WingTopAppBarNavigationProps(
+                        imageVector = Icons.Default.ArrowBack,
+                        onClick = onBackPress
+                    )
                 )
             ) { paddingValues ->
                 Column(

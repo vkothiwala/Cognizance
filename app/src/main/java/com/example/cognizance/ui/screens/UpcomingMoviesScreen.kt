@@ -1,5 +1,7 @@
 package com.example.cognizance.ui.screens
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -12,6 +14,7 @@ import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.ui.composables.MovieListContent
 import com.example.cognizance.ui.viewmodel.MovieListViewModel
 import com.example.ui.models.WingTopAppBarActionProps
+import com.example.ui.models.WingTopAppBarNavigationProps
 import com.example.ui.models.WingTopAppBarProps
 
 @Composable
@@ -27,7 +30,10 @@ fun UpcomingMoviesScreen(
     MovieListContent(
         topAppBarProps = WingTopAppBarProps(
             title = stringResource(R.string.upcoming),
-            onBackPress = onBackPress,
+            navigationProps = WingTopAppBarNavigationProps(
+                imageVector = Icons.Default.ArrowBack,
+                onClick = onBackPress
+            ),
             actionProps = listOf(
                 WingTopAppBarActionProps(
                     actionTitle = stringResource(R.string.bookmarks),
