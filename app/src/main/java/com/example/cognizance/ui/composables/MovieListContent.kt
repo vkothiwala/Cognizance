@@ -38,7 +38,8 @@ fun MovieListContent(
     bookmarks: List<MovieBookmark>,
     onEvent: (UiEvents) -> Unit,
     onBackPress: () -> Unit,
-    bookmarkClickAction: () -> Unit
+    bookmarkClickAction: () -> Unit,
+    cardClickAction: (Int) -> Unit
 ) {
     WingScaffold(
         title = title,
@@ -55,7 +56,10 @@ fun MovieListContent(
                     MovieRow(
                         movie = movie,
                         bookmarks = bookmarks,
-                        onBookmarkClick = onEvent
+                        onBookmarkClick = onEvent,
+                        onCardClick = {
+                            cardClickAction(movie.id)
+                        }
                     )
                 }
             }
@@ -88,13 +92,15 @@ private fun ProgressIndicator() {
 private fun MovieRow(
     movie: Movie,
     bookmarks: List<MovieBookmark>,
-    onBookmarkClick: (UiEvents.OnBookmarkClick) -> Unit
+    onBookmarkClick: (UiEvents.OnBookmarkClick) -> Unit,
+    onCardClick: () -> Unit
 ) {
     TMDBCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 8.dp)
-            .padding(horizontal = 8.dp)
+            .padding(horizontal = 8.dp),
+        onClick = onCardClick
     ) {
         Row(
             modifier = Modifier
@@ -123,7 +129,7 @@ private fun MovieRow(
                 WingSpacer(height = 4.dp)
                 Text(
                     text = movie.overview,
-                    maxLines = 3,
+                    maxLines = 4,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.bodySmall
                 )

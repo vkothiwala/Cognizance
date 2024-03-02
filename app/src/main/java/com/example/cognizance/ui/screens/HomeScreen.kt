@@ -19,6 +19,7 @@ import com.example.ui.composables.WingScaffold
 fun HomeScreen(
     backPressAction: () -> Unit,
     navigateToNowPlayingAction: () -> Unit,
+    navigateToPopularAction: () -> Unit,
     bookmarkClickAction: () -> Unit
 ) {
     WingScaffold(
@@ -36,6 +37,10 @@ fun HomeScreen(
             HomeCard(
                 title = stringResource(R.string.now_playing),
                 onClick = navigateToNowPlayingAction
+            )
+            HomeCard(
+                title = stringResource(R.string.popular),
+                onClick = navigateToPopularAction
             )
         }
     }

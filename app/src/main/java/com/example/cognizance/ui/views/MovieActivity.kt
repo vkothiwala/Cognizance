@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.cognizance.ui.models.NavGraph
 import com.example.cognizance.ui.screens.BookmarkScreen
 import com.example.cognizance.ui.screens.HomeScreen
 import com.example.cognizance.ui.screens.NowPlayingMoviesScreen
@@ -35,6 +36,9 @@ class MovieActivity : ComponentActivity() {
                                 navigateToNowPlayingAction = {
                                     navController.navigate(NavGraph.NowPlaying.route)
                                 },
+                                navigateToPopularAction = {
+                                    navController.navigate(NavGraph.Popular.route)
+                                },
                                 bookmarkClickAction = {
                                     navController.navigate(NavGraph.Bookmarks.route)
                                 }
@@ -50,7 +54,8 @@ class MovieActivity : ComponentActivity() {
                                 backPressAction = onBackPressedDispatcher::onBackPressed,
                                 bookmarkClickAction = {
                                     navController.navigate(NavGraph.Bookmarks.route)
-                                }
+                                },
+                                cardClickAction = { movieId -> }
                             )
                         }
                         composable(NavGraph.Popular.route) {
@@ -58,7 +63,8 @@ class MovieActivity : ComponentActivity() {
                                 backPressAction = onBackPressedDispatcher::onBackPressed,
                                 bookmarkClickAction = {
                                     navController.navigate(NavGraph.Bookmarks.route)
-                                }
+                                },
+                                cardClickAction = { movieId -> }
                             )
                         }
                     }
@@ -66,11 +72,4 @@ class MovieActivity : ComponentActivity() {
             }
         }
     }
-}
-
-sealed class NavGraph(val route: String) {
-    object Home : NavGraph("home")
-    object Bookmarks : NavGraph("bookmarks")
-    object NowPlaying : NavGraph("nowplaying")
-    object Popular : NavGraph("popular")
 }

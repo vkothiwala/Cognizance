@@ -19,7 +19,7 @@ class MovieListViewModel @Inject constructor(
 ) : ViewModel() {
 
     val nowPlayingMovies = moviesRepository.nowPlayingMovies.cachedIn(viewModelScope)
-    val popularMovies = moviesRepository.nowPlayingMovies.cachedIn(viewModelScope)
+    val popularMovies = moviesRepository.popularMovies.cachedIn(viewModelScope)
     val bookmarks = bookmarksRepository.bookmarks.stateIn(
         scope = viewModelScope,
         initialValue = emptyList(),

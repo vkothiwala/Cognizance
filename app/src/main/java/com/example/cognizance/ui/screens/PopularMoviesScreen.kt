@@ -16,17 +16,19 @@ import com.example.cognizance.ui.viewmodel.MovieListViewModel
 fun PopularMoviesScreen(
     viewModel: MovieListViewModel = hiltViewModel(),
     backPressAction: () -> Unit,
-    bookmarkClickAction: () -> Unit
+    bookmarkClickAction: () -> Unit,
+    cardClickAction: (Int) -> Unit
 ) {
     val movies: LazyPagingItems<Movie> = viewModel.popularMovies.collectAsLazyPagingItems()
     val bookmarks by viewModel.bookmarks.collectAsState()
 
     MovieListContent(
-        title = stringResource(R.string.now_playing),
+        title = stringResource(R.string.popular),
         movies = movies,
         bookmarks = bookmarks,
         onEvent = viewModel::onEvent,
         onBackPress = backPressAction,
-        bookmarkClickAction = bookmarkClickAction
+        bookmarkClickAction = bookmarkClickAction,
+        cardClickAction = cardClickAction
     )
 }

@@ -2,7 +2,7 @@ package com.example.cognizance.ui.composables
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,8 +27,8 @@ fun TMDBImage(modifier: Modifier = Modifier, url: String?) {
         contentDescription = null,
         contentScale = ContentScale.Crop,
         modifier = modifier
-            .clip(CircleShape)
-            .width(80.dp)
-            .height(120.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .width(100.dp)
+            .height(130.dp)
     )
 }
