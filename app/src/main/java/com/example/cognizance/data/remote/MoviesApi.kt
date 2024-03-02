@@ -1,7 +1,9 @@
 package com.example.cognizance.data.remote
 
+import com.example.cognizance.data.remote.models.ApiMovieDetails
 import com.example.cognizance.data.remote.models.ApiMoviesResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MoviesApi {
@@ -19,6 +21,13 @@ interface MoviesApi {
         @Query("language") language: String = EN_US,
         @Query("page") page: Int
     ): ApiMoviesResponse
+
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetails(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("language") language: String = EN_US
+    ): ApiMovieDetails
 
     companion object {
         const val API_KEY = "ad35eeedf999e78fd5e38d13c53f5ad8"

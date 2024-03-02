@@ -7,12 +7,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.cognizance.ui.models.NavGraph
 import com.example.cognizance.ui.screens.BookmarkScreen
 import com.example.cognizance.ui.screens.HomeScreen
+import com.example.cognizance.ui.screens.MovieDetailsScreen
 import com.example.cognizance.ui.screens.NowPlayingMoviesScreen
 import com.example.cognizance.ui.screens.PopularMoviesScreen
 import com.example.ui.theme.WingTheme
@@ -26,7 +29,7 @@ class MovieActivity : ComponentActivity() {
             WingTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.tertiary
+                    color = MaterialTheme.colorScheme.primary
                 ) {
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = NavGraph.Home.route) {
@@ -55,7 +58,13 @@ class MovieActivity : ComponentActivity() {
                                 bookmarkClickAction = {
                                     navController.navigate(NavGraph.Bookmarks.route)
                                 },
-                                cardClickAction = { movieId -> }
+                                cardClickAction = { movieId ->
+                                    navController.navigate(
+                                        NavGraph.Details.getRouteWithParam(
+                                            movieId
+                                        )
+                                    )
+                                }
                             )
                         }
                         composable(NavGraph.Popular.route) {
@@ -64,7 +73,25 @@ class MovieActivity : ComponentActivity() {
                                 bookmarkClickAction = {
                                     navController.navigate(NavGraph.Bookmarks.route)
                                 },
-                                cardClickAction = { movieId -> }
+                                cardClickAction = { movieId ->
+                                    navController.navigate(
+                                        NavGraph.Details.getRouteWithParam(
+                                            movieId
+                                        )
+                                    )
+                                }
+                            )
+                        }
+                        composable(
+                            NavGraph.Details.route,
+                            arguments = listOf(
+                                navArgument("movieId") {
+                                    type = NavType.IntType
+                                }
+                            )
+                        ) {
+                            MovieDetailsScreen(
+                                backPressAction = onBackPressedDispatcher::onBackPressed
                             )
                         }
                     }

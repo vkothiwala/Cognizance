@@ -6,6 +6,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,7 +31,10 @@ fun TMDBActions(bookmarkClickAction: () -> Unit) {
     ) {
         DropdownMenuItem(
             text = {
-                Text(stringResource(R.string.bookmarks))
+                Text(
+                    style = MaterialTheme.typography.bodyMedium,
+                    text = stringResource(R.string.bookmarks)
+                )
             },
             onClick = {
                 isActionMenuExpanded = false

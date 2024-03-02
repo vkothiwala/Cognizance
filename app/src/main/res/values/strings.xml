@@ -5,4 +5,5 @@
     <string name="bookmarks">Bookmarks</string>
     <string name="empty_bookmarks">No bookmarked movies found!</string>
     <string name="popular">Popular</string>
+    <string name="something_wend_wrong">Oops! Something went wrong!</string>
 </resources>

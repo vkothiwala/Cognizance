@@ -47,7 +47,7 @@ fun HomeScreen(
 }
 
 @Composable
-fun HomeCard(title: String, onClick: () -> Unit) {
+private fun HomeCard(title: String, onClick: () -> Unit) {
     TMDBCard(
         modifier = Modifier
             .fillMaxWidth()
