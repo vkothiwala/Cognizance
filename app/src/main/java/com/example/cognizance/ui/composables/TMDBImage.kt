@@ -29,6 +29,6 @@ fun TMDBImage(modifier: Modifier = Modifier, url: String?) {
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))
             .width(100.dp)
-            .height(130.dp)
+            .height(120.dp)
     )
 }

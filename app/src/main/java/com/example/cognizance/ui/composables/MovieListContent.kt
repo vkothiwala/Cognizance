@@ -1,6 +1,5 @@
 package com.example.cognizance.ui.composables
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -105,23 +104,18 @@ private fun MovieRow(
         Row(
             modifier = Modifier
                 .wrapContentSize()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                .padding(8.dp)
         ) {
             TMDBImage(url = movie.posterPath)
+            WingSpacer(width = 8.dp)
             Column(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
                     text = movie.title,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleMedium
                 )
-                WingSpacer(height = 2.dp)
-                Text(
-                    text = "Language: ${movie.originalLanguage}",
-                    style = MaterialTheme.typography.labelSmall
-                )
-                WingSpacer(height = 2.dp)
+                WingSpacer(height = 4.dp)
                 Text(
                     text = movie.releaseDate.toDateString(),
                     style = MaterialTheme.typography.labelSmall
@@ -129,7 +123,7 @@ private fun MovieRow(
                 WingSpacer(height = 4.dp)
                 Text(
                     text = movie.overview,
-                    maxLines = 4,
+                    maxLines = 5,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.bodySmall
                 )
@@ -142,9 +136,7 @@ private fun MovieRow(
                 Icons.Filled.Star
             }
             IconButton(
-                onClick = {
-                    onBookmarkClick(UiEvents.OnBookmarkClick(movie.id))
-                }
+                onClick = { onBookmarkClick(UiEvents.OnBookmarkClick(movie.id)) }
             ) {
                 Icon(
                     imageVector = bookmarkVector,
