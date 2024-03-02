@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Icon
@@ -73,10 +75,10 @@ private fun Content(
                 )
             }
         } else {
-            Column(
+            LazyColumn(
                 modifier = Modifier.padding(paddingValues)
             ) {
-                bookmarkedMovies.forEach {
+                items(bookmarkedMovies) {
                     MovieRow(
                         movie = it,
                         onBookmarkClick = onEvent
