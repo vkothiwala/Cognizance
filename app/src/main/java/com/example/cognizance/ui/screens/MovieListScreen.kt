@@ -68,7 +68,7 @@ private fun MovieListContent(
     bookmarkClickAction: () -> Unit
 ) {
     WingScaffold(
-        title = stringResource(R.string.now_playing_movies),
+        title = stringResource(R.string.now_playing),
         onBackPress = onBackPress,
         actions = {
             TMDBActions(

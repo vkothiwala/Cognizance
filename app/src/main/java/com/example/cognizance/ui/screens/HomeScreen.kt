@@ -34,7 +34,7 @@ fun HomeScreen(
             modifier = Modifier.padding(paddingValues)
         ) {
             HomeCard(
-                title = stringResource(R.string.now_playing_movies),
+                title = stringResource(R.string.now_playing),
                 onClick = navigateToNowPlayingAction
             )
         }
