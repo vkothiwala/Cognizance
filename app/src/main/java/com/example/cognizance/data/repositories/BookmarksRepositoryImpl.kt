@@ -12,6 +12,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
+/**
+ * Bookmark is a local feature. It has no remote support. Deleting storage will
+ * result in loss of bookmarks.
+ * Bookmark storage keeps track of movieId. If movieId is found in storage then it
+ * has been bookmarked.
+ * */
 class BookmarksRepositoryImpl @Inject constructor(
     private val moviesDatabase: MoviesDatabase
 ) : BookmarksRepository {
@@ -28,19 +34,13 @@ class BookmarksRepositoryImpl @Inject constructor(
     override val bookmarkedMovies: Flow<List<Movie>> = moviesDatabase.getMoviesBookmarkDao()
         .getAllMoviesBookmark()
         .map { entityBookmarks ->
-            entityBookmarks.map {
+            entityBookmarks.mapNotNull {
                 moviesDatabase.withTransaction {
                     moviesDatabase.getMovieDao().getMovieById(it.id)
-                }.toMovie()
+                }?.toMovie()
             }
         }
 
-    /**
-     * Bookmark is a local feature. It has no remote support. Deleting storage will
-     * result in loss of bookmarks.
-     * Bookmark storage keeps track of movieId. If movieId is found in storage then it
-     * has been bookmarked.
-     * */
     override suspend fun onBookmarkClick(movieId: Int) {
         moviesDatabase.withTransaction {
             val bookmarkDao = moviesDatabase.getMoviesBookmarkDao()

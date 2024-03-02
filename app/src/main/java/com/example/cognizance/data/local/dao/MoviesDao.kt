@@ -14,7 +14,7 @@ interface MoviesDao {
     fun getMovies(): PagingSource<Int, EntityMovie>
 
     @Query("SELECT * FROM movie WHERE movie_id = :movieId")
-    fun getMovieById(movieId: Int): EntityMovie
+    fun getMovieById(movieId: Int): EntityMovie?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(entityMovies: List<EntityMovie>)
