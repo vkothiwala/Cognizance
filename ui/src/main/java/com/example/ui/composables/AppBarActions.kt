@@ -1,4 +1,4 @@
-package com.example.cognizance.ui.composables
+package com.example.ui.composables
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert

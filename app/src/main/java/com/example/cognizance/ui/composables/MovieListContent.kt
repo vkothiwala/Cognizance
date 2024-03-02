@@ -12,6 +12,7 @@ import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.domain.models.MovieBookmark
 import com.example.cognizance.ui.models.BookmarkIconProps
 import com.example.cognizance.ui.models.MovieCardClickEvent
+import com.example.ui.composables.AppBarActions
 import com.example.ui.composables.WingScaffold
 import com.example.ui.composables.WingSpacer
 import com.example.ui.models.TopAppBarProps

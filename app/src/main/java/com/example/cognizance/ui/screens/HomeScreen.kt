@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.cognizance.R
-import com.example.cognizance.ui.composables.AppBarActions
 import com.example.cognizance.ui.composables.MovieCard
+import com.example.ui.composables.AppBarActions
 import com.example.ui.composables.WingScaffold
 import com.example.ui.models.AppBarActionProps
 
