@@ -95,7 +95,7 @@ class MovieActivity : ComponentActivity() {
                             )
                         ) {
                             MovieDetailsScreen(
-                                backPressAction = onBackPressedDispatcher::onBackPressed
+                                onBackPress = onBackPressedDispatcher::onBackPressed
                             )
                         }
                     }

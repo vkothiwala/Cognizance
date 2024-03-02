@@ -14,25 +14,18 @@ import com.example.cognizance.ui.models.BookmarkIconProps
 import com.example.cognizance.ui.models.MovieCardClickEvent
 import com.example.ui.composables.WingScaffold
 import com.example.ui.composables.WingSpacer
-import com.example.ui.composables.WingTopAppBarActions
 import com.example.ui.models.WingTopAppBarProps
 
 @Composable
 fun MovieListContent(
-    wingTopAppBarProps: WingTopAppBarProps,
+    topAppBarProps: WingTopAppBarProps,
     movies: LazyPagingItems<Movie>,
     bookmarks: List<MovieBookmark>?,
     onClick: (MovieCardClickEvent) -> Unit,
     onCardClick: (Int) -> Unit
 ) {
     WingScaffold(
-        title = wingTopAppBarProps.title,
-        onBackPress = wingTopAppBarProps.onBackPress,
-        actions = {
-            WingTopAppBarActions(
-                actionProps = wingTopAppBarProps.actionProps
-            )
-        }
+        topAppBarProps = topAppBarProps
     ) { paddingValues ->
         LazyColumn(modifier = Modifier.padding(paddingValues)) {
             items(movies.itemCount) { index ->

@@ -29,18 +29,21 @@ import com.example.cognizance.ui.viewmodel.MovieDetailsViewModel
 import com.example.cognizance.utils.Response
 import com.example.cognizance.utils.toDateString
 import com.example.ui.composables.WingScaffold
+import com.example.ui.models.WingTopAppBarProps
 
 @Composable
 fun MovieDetailsScreen(
     viewModel: MovieDetailsViewModel = hiltViewModel(),
-    backPressAction: () -> Unit
+    onBackPress: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
     if (uiState == null || uiState is Response.Error) {
         WingScaffold(
-            title = "Movie Details",
-            onBackPress = backPressAction
+            topAppBarProps = WingTopAppBarProps(
+                title = stringResource(R.string.bookmarks),
+                onBackPress = onBackPress
+            )
         ) { paddingValues ->
             Box(
                 modifier = Modifier
@@ -58,8 +61,10 @@ fun MovieDetailsScreen(
     } else {
         with((uiState as Response.Success).data) {
             WingScaffold(
-                title = title,
-                onBackPress = backPressAction
+                topAppBarProps = WingTopAppBarProps(
+                    title = title,
+                    onBackPress = onBackPress
+                )
             ) { paddingValues ->
                 Column(
                     modifier = Modifier

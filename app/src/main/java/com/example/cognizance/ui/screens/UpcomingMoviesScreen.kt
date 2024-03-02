@@ -18,14 +18,14 @@ import com.example.ui.models.WingTopAppBarProps
 fun UpcomingMoviesScreen(
     viewModel: MovieListViewModel = hiltViewModel(),
     onBackPress: () -> Unit,
-    onCardClick: (Int) -> Unit,
-    onBookmarkClick: () -> Unit
+    onBookmarkClick: () -> Unit,
+    onCardClick: (Int) -> Unit
 ) {
     val movies: LazyPagingItems<Movie> = viewModel.upcomingMovies.collectAsLazyPagingItems()
     val bookmarks by viewModel.bookmarks.collectAsState()
 
     MovieListContent(
-        wingTopAppBarProps = WingTopAppBarProps(
+        topAppBarProps = WingTopAppBarProps(
             title = stringResource(R.string.upcoming),
             onBackPress = onBackPress,
             actionProps = listOf(

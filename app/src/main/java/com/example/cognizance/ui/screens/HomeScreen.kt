@@ -13,8 +13,8 @@ import androidx.compose.ui.unit.dp
 import com.example.cognizance.R
 import com.example.cognizance.ui.composables.MovieCard
 import com.example.ui.composables.WingScaffold
-import com.example.ui.composables.WingTopAppBarActions
 import com.example.ui.models.WingTopAppBarActionProps
+import com.example.ui.models.WingTopAppBarProps
 
 @Composable
 fun HomeScreen(
@@ -24,18 +24,16 @@ fun HomeScreen(
     onBookmarkClick: () -> Unit
 ) {
     WingScaffold(
-        title = stringResource(R.string.home),
-        onBackPress = backPressAction,
-        actions = {
-            WingTopAppBarActions(
-                actionProps = listOf(
-                    WingTopAppBarActionProps(
-                        actionTitle = stringResource(R.string.bookmarks),
-                        onActionClick = onBookmarkClick
-                    )
+        topAppBarProps = WingTopAppBarProps(
+            title = stringResource(R.string.home),
+            onBackPress = backPressAction,
+            actionProps = listOf(
+                WingTopAppBarActionProps(
+                    actionTitle = stringResource(R.string.bookmarks),
+                    onActionClick = onBookmarkClick
                 )
             )
-        }
+        )
     ) { paddingValues ->
         Column(
             modifier = Modifier.padding(paddingValues)

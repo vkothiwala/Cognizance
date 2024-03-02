@@ -20,7 +20,7 @@ fun PopularMoviesScreen(
     val movies: LazyPagingItems<Movie> = viewModel.popularMovies.collectAsLazyPagingItems()
 
     MovieListContent(
-        wingTopAppBarProps = WingTopAppBarProps(
+        topAppBarProps = WingTopAppBarProps(
             title = stringResource(R.string.popular),
             onBackPress = onBackPress
         ),

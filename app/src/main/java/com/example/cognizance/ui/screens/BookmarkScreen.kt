@@ -24,6 +24,7 @@ import com.example.cognizance.ui.models.MovieCardClickEvent
 import com.example.cognizance.ui.viewmodel.BookmarksViewModel
 import com.example.ui.composables.WingScaffold
 import com.example.ui.composables.WingSpacer
+import com.example.ui.models.WingTopAppBarProps
 
 @Composable
 fun BookmarkScreen(
@@ -49,8 +50,10 @@ private fun Content(
     onClick: (MovieCardClickEvent) -> Unit
 ) {
     WingScaffold(
-        title = stringResource(R.string.bookmarks),
-        onBackPress = onBackPress
+        topAppBarProps = WingTopAppBarProps(
+            title = stringResource(R.string.bookmarks),
+            onBackPress = onBackPress
+        )
     ) { paddingValues ->
         if (bookmarkedMovies.isEmpty()) {
             Box(
