@@ -1,6 +1,7 @@
 package com.example.cognizance.data.remote
 
 import com.example.cognizance.data.remote.models.ApiMovieDetails
+import com.example.cognizance.data.remote.service.MoviesApi
 import com.example.cognizance.utils.Response
 import javax.inject.Inject
 

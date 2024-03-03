@@ -6,9 +6,9 @@ import androidx.paging.PagingConfig
 import com.example.cognizance.MoviesDatabase
 import com.example.cognizance.data.local.MoviesRemoteMediator
 import com.example.cognizance.data.local.models.EntityMovie
-import com.example.cognizance.data.remote.MoviesApi
 import com.example.cognizance.data.remote.MoviesPagingSource
 import com.example.cognizance.data.remote.models.ApiMovie
+import com.example.cognizance.data.remote.service.MoviesApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

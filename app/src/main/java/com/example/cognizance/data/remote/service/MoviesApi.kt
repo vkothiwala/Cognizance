@@ -1,4 +1,4 @@
-package com.example.cognizance.data.remote
+package com.example.cognizance.data.remote.service
 
 import com.example.cognizance.data.remote.models.ApiMovieDetails
 import com.example.cognizance.data.remote.models.ApiMoviesResponse

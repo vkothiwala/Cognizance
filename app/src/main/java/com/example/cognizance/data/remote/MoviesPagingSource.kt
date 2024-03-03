@@ -3,6 +3,7 @@ package com.example.cognizance.data.remote
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.cognizance.data.remote.models.ApiMovie
+import com.example.cognizance.data.remote.service.MoviesApi
 
 class MoviesPagingSource(
     private val moviesApi: MoviesApi

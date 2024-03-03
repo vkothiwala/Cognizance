@@ -1,6 +1,6 @@
 package com.example.cognizance.di
 
-import com.example.cognizance.data.remote.MoviesApi
+import com.example.cognizance.data.remote.service.MoviesApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
