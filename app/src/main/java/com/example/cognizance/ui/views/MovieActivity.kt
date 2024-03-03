@@ -90,6 +90,9 @@ class MovieActivity : ComponentActivity() {
                                             movieId
                                         )
                                     )
+                                },
+                                onBookmarkClick = {
+                                    navController.navigate(NavGraph.Bookmarks.route)
                                 }
                             )
                         }
@@ -103,6 +106,9 @@ class MovieActivity : ComponentActivity() {
                                             movieId
                                         )
                                     )
+                                },
+                                onBookmarkClick = {
+                                    navController.navigate(NavGraph.Bookmarks.route)
                                 }
                             )
                         }

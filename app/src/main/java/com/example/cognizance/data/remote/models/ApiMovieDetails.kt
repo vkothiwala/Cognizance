@@ -8,7 +8,7 @@ data class ApiMovieDetails(
     val budget: Long,
     val genres: List<ApiGenre>,
     val homepage: String,
-    val id: Long,
+    val id: Int,
     @SerializedName("imdb_id") val imdbId: String,
     @SerializedName("original_language") val originalLanguage: String,
     @SerializedName("original_title") val originalTitle: String,
@@ -25,7 +25,7 @@ data class ApiMovieDetails(
     val tagline: String,
     val title: String,
     val video: Boolean,
-    @SerializedName("vote_average") val voteAverage: Double,
+    @SerializedName("vote_average") val voteAverage: Float,
     @SerializedName("vote_count") val voteCount: Long
 )
 

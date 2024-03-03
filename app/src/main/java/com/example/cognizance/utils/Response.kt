@@ -13,3 +13,10 @@ fun <T, R> Response<T>.map(
         is Response.Error -> Response.Error(error)
     }
 }
+
+fun <T> Response<T>.dataOrNull(): T? {
+    return when (this) {
+        is Response.Success -> data
+        is Response.Error -> null
+    }
+}

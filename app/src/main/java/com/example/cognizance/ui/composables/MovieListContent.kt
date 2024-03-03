@@ -1,5 +1,7 @@
 package com.example.cognizance.ui.composables
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,8 +14,8 @@ import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.domain.models.MovieBookmark
 import com.example.cognizance.ui.models.BookmarkIconProps
 import com.example.cognizance.ui.models.MovieCardClickEvent
+import com.example.ui.composables.WingProgressIndicator
 import com.example.ui.composables.WingScaffold
-import com.example.ui.composables.WingSpacer
 import com.example.ui.models.WingTopAppBarProps
 
 @Composable
@@ -26,7 +28,11 @@ fun MovieListContent(
     WingScaffold(
         topAppBarProps = topAppBarProps
     ) { paddingValues ->
-        LazyColumn(modifier = Modifier.padding(paddingValues)) {
+        LazyColumn(
+            modifier = Modifier.padding(paddingValues),
+            contentPadding = PaddingValues(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             items(movies.itemCount) { index ->
                 movies[index]?.let { movie ->
                     MovieRow(
@@ -47,16 +53,11 @@ fun MovieListContent(
                     )
                 }
             }
-            item {
-                WingSpacer(height = 8.dp)
-            }
 
             if (movies.loadState.append is LoadState.Loading) {
                 item {
-                    ProgressIndicator(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(bottom = 8.dp)
+                    WingProgressIndicator(
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
             }

@@ -3,7 +3,6 @@ package com.example.cognizance.ui.composables
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -27,13 +26,11 @@ import com.example.ui.composables.WingSpacer
 fun MovieRow(
     movie: Movie,
     bookmarkIconProps: BookmarkIconProps?,
+    modifier: Modifier = Modifier,
     onCardClick: () -> Unit
 ) {
     MovieCard(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 8.dp)
-            .padding(horizontal = 8.dp),
+        modifier = modifier,
         onClick = onCardClick
     ) {
         Row(
