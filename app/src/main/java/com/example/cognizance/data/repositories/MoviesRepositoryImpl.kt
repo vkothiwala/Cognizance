@@ -8,6 +8,8 @@ import com.example.cognizance.data.mappers.toMovie
 import com.example.cognizance.data.mappers.toMovieDetailsMapper
 import com.example.cognizance.data.remote.MoviesRemoteSource
 import com.example.cognizance.data.remote.models.ApiMovie
+import com.example.cognizance.di.PagingSourceModule.Companion.POPULAR_MOVIES
+import com.example.cognizance.di.PagingSourceModule.Companion.UPCOMING_MOVIES
 import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.domain.models.MovieDetails
 import com.example.cognizance.domain.repositories.MoviesRepository
@@ -19,19 +21,19 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class MoviesRepositoryImpl @Inject constructor(
-    @Named("movies_paging_source") pagingSource: Pager<Int, ApiMovie>,
-    @Named("movies_remote_mediator") remoteMediator: Pager<Int, EntityMovie>,
+    @Named(POPULAR_MOVIES) popularMovies: Pager<Int, ApiMovie>,
+    @Named(UPCOMING_MOVIES) upcomingMovies: Pager<Int, EntityMovie>,
     private val moviesRemoteSource: MoviesRemoteSource
 ) : MoviesRepository {
 
-    override val upcomingMovies: Flow<PagingData<Movie>> = remoteMediator.flow
+    override val upcomingMovies: Flow<PagingData<Movie>> = upcomingMovies.flow
         .map { pagingData ->
             pagingData.map {
                 it.toMovie()
             }
         }
 
-    override val popularMovies: Flow<PagingData<Movie>> = pagingSource.flow
+    override val popularMovies: Flow<PagingData<Movie>> = popularMovies.flow
         .map { pagingData ->
             pagingData.map {
                 it.toMovie()

@@ -9,10 +9,9 @@ import com.example.cognizance.MoviesDatabase
 import com.example.cognizance.data.local.models.EntityMovie
 import com.example.cognizance.data.mappers.toEntityMovie
 import com.example.cognizance.data.remote.MoviesApi
-import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
-class MoviesRemoteMediator @Inject constructor(
+class MoviesRemoteMediator(
     private val moviesApi: MoviesApi,
     private val moviesDatabase: MoviesDatabase
 ) : RemoteMediator<Int, EntityMovie>() {
