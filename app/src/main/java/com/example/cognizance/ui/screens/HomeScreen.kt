@@ -23,6 +23,7 @@ import com.example.ui.models.WingTopAppBarProps
 fun HomeScreen(
     navigateToUpcomingAction: () -> Unit,
     navigateToPopularAction: () -> Unit,
+    navigateToTopRatedAction: () -> Unit,
     onBookmarkClick: () -> Unit
 ) {
     WingScaffold(
@@ -50,6 +51,10 @@ fun HomeScreen(
             HomeCard(
                 title = stringResource(R.string.upcoming),
                 onClick = navigateToUpcomingAction
+            )
+            HomeCard(
+                title = stringResource(R.string.top_rated),
+                onClick = navigateToTopRatedAction
             )
         }
     }

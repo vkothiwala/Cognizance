@@ -17,6 +17,7 @@ import com.example.cognizance.ui.screens.BookmarkScreen
 import com.example.cognizance.ui.screens.HomeScreen
 import com.example.cognizance.ui.screens.MovieDetailsScreen
 import com.example.cognizance.ui.screens.PopularMoviesScreen
+import com.example.cognizance.ui.screens.TopRatedMoviesScreen
 import com.example.cognizance.ui.screens.UpcomingMoviesScreen
 import com.example.ui.theme.WingTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +34,7 @@ class MovieActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = NavGraph.Home.route) {
+                        // Home Screen
                         composable(NavGraph.Home.route) {
                             HomeScreen(
                                 navigateToUpcomingAction = {
@@ -41,11 +43,15 @@ class MovieActivity : ComponentActivity() {
                                 navigateToPopularAction = {
                                     navController.navigate(NavGraph.Popular.route)
                                 },
+                                navigateToTopRatedAction = {
+                                    navController.navigate(NavGraph.TopRated.route)
+                                },
                                 onBookmarkClick = {
                                     navController.navigate(NavGraph.Bookmarks.route)
                                 }
                             )
                         }
+                        // Bookmarks Screen
                         composable(NavGraph.Bookmarks.route) {
                             BookmarkScreen(
                                 onBackPress = onBackPressedDispatcher::onBackPressed,
@@ -58,6 +64,7 @@ class MovieActivity : ComponentActivity() {
                                 }
                             )
                         }
+                        // Upcoming Screen
                         composable(NavGraph.Upcoming.route) {
                             UpcomingMoviesScreen(
                                 onBackPress = onBackPressedDispatcher::onBackPressed,
@@ -73,6 +80,7 @@ class MovieActivity : ComponentActivity() {
                                 }
                             )
                         }
+                        // Popular Screen
                         composable(NavGraph.Popular.route) {
                             PopularMoviesScreen(
                                 onBackPress = onBackPressedDispatcher::onBackPressed,
@@ -85,6 +93,20 @@ class MovieActivity : ComponentActivity() {
                                 }
                             )
                         }
+                        // TopRated Screen
+                        composable(NavGraph.TopRated.route) {
+                            TopRatedMoviesScreen(
+                                onBackPress = onBackPressedDispatcher::onBackPressed,
+                                onCardClick = { movieId ->
+                                    navController.navigate(
+                                        NavGraph.Details.getRouteWithParam(
+                                            movieId
+                                        )
+                                    )
+                                }
+                            )
+                        }
+                        // Movie Details Screen
                         composable(
                             NavGraph.Details.route,
                             arguments = listOf(

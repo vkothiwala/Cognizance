@@ -28,7 +28,7 @@ class PagingSourceModule {
     @OptIn(ExperimentalPagingApi::class)
     @Provides
     @Named(UPCOMING_MOVIES)
-    fun provideMoviesRemoteMediator(
+    fun provideUpcomingMoviesPager(
         moviesDatabase: MoviesDatabase,
         moviesApi: MoviesApi
     ): Pager<Int, EntityMovie> {
@@ -46,7 +46,7 @@ class PagingSourceModule {
 
     @Provides
     @Named(POPULAR_MOVIES)
-    fun provideMoviesPagingSource(
+    fun providePopularMoviesPager(
         moviesApi: MoviesApi
     ): Pager<Int, ApiMovie> {
         return Pager(
@@ -60,8 +60,25 @@ class PagingSourceModule {
         )
     }
 
+    @Provides
+    @Named(TOP_RATED_MOVIES)
+    fun provideTopRatedMoviesPager(
+        moviesApi: MoviesApi
+    ): Pager<Int, ApiMovie> {
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = {
+                MoviesPagingSource(
+                    moviesApi = moviesApi,
+                    movieCategoryType = MovieCategoryType.TopRated
+                )
+            }
+        )
+    }
+
     companion object {
         const val UPCOMING_MOVIES = "upcoming_movies"
         const val POPULAR_MOVIES = "popular_movies"
+        const val TOP_RATED_MOVIES = "top_rated_movies"
     }
 }

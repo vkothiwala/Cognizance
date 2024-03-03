@@ -22,6 +22,7 @@ import javax.inject.Named
 class MoviesRepositoryImpl @Inject constructor(
     @Named(PagingSourceModule.POPULAR_MOVIES) popularMovies: Pager<Int, ApiMovie>,
     @Named(PagingSourceModule.UPCOMING_MOVIES) upcomingMovies: Pager<Int, EntityMovie>,
+    @Named(PagingSourceModule.TOP_RATED_MOVIES) topRatedMovies: Pager<Int, ApiMovie>,
     private val moviesRemoteSource: MoviesRemoteSource
 ) : MoviesRepository {
 
@@ -33,6 +34,13 @@ class MoviesRepositoryImpl @Inject constructor(
         }
 
     override val popularMovies: Flow<PagingData<Movie>> = popularMovies.flow
+        .map { pagingData ->
+            pagingData.map {
+                it.toMovie()
+            }
+        }
+
+    override val topRatedMovies: Flow<PagingData<Movie>> = topRatedMovies.flow
         .map { pagingData ->
             pagingData.map {
                 it.toMovie()

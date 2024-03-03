@@ -5,6 +5,7 @@ sealed class NavGraph(val route: String) {
     object Bookmarks : NavGraph("bookmarks")
     object Upcoming : NavGraph("upcoming")
     object Popular : NavGraph("popular")
+    object TopRated : NavGraph("topRated")
     object Details : NavGraph("details/{movieId}") {
         fun getRouteWithParam(movieId: Int): String {
             return route.replace("{movieId}", movieId.toString())
