@@ -1,5 +1,6 @@
 package com.example.cognizance.ui.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -42,7 +43,10 @@ fun HomeScreen(
         )
     ) { paddingValues ->
         Column(
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier
+                .padding(paddingValues)
+                .padding(start = 8.dp, top = 8.dp, end = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             HomeCard(
                 title = stringResource(R.string.popular),
@@ -63,10 +67,7 @@ fun HomeScreen(
 @Composable
 private fun HomeCard(title: String, onClick: () -> Unit) {
     MovieCard(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 8.dp)
-            .padding(horizontal = 8.dp),
+        modifier = Modifier.fillMaxWidth(),
         onClick = onClick
     ) {
         Text(

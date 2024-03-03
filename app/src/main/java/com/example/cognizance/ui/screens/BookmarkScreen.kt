@@ -63,7 +63,7 @@ private fun Content(
                 modifier = Modifier
                     .padding(paddingValues)
                     .fillMaxSize(),
-                message = stringResource(R.string.something_wend_wrong)
+                message = stringResource(R.string.empty_bookmarks)
             )
         } else {
             LazyColumn(
