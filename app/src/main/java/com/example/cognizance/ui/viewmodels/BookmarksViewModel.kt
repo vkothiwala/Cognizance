@@ -1,4 +1,4 @@
-package com.example.cognizance.ui.viewmodel
+package com.example.cognizance.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

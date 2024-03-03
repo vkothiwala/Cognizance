@@ -24,7 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cognizance.R
 import com.example.cognizance.ui.composables.BoldTitleTextTile
 import com.example.cognizance.ui.composables.MoviePoster
-import com.example.cognizance.ui.viewmodel.MovieDetailsViewModel
+import com.example.cognizance.ui.viewmodels.MovieDetailsViewModel
 import com.example.cognizance.utils.Response
 import com.example.cognizance.utils.toDateString
 import com.example.ui.composables.WingScaffold
