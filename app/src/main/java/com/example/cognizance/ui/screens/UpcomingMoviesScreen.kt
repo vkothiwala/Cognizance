@@ -12,14 +12,14 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.cognizance.R
 import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.ui.composables.MovieListContent
-import com.example.cognizance.ui.viewmodels.MovieListViewModel
+import com.example.cognizance.ui.viewmodels.UpcomingMoviesViewModel
 import com.example.ui.models.WingTopAppBarActionProps
 import com.example.ui.models.WingTopAppBarNavigationProps
 import com.example.ui.models.WingTopAppBarProps
 
 @Composable
 fun UpcomingMoviesScreen(
-    viewModel: MovieListViewModel = hiltViewModel(),
+    viewModel: UpcomingMoviesViewModel = hiltViewModel(),
     onBackPress: () -> Unit,
     onBookmarkClick: () -> Unit,
     onCardClick: (Int) -> Unit
@@ -42,8 +42,7 @@ fun UpcomingMoviesScreen(
             )
         ),
         movies = movies,
-        bookmarks = bookmarks,
-        onClick = viewModel::onClick,
+        bookmarkProp = Pair(bookmarks, viewModel::onClick),
         onCardClick = onCardClick
     )
 }

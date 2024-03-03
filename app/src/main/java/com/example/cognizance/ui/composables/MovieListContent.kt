@@ -20,8 +20,7 @@ import com.example.ui.models.WingTopAppBarProps
 fun MovieListContent(
     topAppBarProps: WingTopAppBarProps,
     movies: LazyPagingItems<Movie>,
-    bookmarks: List<MovieBookmark>?,
-    onClick: (MovieCardClickEvent) -> Unit,
+    bookmarkProp: Pair<List<MovieBookmark>, (MovieCardClickEvent) -> Unit>?,
     onCardClick: (Int) -> Unit
 ) {
     WingScaffold(
@@ -32,9 +31,11 @@ fun MovieListContent(
                 movies[index]?.let { movie ->
                     MovieRow(
                         movie = movie,
-                        bookmarkIconProps = bookmarks?.let {
+                        bookmarkIconProps = bookmarkProp?.let {
+                            val bookmarks = it.first
+                            val onClick = it.second
                             BookmarkIconProps(
-                                isBookmarked = it.contains(MovieBookmark(movie.id)),
+                                isBookmarked = bookmarks.contains(MovieBookmark(movie.id)),
                                 onBookmarkClick = {
                                     onClick(MovieCardClickEvent.OnBookmarkIconClick(movie.id))
                                 }

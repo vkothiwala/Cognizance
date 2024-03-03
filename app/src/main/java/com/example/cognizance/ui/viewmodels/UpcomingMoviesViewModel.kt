@@ -13,14 +13,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieListViewModel @Inject constructor(
+class UpcomingMoviesViewModel @Inject constructor(
     moviesRepository: MoviesRepository,
     private val bookmarksRepository: BookmarksRepository
 ) : ViewModel() {
 
     val upcomingMovies = moviesRepository.upcomingMovies.cachedIn(viewModelScope)
-    val popularMovies = moviesRepository.popularMovies.cachedIn(viewModelScope)
-    val topRatedMovies = moviesRepository.topRatedMovies.cachedIn(viewModelScope)
     val bookmarks = bookmarksRepository.bookmarks.stateIn(
         scope = viewModelScope,
         initialValue = emptyList(),
