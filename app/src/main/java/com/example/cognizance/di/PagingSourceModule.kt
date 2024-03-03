@@ -9,6 +9,7 @@ import com.example.cognizance.data.local.models.EntityMovie
 import com.example.cognizance.data.remote.MoviesPagingSource
 import com.example.cognizance.data.remote.models.ApiMovie
 import com.example.cognizance.data.remote.service.MoviesApi
+import com.example.cognizance.utils.MovieCategoryType
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,7 +27,7 @@ class PagingSourceModule {
 
     @OptIn(ExperimentalPagingApi::class)
     @Provides
-    @Named("upcoming_movies")
+    @Named(UPCOMING_MOVIES)
     fun provideMoviesRemoteMediator(
         moviesDatabase: MoviesDatabase,
         moviesApi: MoviesApi
@@ -44,14 +45,17 @@ class PagingSourceModule {
     }
 
     @Provides
-    @Named("popular_movies")
+    @Named(POPULAR_MOVIES)
     fun provideMoviesPagingSource(
         moviesApi: MoviesApi
     ): Pager<Int, ApiMovie> {
         return Pager(
             config = pagingConfig,
             pagingSourceFactory = {
-                MoviesPagingSource(moviesApi)
+                MoviesPagingSource(
+                    moviesApi = moviesApi,
+                    movieCategoryType = MovieCategoryType.Popular
+                )
             }
         )
     }

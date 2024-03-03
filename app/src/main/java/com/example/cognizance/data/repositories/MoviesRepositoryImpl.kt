@@ -8,8 +8,7 @@ import com.example.cognizance.data.mappers.toMovie
 import com.example.cognizance.data.mappers.toMovieDetailsMapper
 import com.example.cognizance.data.remote.MoviesRemoteSource
 import com.example.cognizance.data.remote.models.ApiMovie
-import com.example.cognizance.di.PagingSourceModule.Companion.POPULAR_MOVIES
-import com.example.cognizance.di.PagingSourceModule.Companion.UPCOMING_MOVIES
+import com.example.cognizance.di.PagingSourceModule
 import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.domain.models.MovieDetails
 import com.example.cognizance.domain.repositories.MoviesRepository
@@ -21,8 +20,8 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class MoviesRepositoryImpl @Inject constructor(
-    @Named(POPULAR_MOVIES) popularMovies: Pager<Int, ApiMovie>,
-    @Named(UPCOMING_MOVIES) upcomingMovies: Pager<Int, EntityMovie>,
+    @Named(PagingSourceModule.POPULAR_MOVIES) popularMovies: Pager<Int, ApiMovie>,
+    @Named(PagingSourceModule.UPCOMING_MOVIES) upcomingMovies: Pager<Int, EntityMovie>,
     private val moviesRemoteSource: MoviesRemoteSource
 ) : MoviesRepository {
 
