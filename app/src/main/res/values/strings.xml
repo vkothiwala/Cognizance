@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">Cognizance</string>
+    <string name="app_name">MoviePy</string>
 
     <!-- Title -->
     <string name="home">Home</string>
     <string name="upcoming">Upcoming</string>
     <string name="bookmarks">Bookmarks</string>
     <string name="popular">Popular</string>
-    <string name="top_rated">TopRated</string>
+    <string name="top_rated">Top Rated</string>
 
     <!-- Messages -->
     <string name="empty_bookmarks">No bookmarked movies found!</string>
