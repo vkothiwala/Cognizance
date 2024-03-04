@@ -3,7 +3,6 @@ package com.example.cognizance.di
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.example.cognizance.data.local.MoviesDatabase
 import com.example.cognizance.data.local.MoviesRemoteMediator
 import com.example.cognizance.data.local.dao.MoviesDao
 import com.example.cognizance.data.local.models.EntityMovie
