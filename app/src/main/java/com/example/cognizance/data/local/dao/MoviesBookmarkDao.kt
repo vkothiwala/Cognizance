@@ -13,9 +13,6 @@ interface MoviesBookmarkDao {
     @Query("SELECT * FROM movies_bookmark")
     fun getAllMoviesBookmark(): Flow<List<EntityMoviesBookmark>>
 
-    @Query("SELECT * FROM movies_bookmark")
-    fun getAllMoviesBookmarkNonFlow(): List<EntityMoviesBookmark>
-
     @Query("SELECT * FROM movies_bookmark WHERE id = :movieId")
     fun findMovie(movieId: Int): EntityMoviesBookmark?
 

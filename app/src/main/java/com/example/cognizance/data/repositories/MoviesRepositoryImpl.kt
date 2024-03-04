@@ -3,6 +3,7 @@ package com.example.cognizance.data.repositories
 import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.map
+import com.example.cognizance.data.local.MoviesLocalSource
 import com.example.cognizance.data.local.models.EntityMovie
 import com.example.cognizance.data.mappers.toMovie
 import com.example.cognizance.data.mappers.toMovieDetailsMapper
@@ -23,7 +24,8 @@ class MoviesRepositoryImpl @Inject constructor(
     @Named(PagingSourceModule.POPULAR_MOVIES) popularMovies: Pager<Int, ApiMovie>,
     @Named(PagingSourceModule.UPCOMING_MOVIES) upcomingMovies: Pager<Int, EntityMovie>,
     @Named(PagingSourceModule.TOP_RATED_MOVIES) topRatedMovies: Pager<Int, ApiMovie>,
-    private val moviesRemoteSource: MoviesRemoteSource
+    private val moviesRemoteSource: MoviesRemoteSource,
+    private val moviesLocalSource: MoviesLocalSource
 ) : MoviesRepository {
 
     override val upcomingMovies: Flow<PagingData<Movie>> = upcomingMovies.flow
@@ -51,5 +53,13 @@ class MoviesRepositoryImpl @Inject constructor(
         return moviesRemoteSource.getMovieDetails(movieId).map {
             it.toMovieDetailsMapper()
         }
+    }
+
+    override suspend fun getMovieById(movieId: Int): Response<Movie> {
+        moviesLocalSource.getMovieById(movieId)?.let { entityMovie ->
+            return Response.Success(entityMovie.toMovie())
+        }
+        // If movie is not found locally, make remote call to fetch data
+        return moviesRemoteSource.getMovieDetails(movieId).map { it.toMovie() }
     }
 }

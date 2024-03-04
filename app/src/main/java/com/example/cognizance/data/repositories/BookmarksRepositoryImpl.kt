@@ -1,14 +1,9 @@
 package com.example.cognizance.data.repositories
 
 import com.example.cognizance.data.local.BookmarksLocalSource
-import com.example.cognizance.data.local.MoviesLocalSource
-import com.example.cognizance.data.mappers.toMovie
 import com.example.cognizance.data.mappers.toMovieBookmark
-import com.example.cognizance.data.remote.MoviesRemoteSource
-import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.domain.models.MovieBookmark
 import com.example.cognizance.domain.repositories.BookmarksRepository
-import com.example.cognizance.utils.dataOrNull
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -20,24 +15,13 @@ import javax.inject.Inject
  * has been bookmarked.
  * */
 class BookmarksRepositoryImpl @Inject constructor(
-    private val bookmarksLocalSource: BookmarksLocalSource,
-    private val moviesLocalSource: MoviesLocalSource,
-    private val moviesRemoteSource: MoviesRemoteSource
+    private val bookmarksLocalSource: BookmarksLocalSource
 ) : BookmarksRepository {
 
     override val bookmarks: Flow<List<MovieBookmark>> = bookmarksLocalSource.bookmarks
         .map { entityBookmarks ->
             entityBookmarks.map {
                 it.toMovieBookmark()
-            }
-        }
-
-    override val bookmarkedMovies: Flow<List<Movie>> = bookmarksLocalSource.bookmarks
-        .map { entityBookmarks ->
-            entityBookmarks.mapNotNull {
-                moviesLocalSource.getMovieById(it.id)?.toMovie() ?: run {
-                    moviesRemoteSource.getMovieDetails(movieId = it.id).dataOrNull()?.toMovie()
-                }
             }
         }
 
