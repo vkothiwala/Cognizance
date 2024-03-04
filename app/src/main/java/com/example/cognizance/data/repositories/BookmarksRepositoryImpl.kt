@@ -1,8 +1,7 @@
 package com.example.cognizance.data.repositories
 
-import androidx.room.withTransaction
-import com.example.cognizance.MoviesDatabase
-import com.example.cognizance.data.local.models.EntityMoviesBookmark
+import com.example.cognizance.data.local.BookmarksLocalSource
+import com.example.cognizance.data.local.MoviesLocalSource
 import com.example.cognizance.data.mappers.toMovie
 import com.example.cognizance.data.mappers.toMovieBookmark
 import com.example.cognizance.data.remote.MoviesRemoteSource
@@ -21,50 +20,28 @@ import javax.inject.Inject
  * has been bookmarked.
  * */
 class BookmarksRepositoryImpl @Inject constructor(
-    private val moviesDatabase: MoviesDatabase,
+    private val bookmarksLocalSource: BookmarksLocalSource,
+    private val moviesLocalSource: MoviesLocalSource,
     private val moviesRemoteSource: MoviesRemoteSource
 ) : BookmarksRepository {
 
-    override val bookmarks: Flow<List<MovieBookmark>> = moviesDatabase
-        .getMoviesBookmarkDao()
-        .getAllMoviesBookmark()
+    override val bookmarks: Flow<List<MovieBookmark>> = bookmarksLocalSource.bookmarks
         .map { entityBookmarks ->
             entityBookmarks.map {
                 it.toMovieBookmark()
             }
         }
 
-    override val bookmarkedMovies: Flow<List<Movie>> = moviesDatabase.getMoviesBookmarkDao()
-        .getAllMoviesBookmark()
+    override val bookmarkedMovies: Flow<List<Movie>> = bookmarksLocalSource.bookmarks
         .map { entityBookmarks ->
             entityBookmarks.mapNotNull {
-                moviesDatabase.withTransaction {
-                    moviesDatabase.getMovieDao().getMovieById(it.id)?.toMovie()
-                } ?: run {
+                moviesLocalSource.getMovieById(it.id)?.toMovie() ?: run {
                     moviesRemoteSource.getMovieDetails(movieId = it.id).dataOrNull()?.toMovie()
                 }
             }
         }
 
     override suspend fun onBookmarkClick(movieId: Int) {
-        moviesDatabase.withTransaction {
-            val bookmarkDao = moviesDatabase.getMoviesBookmarkDao()
-            val entityMoviesBookmark = bookmarkDao.findMovie(movieId = movieId)
-            if (entityMoviesBookmark == null) {
-                // If movie being bookmarked is not found in table, then bookmark it by adding it to table.
-                bookmarkDao.addMovie(
-                    EntityMoviesBookmark(
-                        id = movieId
-                    )
-                )
-            } else {
-                // If movie being bookmarked exists in table, un-bookmark it by deleting it from table.
-                bookmarkDao.deleteMovie(
-                    EntityMoviesBookmark(
-                        id = movieId
-                    )
-                )
-            }
-        }
+        bookmarksLocalSource.onBookmarkClick(movieId)
     }
 }

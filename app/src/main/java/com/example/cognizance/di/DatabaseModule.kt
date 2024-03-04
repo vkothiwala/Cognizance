@@ -2,7 +2,7 @@ package com.example.cognizance.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.cognizance.MoviesDatabase
+import com.example.cognizance.data.local.MoviesDatabase
 import com.example.cognizance.data.local.dao.MoviesBookmarkDao
 import com.example.cognizance.data.local.dao.MoviesDao
 import dagger.Module

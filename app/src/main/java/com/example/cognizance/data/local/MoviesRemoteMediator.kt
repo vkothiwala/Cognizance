@@ -5,7 +5,6 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.example.cognizance.MoviesDatabase
 import com.example.cognizance.data.local.models.EntityMovie
 import com.example.cognizance.data.mappers.toEntityMovie
 import com.example.cognizance.data.remote.service.MoviesApi

@@ -1,4 +1,4 @@
-package com.example.cognizance
+package com.example.cognizance.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
