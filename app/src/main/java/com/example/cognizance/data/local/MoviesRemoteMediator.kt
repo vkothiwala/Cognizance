@@ -4,15 +4,17 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import androidx.room.withTransaction
+import com.example.cognizance.data.local.dao.MoviesDao
 import com.example.cognizance.data.local.models.EntityMovie
 import com.example.cognizance.data.mappers.toEntityMovie
 import com.example.cognizance.data.remote.service.MoviesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalPagingApi::class)
 class MoviesRemoteMediator(
     private val moviesApi: MoviesApi,
-    private val moviesDatabase: MoviesDatabase
+    private val moviesDao: MoviesDao
 ) : RemoteMediator<Int, EntityMovie>() {
 
     override suspend fun load(
@@ -39,17 +41,17 @@ class MoviesRemoteMediator(
             val movies = apiMovieResponse.results
             val endOfPaginationReached = movies.isEmpty()
 
-            moviesDatabase.withTransaction {
+            withContext(Dispatchers.IO) {
                 if (loadType == LoadType.REFRESH) {
-                    moviesDatabase.getMovieDao().deleteAll()
-                    moviesDatabase.getMovieDao().resetPrimaryKeyAutoIncrementValue()
+                    moviesDao.deleteAll()
+                    moviesDao.resetPrimaryKeyAutoIncrementValue()
                 }
                 val entityMovies = movies.map {
                     it.toEntityMovie(
                         currentPage = apiMovieResponse.page
                     )
                 }
-                moviesDatabase.getMovieDao().insertAll(entityMovies)
+                moviesDao.insertAll(entityMovies)
             }
             MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (error: Exception) {

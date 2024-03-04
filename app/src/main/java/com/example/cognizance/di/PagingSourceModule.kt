@@ -5,6 +5,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.example.cognizance.data.local.MoviesDatabase
 import com.example.cognizance.data.local.MoviesRemoteMediator
+import com.example.cognizance.data.local.dao.MoviesDao
 import com.example.cognizance.data.local.models.EntityMovie
 import com.example.cognizance.data.remote.MoviesPagingSource
 import com.example.cognizance.data.remote.models.ApiMovie
@@ -29,17 +30,17 @@ class PagingSourceModule {
     @Provides
     @Named(UPCOMING_MOVIES)
     fun provideUpcomingMoviesPager(
-        moviesDatabase: MoviesDatabase,
+        moviesDao: MoviesDao,
         moviesApi: MoviesApi
     ): Pager<Int, EntityMovie> {
         return Pager(
             config = pagingConfig,
             remoteMediator = MoviesRemoteMediator(
                 moviesApi = moviesApi,
-                moviesDatabase = moviesDatabase
+                moviesDao = moviesDao
             ),
             pagingSourceFactory = {
-                moviesDatabase.getMovieDao().getMovies()
+                moviesDao.getMovies()
             }
         )
     }
