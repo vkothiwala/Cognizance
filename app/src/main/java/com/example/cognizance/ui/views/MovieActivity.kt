@@ -30,7 +30,8 @@ class MovieActivity : ComponentActivity() {
             WingTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.surface,
+                    contentColor = MaterialTheme.colorScheme.onSurface
                 ) {
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = NavGraph.Home.route) {

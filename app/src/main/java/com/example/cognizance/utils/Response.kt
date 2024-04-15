@@ -1,8 +1,8 @@
 package com.example.cognizance.utils
 
-sealed class Response<T> {
+sealed class Response<out T> {
     data class Success<T>(val data: T) : Response<T>()
-    data class Error<T>(val error: Exception) : Response<T>()
+    data class Error(val error: Exception) : Response<Nothing>()
 }
 
 fun <T, R> Response<T>.map(
