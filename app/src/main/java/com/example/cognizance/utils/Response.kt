@@ -14,6 +14,31 @@ fun <T, R> Response<T>.map(
     }
 }
 
+fun <T> Response<T>.onSuccess(
+    block: (T) -> Unit
+): Response<T> {
+    return when (this) {
+        is Response.Success -> {
+            block(data)
+            this
+        }
+
+        is Response.Error -> this
+    }
+}
+
+fun <T> Response<T>.onError(
+    block: (Exception) -> Unit
+): Response<T> {
+    return when (this) {
+        is Response.Success -> this
+        is Response.Error -> {
+            block(error)
+            this
+        }
+    }
+}
+
 fun <T> Response<T>.dataOrNull(): T? {
     return when (this) {
         is Response.Success -> data

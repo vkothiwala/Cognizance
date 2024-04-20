@@ -18,6 +18,7 @@ import com.example.cognizance.ui.screens.BookmarkScreen
 import com.example.cognizance.ui.screens.HomeScreen
 import com.example.cognizance.ui.screens.MediaPlayerScreen
 import com.example.cognizance.ui.screens.MovieDetailsScreen
+import com.example.cognizance.ui.screens.MovieVideosScreen
 import com.example.cognizance.ui.screens.PopularMoviesScreen
 import com.example.cognizance.ui.screens.TopRatedMoviesScreen
 import com.example.cognizance.ui.screens.UpcomingMoviesScreen
@@ -134,9 +135,20 @@ class MovieActivity : ComponentActivity() {
                                     onBackPress = onBackPressedDispatcher::onBackPressed
                                 )
                             }
-                            // Movie trailer Screen
-                            composable(NavGraph.Trailer.route) { backStackEntry ->
-                                backStackEntry.arguments?.getString("trailerId")?.let { id ->
+                            // Movie videos Screen
+                            composable(
+                                route = NavGraph.Videos.route,
+                                arguments = listOf(
+                                    navArgument("movieId") {
+                                        type = NavType.IntType
+                                    }
+                                )
+                            ) {
+                                MovieVideosScreen()
+                            }
+                            // Youtube video Screen
+                            composable(NavGraph.YoutubeVideo.route) { backStackEntry ->
+                                backStackEntry.arguments?.getString("videoId")?.let { id ->
                                     YoutubePlayerScreen(id)
                                 }
                             }

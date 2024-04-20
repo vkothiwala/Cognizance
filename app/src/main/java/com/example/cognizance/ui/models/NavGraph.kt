@@ -13,9 +13,15 @@ sealed class NavGraph(val route: String) {
         }
     }
 
-    object Trailer : NavGraph("trailer/{trailerId}") {
-        fun getRouteWithParam(url: String): String {
-            return route.replace("{trailerId}", url)
+    object Videos : NavGraph("videos/{movieId}") {
+        fun getRouteWithParam(movieId: Int): String {
+            return route.replace("{movieId}", movieId.toString())
+        }
+    }
+
+    object YoutubeVideo : NavGraph("video/{videoId}") {
+        fun getRouteWithParam(videoId: String): String {
+            return route.replace("{videoId}", videoId)
         }
     }
 }

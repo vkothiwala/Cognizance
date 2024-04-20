@@ -10,48 +10,59 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.loadOrCueVideo
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 @Composable
-fun YoutubePlayerScreen(trailerId: String, modifier: Modifier = Modifier) {
-    val lifecycleOwner = rememberUpdatedState(LocalLifecycleOwner.current)
-    val activityLifecycle = lifecycleOwner.value.lifecycle
+fun YoutubePlayerScreen(videoId: String, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val window = context.findActivity()?.window
     var startSeconds by rememberSaveable { mutableStateOf(0f) }
+    var isPaused by rememberSaveable { mutableStateOf(false) }
     val currentOrientation = LocalConfiguration.current.orientation
 
     val youtubePlayer = remember {
         YouTubePlayerView(context).apply {
-            activityLifecycle.addObserver(this)
             enableAutomaticInitialization = false
-            initialize(object : AbstractYouTubePlayerListener() {
-                override fun onReady(youTubePlayer: YouTubePlayer) {
-                    youTubePlayer.apply {
-                        toggleFullScreen()
-                        loadOrCueVideo(activityLifecycle, trailerId, startSeconds)
+            initialize(
+                object : AbstractYouTubePlayerListener() {
+                    override fun onReady(youTubePlayer: YouTubePlayer) {
+                        youTubePlayer.apply {
+                            toggleFullScreen()
+                            loadVideo(videoId, startSeconds)
+                            if (isPaused) pause()
+                        }
+                    }
+
+                    override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) {
+                        super.onCurrentSecond(youTubePlayer, second)
+                        startSeconds = second
+                    }
+
+                    override fun onStateChange(
+                        youTubePlayer: YouTubePlayer,
+                        state: PlayerConstants.PlayerState
+                    ) {
+                        super.onStateChange(youTubePlayer, state)
+                        when (state) {
+                            PlayerConstants.PlayerState.PAUSED -> isPaused = true
+                            PlayerConstants.PlayerState.PLAYING -> isPaused = false
+                            else -> Unit
+                        }
                     }
                 }
-
-                override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) {
-                    super.onCurrentSecond(youTubePlayer, second)
-                    startSeconds = second
-                }
-            })
+            )
         }
     }
 

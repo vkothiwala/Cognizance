@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -81,22 +82,24 @@ fun MovieDetailsScreen(
                                 .height(300.dp),
                             url = backdropPath
                         )
-                        videoId?.let { trailerId ->
-                            Button(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 4.dp)
-                                    .padding(horizontal = 4.dp),
-                                onClick = {
-                                    navController.navigate(
-                                        NavGraph.Trailer.getRouteWithParam(
-                                            trailerId
-                                        )
+                        Button(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 4.dp)
+                                .padding(horizontal = 4.dp),
+                            onClick = {
+                                navController.navigate(
+                                    NavGraph.Videos.getRouteWithParam(
+                                        movieId = id
                                     )
-                                }
-                            ) {
-                                Text(text = "Watch Trailer")
-                            }
+                                )
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.tertiary,
+                                contentColor = MaterialTheme.colorScheme.onTertiary
+                            )
+                        ) {
+                            Text(text = stringResource(id = R.string.watch_videos))
                         }
                         BoldTitleTextTile(
                             modifier = Modifier

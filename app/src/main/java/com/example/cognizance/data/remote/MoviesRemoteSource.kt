@@ -1,7 +1,7 @@
 package com.example.cognizance.data.remote
 
 import com.example.cognizance.data.remote.models.ApiMovieDetails
-import com.example.cognizance.data.remote.models.ApiVideosResponse
+import com.example.cognizance.data.remote.models.ApiMovieVideos
 import com.example.cognizance.data.remote.service.MoviesApi
 import com.example.cognizance.utils.Response
 import javax.inject.Inject
@@ -19,10 +19,10 @@ class MoviesRemoteSource @Inject constructor(
         }
     }
 
-    suspend fun getMovieVideoId(movieId: Int): Response<ApiVideosResponse> {
+    suspend fun getMovieVideos(movieId: Int): Response<ApiMovieVideos> {
         return try {
-            val videoIdResponse = moviesApi.getVideos(movieId = movieId)
-            Response.Success(videoIdResponse)
+            val videosResponse = moviesApi.getVideos(movieId = movieId)
+            Response.Success(videosResponse)
         } catch (e: Exception) {
             Response.Error(e)
         }

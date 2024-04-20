@@ -12,6 +12,8 @@
     <string name="empty_bookmarks">No bookmarked movies found!</string>
     <string name="something_wend_wrong">Oops! Something went wrong!</string>
 
+    <string name="watch_videos">Watch Videos</string>
+
     <!-- Url -->
     <string name="media_url_mp3">https://storage.googleapis.com/exoplayer-test-media-0/Jazz_In_Paris.mp3</string>
     <!-- Big Buck Bunny video provided by the Blender Foundation.

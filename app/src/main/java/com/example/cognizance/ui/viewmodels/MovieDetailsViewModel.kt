@@ -6,8 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.cognizance.domain.models.MovieDetails
 import com.example.cognizance.domain.repositories.MoviesRepository
 import com.example.cognizance.utils.Response
-import com.example.cognizance.utils.dataOrNull
-import com.example.cognizance.utils.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,11 +25,8 @@ class MovieDetailsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val movieDetails = moviesRepository.getMovieDetails(movieId)
-            val videoId = moviesRepository.getMovieVideoId(movieId)
-            _uiState.value = movieDetails.map {
-                it.copy(videoId = videoId.dataOrNull())
-            }
+            val response = moviesRepository.getMovieDetails(movieId)
+            _uiState.value = response
         }
     }
 }
