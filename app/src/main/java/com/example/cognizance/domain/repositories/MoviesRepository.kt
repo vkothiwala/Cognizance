@@ -12,4 +12,5 @@ interface MoviesRepository {
     val topRatedMovies: Flow<PagingData<Movie>>
     suspend fun getMovieDetails(movieId: Int): Response<MovieDetails>
     suspend fun getMovieById(movieId: Int): Response<Movie>
+    suspend fun getMovieVideoId(movieId: Int): Response<String>
 }

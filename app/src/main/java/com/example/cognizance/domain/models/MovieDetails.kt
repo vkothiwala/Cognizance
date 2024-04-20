@@ -13,5 +13,6 @@ data class MovieDetails(
     val runtime: Long,
     val revenue: Long,
     val budget: Long,
-    val releaseDate: String
+    val releaseDate: String,
+    val videoId: String? = null
 )

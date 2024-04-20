@@ -1,14 +1,16 @@
 package com.example.cognizance.ui.screens
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -20,7 +22,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cognizance.R
 import com.example.cognizance.ui.composables.BoldTitleTextTile
 import com.example.cognizance.ui.composables.MoviePoster
+import com.example.cognizance.ui.models.NavGraph
 import com.example.cognizance.ui.viewmodels.MovieDetailsViewModel
+import com.example.cognizance.utils.LocalNavController
 import com.example.cognizance.utils.Response
 import com.example.cognizance.utils.toDateString
 import com.example.ui.composables.WingEmptyState
@@ -34,6 +38,7 @@ fun MovieDetailsScreen(
     onBackPress: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val navController = LocalNavController.current
 
     if (uiState == null || uiState is Response.Error) {
         WingScaffold(
@@ -63,66 +68,85 @@ fun MovieDetailsScreen(
                     )
                 )
             ) { paddingValues ->
-                Column(
+                LazyColumn(
                     modifier = Modifier
                         .padding(paddingValues)
                         .padding(all = 2.dp)
                 ) {
-                    MoviePoster(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .fillMaxWidth()
-                            .height(300.dp),
-                        url = backdropPath
-                    )
-                    BoldTitleTextTile(
-                        modifier = Modifier
-                            .padding(start = 8.dp)
-                            .padding(top = 4.dp),
-                        title = "Overview: ",
-                        message = overview,
-                        textStyle = MaterialTheme.typography.bodyMedium
-                    )
-                    BoldTitleTextTile(
-                        modifier = Modifier
-                            .padding(horizontal = 8.dp)
-                            .padding(top = 8.dp),
-                        title = "Release Date: ",
-                        message = releaseDate.toDateString(),
-                        textStyle = MaterialTheme.typography.bodyMedium
-                    )
-                    BoldTitleTextTile(
-                        modifier = Modifier
-                            .padding(horizontal = 8.dp)
-                            .padding(top = 8.dp),
-                        title = "Status: ",
-                        message = status,
-                        textStyle = MaterialTheme.typography.bodyMedium
-                    )
-                    BoldTitleTextTile(
-                        modifier = Modifier
-                            .padding(horizontal = 8.dp)
-                            .padding(top = 8.dp),
-                        title = "Votes Rating: ",
-                        message = voteAverage.toString(),
-                        textStyle = MaterialTheme.typography.bodyMedium
-                    )
-                    BoldTitleTextTile(
-                        modifier = Modifier
-                            .padding(horizontal = 8.dp)
-                            .padding(top = 8.dp),
-                        title = "Runtime: ",
-                        message = "$runtime mins",
-                        textStyle = MaterialTheme.typography.bodyMedium
-                    )
-                    BoldTitleTextTile(
-                        modifier = Modifier
-                            .padding(horizontal = 8.dp)
-                            .padding(top = 8.dp),
-                        title = "Tagline: ",
-                        message = tagline,
-                        textStyle = MaterialTheme.typography.bodyMedium
-                    )
+                    item {
+                        MoviePoster(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .fillMaxWidth()
+                                .height(300.dp),
+                            url = backdropPath
+                        )
+                        videoId?.let { trailerId ->
+                            Button(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 4.dp)
+                                    .padding(horizontal = 4.dp),
+                                onClick = {
+                                    navController.navigate(
+                                        NavGraph.Trailer.getRouteWithParam(
+                                            trailerId
+                                        )
+                                    )
+                                }
+                            ) {
+                                Text(text = "Watch Trailer")
+                            }
+                        }
+                        BoldTitleTextTile(
+                            modifier = Modifier
+                                .padding(start = 8.dp)
+                                .padding(top = 4.dp),
+                            title = "Overview: ",
+                            message = overview,
+                            textStyle = MaterialTheme.typography.bodyMedium
+                        )
+                        BoldTitleTextTile(
+                            modifier = Modifier
+                                .padding(horizontal = 8.dp)
+                                .padding(top = 8.dp),
+                            title = "Release Date: ",
+                            message = releaseDate.toDateString(),
+                            textStyle = MaterialTheme.typography.bodyMedium
+                        )
+                        BoldTitleTextTile(
+                            modifier = Modifier
+                                .padding(horizontal = 8.dp)
+                                .padding(top = 8.dp),
+                            title = "Status: ",
+                            message = status,
+                            textStyle = MaterialTheme.typography.bodyMedium
+                        )
+                        BoldTitleTextTile(
+                            modifier = Modifier
+                                .padding(horizontal = 8.dp)
+                                .padding(top = 8.dp),
+                            title = "Votes Rating: ",
+                            message = voteAverage.toString(),
+                            textStyle = MaterialTheme.typography.bodyMedium
+                        )
+                        BoldTitleTextTile(
+                            modifier = Modifier
+                                .padding(horizontal = 8.dp)
+                                .padding(top = 8.dp),
+                            title = "Runtime: ",
+                            message = "$runtime mins",
+                            textStyle = MaterialTheme.typography.bodyMedium
+                        )
+                        BoldTitleTextTile(
+                            modifier = Modifier
+                                .padding(horizontal = 8.dp)
+                                .padding(top = 8.dp),
+                            title = "Tagline: ",
+                            message = tagline,
+                            textStyle = MaterialTheme.typography.bodyMedium
+                        )
+                    }
                 }
             }
         }

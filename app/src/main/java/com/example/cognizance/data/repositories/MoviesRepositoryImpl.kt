@@ -14,9 +14,11 @@ import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.domain.models.MovieDetails
 import com.example.cognizance.domain.repositories.MoviesRepository
 import com.example.cognizance.utils.Response
+import com.example.cognizance.utils.dataOrNull
 import com.example.cognizance.utils.map
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.lang.IllegalStateException
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -61,5 +63,14 @@ class MoviesRepositoryImpl @Inject constructor(
         }
         // If movie is not found locally, make remote call to fetch data
         return moviesRemoteSource.getMovieDetails(movieId).map { it.toMovie() }
+    }
+
+    override suspend fun getMovieVideoId(movieId: Int): Response<String> {
+        val videoId = moviesRemoteSource.getMovieVideoId(movieId).dataOrNull()?.results?.firstOrNull()?.key
+        return if (videoId == null) {
+            Response.Error(IllegalStateException())
+        } else {
+            Response.Success(videoId)
+        }
     }
 }
