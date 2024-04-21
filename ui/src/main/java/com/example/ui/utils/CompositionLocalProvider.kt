@@ -1,4 +1,4 @@
-package com.example.cognizance.utils
+package com.example.ui.utils
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.navigation.NavController

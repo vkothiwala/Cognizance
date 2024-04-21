@@ -30,7 +30,11 @@ class MovieVideosViewModel @Inject constructor(
             moviesRepository.getMovieVideos(movieId)
                 .onSuccess { movieVideos ->
                     _uiState.update {
-                        it.copy(isLoading = false, movieVideos = movieVideos)
+                        it.copy(
+                            isLoading = false,
+                            movieVideosByType = movieVideos
+                                .groupBy { movieVideo -> movieVideo.type }
+                        )
                     }
                 }
                 .onError {

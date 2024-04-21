@@ -5,5 +5,5 @@ import com.example.cognizance.domain.models.MovieVideo
 data class MovieVideosUiState(
     val isLoading: Boolean = false,
     val isError: Boolean = false,
-    val movieVideos: List<MovieVideo> = emptyList()
+    val movieVideosByType: Map<String, List<MovieVideo>> = emptyMap()
 )

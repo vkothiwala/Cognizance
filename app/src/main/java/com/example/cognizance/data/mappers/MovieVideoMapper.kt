@@ -6,5 +6,6 @@ import com.example.cognizance.domain.models.MovieVideo
 fun ApiMovieVideos.MovieVideo.toMovieVideo(): MovieVideo = MovieVideo(
     id = id,
     name = name,
-    key = key
+    key = key,
+    type = type
 )

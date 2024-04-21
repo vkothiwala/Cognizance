@@ -23,8 +23,8 @@ import com.example.cognizance.ui.screens.PopularMoviesScreen
 import com.example.cognizance.ui.screens.TopRatedMoviesScreen
 import com.example.cognizance.ui.screens.UpcomingMoviesScreen
 import com.example.cognizance.ui.screens.YoutubePlayerScreen
-import com.example.cognizance.utils.LocalNavController
 import com.example.ui.theme.WingTheme
+import com.example.ui.utils.LocalNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

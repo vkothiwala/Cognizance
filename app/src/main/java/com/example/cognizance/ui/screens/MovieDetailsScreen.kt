@@ -25,13 +25,13 @@ import com.example.cognizance.ui.composables.BoldTitleTextTile
 import com.example.cognizance.ui.composables.MoviePoster
 import com.example.cognizance.ui.models.NavGraph
 import com.example.cognizance.ui.viewmodels.MovieDetailsViewModel
-import com.example.cognizance.utils.LocalNavController
 import com.example.cognizance.utils.Response
 import com.example.cognizance.utils.toDateString
 import com.example.ui.composables.WingEmptyState
 import com.example.ui.composables.WingScaffold
 import com.example.ui.models.WingTopAppBarNavigationProps
 import com.example.ui.models.WingTopAppBarProps
+import com.example.ui.utils.LocalNavController
 
 @Composable
 fun MovieDetailsScreen(
@@ -85,7 +85,7 @@ fun MovieDetailsScreen(
                         Button(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 4.dp)
+                                .padding(top = 2.dp)
                                 .padding(horizontal = 4.dp),
                             onClick = {
                                 navController.navigate(
@@ -95,8 +95,8 @@ fun MovieDetailsScreen(
                                 )
                             },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.tertiary,
-                                contentColor = MaterialTheme.colorScheme.onTertiary
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
                             )
                         ) {
                             Text(text = stringResource(id = R.string.watch_videos))
@@ -104,7 +104,7 @@ fun MovieDetailsScreen(
                         BoldTitleTextTile(
                             modifier = Modifier
                                 .padding(start = 8.dp)
-                                .padding(top = 4.dp),
+                                .padding(top = 2.dp),
                             title = "Overview: ",
                             message = overview,
                             textStyle = MaterialTheme.typography.bodyMedium
