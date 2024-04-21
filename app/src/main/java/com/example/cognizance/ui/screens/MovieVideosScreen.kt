@@ -1,9 +1,9 @@
 package com.example.cognizance.ui.screens
 
-import android.content.res.Configuration
-import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,7 +21,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.cognizance.ui.composables.LockScreenOrientation
 import com.example.cognizance.ui.composables.YoutubePlayer
 import com.example.cognizance.ui.models.MovieVideosUiState
 import com.example.cognizance.ui.viewmodels.MovieVideosViewModel
@@ -37,15 +36,23 @@ import com.example.ui.models.WingTopAppBarProps
 fun MovieVideosScreen(
     viewModel: MovieVideosViewModel = hiltViewModel()
 ) {
-    LockScreenOrientation(Configuration.ORIENTATION_PORTRAIT)
     val uiState by viewModel.uiState.collectAsState()
     MovieVideosContent(uiState = uiState)
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MovieVideosContent(uiState: MovieVideosUiState) {
     val navController = LocalNavController.current
+    var videoId by rememberSaveable { mutableStateOf("") }
+    var playVideo by rememberSaveable { mutableStateOf(false) }
+
+    BackHandler {
+        when {
+            playVideo -> playVideo = false
+            else -> navController.navigateUp()
+        }
+    }
+
     WingScaffold(
         topAppBarProps = WingTopAppBarProps(
             title = "Movie Videos",
@@ -63,7 +70,6 @@ fun MovieVideosContent(uiState: MovieVideosUiState) {
                     .padding(paddingValue)
             )
         } else {
-            var videoId by rememberSaveable { mutableStateOf(uiState.movieVideos.firstOrNull()?.key.orEmpty()) }
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -71,17 +77,12 @@ fun MovieVideosContent(uiState: MovieVideosUiState) {
                     .padding(2.dp),
                 verticalArrangement = Arrangement.spacedBy(2.dp)
             ) {
-                stickyHeader {
-                    YoutubePlayer(
-                        videoId = videoId,
-                        modifier = Modifier
-                    )
-                }
                 items(uiState.movieVideos) { movieVideo ->
                     WingCard(
                         modifier = Modifier
                             .clickable {
                                 videoId = movieVideo.key
+                                playVideo = true
                             }
                             .fillMaxWidth()
                     ) {
@@ -93,8 +94,13 @@ fun MovieVideosContent(uiState: MovieVideosUiState) {
                 }
             }
         }
-        if (uiState.isLoading) {
-            WingProgressIndicator()
+    }
+    if (uiState.isLoading) {
+        WingProgressIndicator()
+    }
+    if (playVideo) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            YoutubePlayer(videoId = videoId)
         }
     }
 }
