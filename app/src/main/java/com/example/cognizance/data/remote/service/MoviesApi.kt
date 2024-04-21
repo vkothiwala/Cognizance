@@ -11,23 +11,23 @@ interface MoviesApi {
 
     @GET("movie/upcoming")
     suspend fun getUpcomingMovies(
+        @Query("page") page: Int,
         @Query("api_key") apiKey: String = API_KEY,
-        @Query("language") language: String = EN_US,
-        @Query("page") page: Int
+        @Query("language") language: String = EN_US
     ): ApiMoviesResponse
 
     @GET("movie/popular")
     suspend fun getPopularMovies(
+        @Query("page") page: Int,
         @Query("api_key") apiKey: String = API_KEY,
-        @Query("language") language: String = EN_US,
-        @Query("page") page: Int
+        @Query("language") language: String = EN_US
     ): ApiMoviesResponse
 
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(
+        @Query("page") page: Int,
         @Query("api_key") apiKey: String = API_KEY,
-        @Query("language") language: String = EN_US,
-        @Query("page") page: Int
+        @Query("language") language: String = EN_US
     ): ApiMoviesResponse
 
     @GET("movie/{movie_id}")

@@ -15,6 +15,7 @@ import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.domain.models.MovieDetails
 import com.example.cognizance.domain.models.MovieVideo
 import com.example.cognizance.domain.repositories.MoviesRepository
+import com.example.cognizance.utils.MovieCategoryType
 import com.example.cognizance.utils.Response
 import com.example.cognizance.utils.map
 import kotlinx.coroutines.flow.Flow
@@ -50,6 +51,16 @@ class MoviesRepositoryImpl @Inject constructor(
                 it.toMovie()
             }
         }
+
+    override suspend fun getMovies(category: MovieCategoryType): Response<List<Movie>> {
+        return when (category) {
+            MovieCategoryType.Upcoming -> moviesRemoteSource.getUpcomingMovies(1)
+            MovieCategoryType.Popular -> moviesRemoteSource.getUpcomingMovies(1)
+            MovieCategoryType.TopRated -> moviesRemoteSource.getUpcomingMovies(1)
+        }.map { response ->
+            response.results.map { it.toMovie() }
+        }
+    }
 
     override suspend fun getMovieDetails(movieId: Int): Response<MovieDetails> {
         return moviesRemoteSource.getMovieDetails(movieId).map {

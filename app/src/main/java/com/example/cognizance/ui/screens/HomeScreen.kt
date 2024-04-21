@@ -9,24 +9,35 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cognizance.R
 import com.example.cognizance.ui.composables.MovieCard
+import com.example.cognizance.ui.models.NavGraph
+import com.example.cognizance.ui.viewmodels.HomeUiState
+import com.example.cognizance.ui.viewmodels.HomeViewModel
 import com.example.ui.composables.WingScaffold
 import com.example.ui.models.WingTopAppBarActionProps
 import com.example.ui.models.WingTopAppBarNavigationProps
 import com.example.ui.models.WingTopAppBarProps
+import com.example.ui.utils.LocalNavController
 
 @Composable
 fun HomeScreen(
-    navigateToUpcomingAction: () -> Unit,
-    navigateToPopularAction: () -> Unit,
-    navigateToTopRatedAction: () -> Unit,
-    onBookmarkClick: () -> Unit
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+    HomeContent(uiState = uiState)
+}
+
+@Composable
+private fun HomeContent(uiState: HomeUiState) {
+    val navController = LocalNavController.current
     WingScaffold(
         topAppBarProps = WingTopAppBarProps(
             title = stringResource(R.string.home),
@@ -37,7 +48,9 @@ fun HomeScreen(
             actionProps = listOf(
                 WingTopAppBarActionProps(
                     actionTitle = stringResource(R.string.bookmarks),
-                    onActionClick = onBookmarkClick
+                    onActionClick = {
+                        navController.navigate(NavGraph.Bookmarks.route)
+                    }
                 )
             )
         )
@@ -50,15 +63,21 @@ fun HomeScreen(
         ) {
             HomeCard(
                 title = stringResource(R.string.popular),
-                onClick = navigateToPopularAction
+                onClick = {
+                    navController.navigate(NavGraph.Popular.route)
+                }
             )
             HomeCard(
                 title = stringResource(R.string.upcoming),
-                onClick = navigateToUpcomingAction
+                onClick = {
+                    navController.navigate(NavGraph.Upcoming.route)
+                }
             )
             HomeCard(
                 title = stringResource(R.string.top_rated),
-                onClick = navigateToTopRatedAction
+                onClick = {
+                    navController.navigate(NavGraph.TopRated.route)
+                }
             )
         }
     }

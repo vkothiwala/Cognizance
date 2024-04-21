@@ -46,20 +46,7 @@ class MovieActivity : ComponentActivity() {
                         ) {
                             // Home Screen
                             composable(NavGraph.Home.route) {
-                                HomeScreen(
-                                    navigateToUpcomingAction = {
-                                        navController.navigate(NavGraph.Upcoming.route)
-                                    },
-                                    navigateToPopularAction = {
-                                        navController.navigate(NavGraph.Popular.route)
-                                    },
-                                    navigateToTopRatedAction = {
-                                        navController.navigate(NavGraph.TopRated.route)
-                                    },
-                                    onBookmarkClick = {
-                                        navController.navigate(NavGraph.Bookmarks.route)
-                                    }
-                                )
+                                HomeScreen()
                             }
                             // Bookmarks Screen
                             composable(NavGraph.Bookmarks.route) {
