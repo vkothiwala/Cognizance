@@ -2,6 +2,7 @@ package com.example.cognizance.ui.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,7 +18,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -42,7 +42,6 @@ import com.example.cognizance.ui.viewmodels.HomeViewModel
 import com.example.ui.composables.WingEmptyState
 import com.example.ui.composables.WingProgressIndicator
 import com.example.ui.composables.WingScaffold
-import com.example.ui.composables.WingSpacer
 import com.example.ui.models.WingTopAppBarActionProps
 import com.example.ui.models.WingTopAppBarNavigationProps
 import com.example.ui.models.WingTopAppBarProps
@@ -79,9 +78,9 @@ private fun HomeContent(uiState: HomeUiState) {
         Column(
             modifier = Modifier
                 .padding(paddingValues)
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = 8.dp, vertical = 8.dp)
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             CategorySection(
                 sectionTitle = stringResource(id = R.string.upcoming),
@@ -90,7 +89,6 @@ private fun HomeContent(uiState: HomeUiState) {
                     navController.navigate(NavGraph.Upcoming.route)
                 }
             )
-            Divider()
             CategorySection(
                 sectionTitle = stringResource(id = R.string.popular),
                 movies = uiState.popularMovies,
@@ -98,7 +96,6 @@ private fun HomeContent(uiState: HomeUiState) {
                     navController.navigate(NavGraph.Popular.route)
                 }
             )
-            Divider()
             CategorySection(
                 sectionTitle = stringResource(id = R.string.top_rated),
                 movies = uiState.topRatedMovies,
@@ -123,7 +120,6 @@ private fun CategorySection(
     movies: List<Movie>,
     onViewMoreClick: () -> Unit
 ) {
-    WingSpacer(height = 4.dp)
     SectionTitle(sectionTitle, onViewMoreClick)
     if (movies.isEmpty()) {
         WingEmptyState(
@@ -133,7 +129,6 @@ private fun CategorySection(
     } else {
         MoviesCarousel(movies = movies)
     }
-    WingSpacer(height = 4.dp)
 }
 
 @Composable
@@ -197,7 +192,9 @@ private fun MovieCard(movie: Movie) {
         }
     ) {
         Column(
-            modifier = Modifier.padding(4.dp),
+            modifier = Modifier
+                .padding(4.dp)
+                .align(Alignment.CenterHorizontally),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
@@ -208,14 +205,18 @@ private fun MovieCard(movie: Movie) {
                     .height(160.dp),
                 url = movie.posterPath
             )
-            Text(
+            Box(
                 modifier = Modifier.fillMaxSize(),
-                maxLines = 2,
-                textAlign = TextAlign.Center,
-                overflow = TextOverflow.Ellipsis,
-                text = movie.title,
-                style = MaterialTheme.typography.labelMedium
-            )
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    maxLines = 2,
+                    textAlign = TextAlign.Center,
+                    overflow = TextOverflow.Ellipsis,
+                    text = movie.title,
+                    style = MaterialTheme.typography.labelMedium
+                )
+            }
         }
     }
 }
