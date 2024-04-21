@@ -3,7 +3,6 @@ package com.example.cognizance.ui.viewmodels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cognizance.domain.models.MovieVideo
 import com.example.cognizance.domain.repositories.MoviesRepository
 import com.example.cognizance.ui.models.MovieVideosUiState
 import com.example.cognizance.utils.onError
@@ -13,8 +12,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.Comparator
-import java.util.Random
 import javax.inject.Inject
 
 @HiltViewModel
