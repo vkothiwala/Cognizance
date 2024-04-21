@@ -110,6 +110,7 @@ dependencies {
     implementation("androidx.media3:media3-ui:$media3_version")
     implementation("androidx.media3:media3-exoplayer-hls:$media3_version")
     implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
 }
 
 // Allow references to generated code

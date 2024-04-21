@@ -1,5 +1,7 @@
 package com.example.cognizance.ui.screens
 
+import android.content.res.Configuration
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,8 +21,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.cognizance.ui.models.NavGraph
-import com.example.cognizance.ui.viewmodels.MovieVideosUiState
+import com.example.cognizance.ui.composables.LockScreenOrientation
+import com.example.cognizance.ui.composables.YoutubePlayer
+import com.example.cognizance.ui.models.MovieVideosUiState
 import com.example.cognizance.ui.viewmodels.MovieVideosViewModel
 import com.example.cognizance.utils.LocalNavController
 import com.example.ui.composables.WingCard
@@ -34,27 +37,25 @@ import com.example.ui.models.WingTopAppBarProps
 fun MovieVideosScreen(
     viewModel: MovieVideosViewModel = hiltViewModel()
 ) {
+    LockScreenOrientation(Configuration.ORIENTATION_PORTRAIT)
     val uiState by viewModel.uiState.collectAsState()
     MovieVideosContent(uiState = uiState)
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MovieVideosContent(uiState: MovieVideosUiState) {
     val navController = LocalNavController.current
-    var videoId by rememberSaveable { mutableStateOf("") }
-
     WingScaffold(
         topAppBarProps = WingTopAppBarProps(
             title = "Movie Videos",
             navigationProps = WingTopAppBarNavigationProps(
                 imageVector = Icons.Default.ArrowBack,
-                onClick = {
-                    navController.navigateUp()
-                }
+                onClick = { navController.navigateUp() }
             )
         )
     ) { paddingValue ->
-        if (uiState.isError) {
+        if (uiState.isError || uiState.movieVideos.isEmpty()) {
             WingEmptyState(
                 message = "No Movie Videos Found!",
                 modifier = Modifier
@@ -62,6 +63,7 @@ fun MovieVideosContent(uiState: MovieVideosUiState) {
                     .padding(paddingValue)
             )
         } else {
+            var videoId by rememberSaveable { mutableStateOf(uiState.movieVideos.firstOrNull()?.key.orEmpty()) }
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -69,15 +71,17 @@ fun MovieVideosContent(uiState: MovieVideosUiState) {
                     .padding(2.dp),
                 verticalArrangement = Arrangement.spacedBy(2.dp)
             ) {
+                stickyHeader {
+                    YoutubePlayer(
+                        videoId = videoId,
+                        modifier = Modifier
+                    )
+                }
                 items(uiState.movieVideos) { movieVideo ->
                     WingCard(
                         modifier = Modifier
                             .clickable {
-                                navController.navigate(
-                                    NavGraph.YoutubeVideo.getRouteWithParam(
-                                        videoId = movieVideo.key
-                                    )
-                                )
+                                videoId = movieVideo.key
                             }
                             .fillMaxWidth()
                     ) {

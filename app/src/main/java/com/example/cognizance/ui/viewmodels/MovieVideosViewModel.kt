@@ -3,8 +3,8 @@ package com.example.cognizance.ui.viewmodels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cognizance.domain.models.MovieVideo
 import com.example.cognizance.domain.repositories.MoviesRepository
+import com.example.cognizance.ui.models.MovieVideosUiState
 import com.example.cognizance.utils.onError
 import com.example.cognizance.utils.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -41,9 +41,3 @@ class MovieVideosViewModel @Inject constructor(
         }
     }
 }
-
-data class MovieVideosUiState(
-    val isLoading: Boolean = false,
-    val isError: Boolean = false,
-    val movieVideos: List<MovieVideo> = emptyList()
-)
