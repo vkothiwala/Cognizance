@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.KeyboardArrowRight
@@ -77,7 +79,8 @@ private fun HomeContent(uiState: HomeUiState) {
         Column(
             modifier = Modifier
                 .padding(paddingValues)
-                .padding(horizontal = 8.dp),
+                .padding(horizontal = 8.dp)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             CategorySection(
@@ -183,7 +186,7 @@ private fun MovieCard(movie: Movie) {
     val navController = LocalNavController.current
     MovieCard(
         modifier = Modifier
-            .width(128.dp)
+            .width(142.dp)
             .height(208.dp),
         onClick = {
             navController.navigate(

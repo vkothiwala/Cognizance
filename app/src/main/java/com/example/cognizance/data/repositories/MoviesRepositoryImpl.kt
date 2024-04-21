@@ -55,8 +55,8 @@ class MoviesRepositoryImpl @Inject constructor(
     override suspend fun getMovies(category: MovieCategoryType): Response<List<Movie>> {
         return when (category) {
             MovieCategoryType.Upcoming -> moviesRemoteSource.getUpcomingMovies(1)
-            MovieCategoryType.Popular -> moviesRemoteSource.getUpcomingMovies(1)
-            MovieCategoryType.TopRated -> moviesRemoteSource.getUpcomingMovies(1)
+            MovieCategoryType.Popular -> moviesRemoteSource.getPopularMovies(1)
+            MovieCategoryType.TopRated -> moviesRemoteSource.getTopRatedMovies(1)
         }.map { response ->
             response.results.map { it.toMovie() }
         }

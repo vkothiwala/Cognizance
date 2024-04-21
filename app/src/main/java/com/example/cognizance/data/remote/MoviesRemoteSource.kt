@@ -20,6 +20,24 @@ class MoviesRemoteSource @Inject constructor(
         }
     }
 
+    suspend fun getPopularMovies(page: Int): Response<ApiMoviesResponse> {
+        return try {
+            val moviesResponse = moviesApi.getPopularMovies(page)
+            Response.Success(moviesResponse)
+        } catch (e: Exception) {
+            Response.Error(e)
+        }
+    }
+
+    suspend fun getTopRatedMovies(page: Int): Response<ApiMoviesResponse> {
+        return try {
+            val moviesResponse = moviesApi.getTopRatedMovies(page)
+            Response.Success(moviesResponse)
+        } catch (e: Exception) {
+            Response.Error(e)
+        }
+    }
+
     suspend fun getMovieDetails(movieId: Int): Response<ApiMovieDetails> {
         return try {
             val apiMovieDetails = moviesApi.getMovieDetails(movieId)
