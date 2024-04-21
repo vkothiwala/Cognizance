@@ -9,7 +9,7 @@ import com.example.cognizance.data.local.models.EntityMovie
 import com.example.cognizance.data.remote.MoviesPagingSource
 import com.example.cognizance.data.remote.models.ApiMovie
 import com.example.cognizance.data.remote.service.MoviesApi
-import com.example.cognizance.utils.MovieCategoryType
+import com.example.cognizance.domain.models.MovieCategoryType
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -2,9 +2,9 @@ package com.example.cognizance.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cognizance.domain.models.MovieCategoryType
 import com.example.cognizance.domain.repositories.MoviesRepository
 import com.example.cognizance.ui.models.HomeUiState
-import com.example.cognizance.utils.MovieCategoryType
 import com.example.cognizance.utils.onError
 import com.example.cognizance.utils.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel

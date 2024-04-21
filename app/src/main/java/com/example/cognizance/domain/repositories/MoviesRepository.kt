@@ -2,9 +2,9 @@ package com.example.cognizance.domain.repositories
 
 import androidx.paging.PagingData
 import com.example.cognizance.domain.models.Movie
+import com.example.cognizance.domain.models.MovieCategoryType
 import com.example.cognizance.domain.models.MovieDetails
 import com.example.cognizance.domain.models.MovieVideo
-import com.example.cognizance.utils.MovieCategoryType
 import com.example.cognizance.utils.Response
 import kotlinx.coroutines.flow.Flow
 

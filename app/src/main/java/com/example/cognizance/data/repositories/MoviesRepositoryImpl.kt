@@ -12,10 +12,10 @@ import com.example.cognizance.data.remote.MoviesRemoteSource
 import com.example.cognizance.data.remote.models.ApiMovie
 import com.example.cognizance.di.PagingSourceModule
 import com.example.cognizance.domain.models.Movie
+import com.example.cognizance.domain.models.MovieCategoryType
 import com.example.cognizance.domain.models.MovieDetails
 import com.example.cognizance.domain.models.MovieVideo
 import com.example.cognizance.domain.repositories.MoviesRepository
-import com.example.cognizance.utils.MovieCategoryType
 import com.example.cognizance.utils.Response
 import com.example.cognizance.utils.map
 import kotlinx.coroutines.flow.Flow

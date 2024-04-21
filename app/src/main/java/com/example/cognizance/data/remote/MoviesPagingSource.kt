@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.cognizance.data.remote.models.ApiMovie
 import com.example.cognizance.data.remote.service.MoviesApi
-import com.example.cognizance.utils.MovieCategoryType
+import com.example.cognizance.domain.models.MovieCategoryType
 
 class MoviesPagingSource(
     private val moviesApi: MoviesApi,

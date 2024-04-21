@@ -1,4 +1,4 @@
-package com.example.cognizance.utils
+package com.example.cognizance.domain.models
 
 sealed class MovieCategoryType {
     object Upcoming : MovieCategoryType()
