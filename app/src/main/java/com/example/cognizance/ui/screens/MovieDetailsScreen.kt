@@ -21,9 +21,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cognizance.R
+import com.example.cognizance.ui.NavGraph
 import com.example.cognizance.ui.composables.BoldTitleTextTile
 import com.example.cognizance.ui.composables.MoviePoster
-import com.example.cognizance.ui.models.NavGraph
 import com.example.cognizance.ui.viewmodels.MovieDetailsViewModel
 import com.example.cognizance.utils.Response
 import com.example.cognizance.utils.toDateString

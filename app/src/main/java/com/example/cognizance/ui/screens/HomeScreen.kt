@@ -1,6 +1,5 @@
 package com.example.cognizance.ui.screens
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,10 +32,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cognizance.R
 import com.example.cognizance.domain.models.Movie
+import com.example.cognizance.ui.NavGraph
 import com.example.cognizance.ui.composables.MovieCard
 import com.example.cognizance.ui.composables.MoviePoster
-import com.example.cognizance.ui.models.NavGraph
-import com.example.cognizance.ui.viewmodels.HomeUiState
+import com.example.cognizance.ui.models.HomeUiState
 import com.example.cognizance.ui.viewmodels.HomeViewModel
 import com.example.ui.composables.WingEmptyState
 import com.example.ui.composables.WingProgressIndicator
@@ -55,7 +54,6 @@ fun HomeScreen(
     HomeContent(uiState = uiState)
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun HomeContent(uiState: HomeUiState) {
     val navController = LocalNavController.current
@@ -122,15 +120,28 @@ private fun CategorySection(
     movies: List<Movie>,
     onViewMoreClick: () -> Unit
 ) {
-    val navController = LocalNavController.current
     WingSpacer(height = 4.dp)
+    SectionTitle(sectionTitle, onViewMoreClick)
+    if (movies.isEmpty()) {
+        WingEmptyState(
+            message = "We are having trouble fetching movies at the moment. Please try again later.",
+            modifier = Modifier.padding(8.dp)
+        )
+    } else {
+        MoviesCarousel(movies = movies)
+    }
+    WingSpacer(height = 4.dp)
+}
+
+@Composable
+private fun SectionTitle(title: String, onViewMoreClick: () -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = sectionTitle,
+            text = title,
             modifier = Modifier.padding(4.dp),
             style = MaterialTheme.typography.headlineMedium
         )
@@ -153,22 +164,18 @@ private fun CategorySection(
             )
         }
     }
-    if (movies.isEmpty()) {
-        WingEmptyState(
-            message = "We are having trouble fetching movies at the moment. Please try again later.",
-            modifier = Modifier.padding(8.dp)
-        )
-    } else {
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
-            modifier = Modifier
-        ) {
-            items(movies) { movie ->
-                MovieCard(movie = movie)
-            }
+}
+
+@Composable
+private fun MoviesCarousel(movies: List<Movie>) {
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = Modifier
+    ) {
+        items(movies) { movie ->
+            MovieCard(movie = movie)
         }
     }
-    WingSpacer(height = 4.dp)
 }
 
 @Composable

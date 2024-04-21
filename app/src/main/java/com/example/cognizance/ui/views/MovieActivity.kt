@@ -13,7 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.cognizance.ui.models.NavGraph
+import com.example.cognizance.ui.NavGraph
 import com.example.cognizance.ui.screens.BookmarkScreen
 import com.example.cognizance.ui.screens.HomeScreen
 import com.example.cognizance.ui.screens.MediaPlayerScreen

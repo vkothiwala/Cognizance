@@ -1,4 +1,4 @@
-package com.example.cognizance.ui.models
+package com.example.cognizance.ui
 
 sealed class NavGraph(val route: String) {
     object Home : NavGraph("home")
