@@ -87,6 +87,12 @@ private fun HomeContent(
                     onActionClick = {
                         navController.navigate(NavGraph.Bookmarks.route)
                     }
+                ),
+                WingTopAppBarActionProps(
+                    actionTitle = stringResource(R.string.exo_player),
+                    onActionClick = {
+                        navController.navigate(NavGraph.MediaPlayer.route)
+                    }
                 )
             )
         )

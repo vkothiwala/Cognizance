@@ -58,35 +58,11 @@ class MovieActivity : ComponentActivity() {
                             }
                             // Popular Screen
                             composable(NavGraph.Popular.route) {
-                                PopularMoviesScreen(
-                                    onBackPress = onBackPressedDispatcher::onBackPressed,
-                                    onCardClick = { movieId ->
-                                        navController.navigate(
-                                            NavGraph.Details.getRouteWithParam(
-                                                movieId
-                                            )
-                                        )
-                                    },
-                                    onBookmarkClick = {
-                                        navController.navigate(NavGraph.Bookmarks.route)
-                                    }
-                                )
+                                PopularMoviesScreen()
                             }
                             // TopRated Screen
                             composable(NavGraph.TopRated.route) {
-                                TopRatedMoviesScreen(
-                                    onBackPress = onBackPressedDispatcher::onBackPressed,
-                                    onCardClick = { movieId ->
-                                        navController.navigate(
-                                            NavGraph.Details.getRouteWithParam(
-                                                movieId
-                                            )
-                                        )
-                                    },
-                                    onBookmarkClick = {
-                                        navController.navigate(NavGraph.Bookmarks.route)
-                                    }
-                                )
+                                TopRatedMoviesScreen()
                             }
                             // Movie Details Screen
                             composable(
@@ -97,9 +73,7 @@ class MovieActivity : ComponentActivity() {
                                     }
                                 )
                             ) {
-                                MovieDetailsScreen(
-                                    onBackPress = onBackPressedDispatcher::onBackPressed
-                                )
+                                MovieDetailsScreen()
                             }
                             // Movie videos Screen
                             composable(
@@ -112,15 +86,15 @@ class MovieActivity : ComponentActivity() {
                             ) {
                                 MovieVideosScreen()
                             }
-                            // Youtube video Screen
-                            composable(NavGraph.YoutubeVideo.route) { backStackEntry ->
-                                backStackEntry.arguments?.getString("videoId")?.let { id ->
-                                    YoutubePlayerScreen(id)
-                                }
-                            }
                             // Media Player
                             composable(NavGraph.MediaPlayer.route) {
                                 MediaPlayerScreen()
+                            }
+                            // Youtube video Screen
+                            composable(NavGraph.YoutubePlayer.route) { backStackEntry ->
+                                backStackEntry.arguments?.getString("videoId")?.let { id ->
+                                    YoutubePlayerScreen(id)
+                                }
                             }
                         }
                     }

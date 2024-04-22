@@ -25,8 +25,8 @@ import com.example.cognizance.R
 @OptIn(UnstableApi::class)
 @Composable
 fun MediaPlayerScreen(
-    mediaUrl: String = stringResource(id = R.string.media_url_mp3),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    mediaUrl: String = stringResource(id = R.string.media_url_mp3)
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -42,7 +42,7 @@ fun MediaPlayerScreen(
                 Lifecycle.Event.ON_CREATE -> {
                     exoPlayer.setMediaItem(
                         MediaItem.fromUri(mediaUrl),
-                        0L
+                        startPosition
                     )
                     exoPlayer.prepare()
                     exoPlayer.playWhenReady = true
@@ -78,7 +78,7 @@ fun MediaPlayerScreen(
 }
 
 @Composable
-fun PlayerView(playerImpl: Player, modifier: Modifier = Modifier) {
+private fun PlayerView(playerImpl: Player, modifier: Modifier = Modifier) {
     AndroidView(
         factory = {
             PlayerView(it).apply {

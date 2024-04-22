@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -35,8 +36,7 @@ import com.example.ui.utils.LocalNavController
 
 @Composable
 fun MovieDetailsScreen(
-    viewModel: MovieDetailsViewModel = hiltViewModel(),
-    onBackPress: () -> Unit
+    viewModel: MovieDetailsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val navController = LocalNavController.current
@@ -46,8 +46,8 @@ fun MovieDetailsScreen(
             topAppBarProps = WingTopAppBarProps(
                 title = stringResource(R.string.bookmarks),
                 navigationProps = WingTopAppBarNavigationProps(
-                    imageVector = Icons.Default.ArrowBack,
-                    onClick = onBackPress
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    onClick = { navController.navigateUp() }
                 )
             )
         ) { paddingValues ->
@@ -64,8 +64,8 @@ fun MovieDetailsScreen(
                 topAppBarProps = WingTopAppBarProps(
                     title = title,
                     navigationProps = WingTopAppBarNavigationProps(
-                        imageVector = Icons.Default.ArrowBack,
-                        onClick = onBackPress
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        onClick = { navController.navigateUp() }
                     )
                 )
             ) { paddingValues ->
