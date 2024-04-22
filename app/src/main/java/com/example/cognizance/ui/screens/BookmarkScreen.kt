@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cognizance.R
 import com.example.cognizance.domain.models.Movie
+import com.example.cognizance.ui.NavGraph
 import com.example.cognizance.ui.composables.MovieRow
 import com.example.cognizance.ui.models.BookmarkIconProps
 import com.example.cognizance.ui.models.MovieCardClickEvent
@@ -25,19 +26,16 @@ import com.example.ui.composables.WingEmptyState
 import com.example.ui.composables.WingScaffold
 import com.example.ui.models.WingTopAppBarNavigationProps
 import com.example.ui.models.WingTopAppBarProps
+import com.example.ui.utils.LocalNavController
 
 @Composable
 fun BookmarkScreen(
-    viewModel: BookmarksViewModel = hiltViewModel(),
-    onBackPress: () -> Unit,
-    onCardClick: (Int) -> Unit
+    viewModel: BookmarksViewModel = hiltViewModel()
 ) {
     val bookmarkedMovies by viewModel.bookmarkedMovies.collectAsState()
 
     Content(
         bookmarkedMovies = bookmarkedMovies,
-        onBackPress = onBackPress,
-        onCardClick = onCardClick,
         onClick = viewModel::onClick
     )
 }
@@ -45,16 +43,15 @@ fun BookmarkScreen(
 @Composable
 private fun Content(
     bookmarkedMovies: List<Movie>,
-    onBackPress: () -> Unit,
-    onCardClick: (Int) -> Unit,
     onClick: (MovieCardClickEvent) -> Unit
 ) {
+    val navController = LocalNavController.current
     WingScaffold(
         topAppBarProps = WingTopAppBarProps(
             title = stringResource(R.string.bookmarks),
             navigationProps = WingTopAppBarNavigationProps(
-                imageVector = Icons.Default.ArrowBack,
-                onClick = onBackPress
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                onClick = { navController.navigateUp() }
             )
         )
     ) { paddingValues ->
@@ -71,17 +68,21 @@ private fun Content(
                 contentPadding = PaddingValues(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(bookmarkedMovies) {
+                items(bookmarkedMovies) { movie ->
                     MovieRow(
-                        movie = it,
+                        movie = movie,
                         bookmarkIconProps = BookmarkIconProps(
                             isBookmarked = true,
                             onBookmarkClick = {
-                                onClick(MovieCardClickEvent.OnBookmarkIconClick(it.id))
+                                onClick(MovieCardClickEvent.OnBookmarkIconClick(movie.id))
                             }
                         ),
                         onCardClick = {
-                            onCardClick(it.id)
+                            navController.navigate(
+                                NavGraph.Details.getRouteWithParam(
+                                    movie.id
+                                )
+                            )
                         }
                     )
                 }

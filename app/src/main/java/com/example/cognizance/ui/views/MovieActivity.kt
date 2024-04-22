@@ -50,32 +50,11 @@ class MovieActivity : ComponentActivity() {
                             }
                             // Bookmarks Screen
                             composable(NavGraph.Bookmarks.route) {
-                                BookmarkScreen(
-                                    onBackPress = onBackPressedDispatcher::onBackPressed,
-                                    onCardClick = { movieId ->
-                                        navController.navigate(
-                                            NavGraph.Details.getRouteWithParam(
-                                                movieId
-                                            )
-                                        )
-                                    }
-                                )
+                                BookmarkScreen()
                             }
                             // Upcoming Screen
                             composable(NavGraph.Upcoming.route) {
-                                UpcomingMoviesScreen(
-                                    onBackPress = onBackPressedDispatcher::onBackPressed,
-                                    onBookmarkClick = {
-                                        navController.navigate(NavGraph.Bookmarks.route)
-                                    },
-                                    onCardClick = { movieId ->
-                                        navController.navigate(
-                                            NavGraph.Details.getRouteWithParam(
-                                                movieId
-                                            )
-                                        )
-                                    }
-                                )
+                                UpcomingMoviesScreen()
                             }
                             // Popular Screen
                             composable(NavGraph.Popular.route) {
