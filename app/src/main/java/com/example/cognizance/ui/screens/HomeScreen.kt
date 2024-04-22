@@ -14,11 +14,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -86,12 +86,6 @@ private fun HomeContent(
                     actionTitle = stringResource(R.string.bookmarks),
                     onActionClick = {
                         navController.navigate(NavGraph.Bookmarks.route)
-                    }
-                ),
-                WingTopAppBarActionProps(
-                    actionTitle = stringResource(R.string.exo_player),
-                    onActionClick = {
-                        navController.navigate(NavGraph.MediaPlayer.route)
                     }
                 )
             )
@@ -196,12 +190,13 @@ private fun SectionTitle(title: String, onViewMoreClick: () -> Unit) {
         Row(
             modifier = Modifier
                 .padding(4.dp)
+                .clip(MaterialTheme.shapes.medium)
                 .clickable(onClick = onViewMoreClick),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 modifier = Modifier.padding(start = 8.dp),
-                text = stringResource(id = R.string.view_more),
+                text = stringResource(id = R.string.all),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.outline
             )
@@ -231,7 +226,7 @@ private fun MovieCarouselCard(movie: Movie) {
     val navController = LocalNavController.current
     MovieCard(
         modifier = Modifier
-            .width(142.dp)
+            .width(150.dp)
             .height(208.dp),
         onClick = {
             navController.navigate(
@@ -250,9 +245,9 @@ private fun MovieCarouselCard(movie: Movie) {
         ) {
             MoviePoster(
                 modifier = Modifier
-                    .clip(CircleShape)
-                    .width(160.dp)
-                    .height(160.dp),
+                    .clip(CardDefaults.shape)
+                    .width(150.dp)
+                    .height(180.dp),
                 url = movie.posterPath
             )
             Box(
@@ -260,7 +255,7 @@ private fun MovieCarouselCard(movie: Movie) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    maxLines = 2,
+                    maxLines = 1,
                     textAlign = TextAlign.Center,
                     overflow = TextOverflow.Ellipsis,
                     text = movie.title,
