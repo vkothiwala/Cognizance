@@ -16,4 +16,5 @@ interface MoviesRepository {
     suspend fun getMovieDetails(movieId: Int): Response<MovieDetails>
     suspend fun getMovieById(movieId: Int): Response<Movie>
     suspend fun getMovieVideos(movieId: Int): Response<List<MovieVideo>>
+    suspend fun searchMovie(query: String): Response<List<Movie>>
 }

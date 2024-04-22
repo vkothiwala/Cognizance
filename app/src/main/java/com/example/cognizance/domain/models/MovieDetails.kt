@@ -3,7 +3,7 @@ package com.example.cognizance.domain.models
 data class MovieDetails(
     val id: Int,
     val title: String,
-    val backdropPath: String,
+    val backdropPath: String?,
     val overview: String,
     val popularity: Double,
     val tagline: String,

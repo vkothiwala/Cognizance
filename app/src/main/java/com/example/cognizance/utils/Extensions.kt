@@ -8,8 +8,12 @@ import org.threeten.bp.format.DateTimeFormatter
 
 fun String.toDateString(): String {
     val dateFormat = DateTimeFormatter.ofPattern("dd MMMM, yyyy")
-    val localDate = LocalDate.parse(this)
-    return dateFormat.format(localDate)
+    return try {
+        val localDate = LocalDate.parse(this)
+        dateFormat.format(localDate)
+    } catch (e: Exception) {
+        "-"
+    }
 }
 
 fun Context.findActivity(): Activity? {

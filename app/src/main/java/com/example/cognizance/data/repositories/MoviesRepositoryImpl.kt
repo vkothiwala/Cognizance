@@ -83,4 +83,10 @@ class MoviesRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun searchMovie(query: String): Response<List<Movie>> {
+        return moviesRemoteSource.searchMovie(query).map { response ->
+            response.results.map { it.toMovie() }
+        }
+    }
 }

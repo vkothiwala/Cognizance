@@ -106,7 +106,7 @@ fun MovieDetailsScreen(
                                 .padding(start = 8.dp)
                                 .padding(top = 2.dp),
                             title = "Overview: ",
-                            message = overview,
+                            message = overview.ifEmpty { "-" },
                             textStyle = MaterialTheme.typography.bodyMedium
                         )
                         BoldTitleTextTile(
@@ -122,7 +122,7 @@ fun MovieDetailsScreen(
                                 .padding(horizontal = 8.dp)
                                 .padding(top = 8.dp),
                             title = "Status: ",
-                            message = status,
+                            message = status.ifEmpty { "-" },
                             textStyle = MaterialTheme.typography.bodyMedium
                         )
                         BoldTitleTextTile(
@@ -130,7 +130,7 @@ fun MovieDetailsScreen(
                                 .padding(horizontal = 8.dp)
                                 .padding(top = 8.dp),
                             title = "Votes Rating: ",
-                            message = voteAverage.toString(),
+                            message = voteAverage.toString().ifEmpty { "-" },
                             textStyle = MaterialTheme.typography.bodyMedium
                         )
                         BoldTitleTextTile(
@@ -146,7 +146,7 @@ fun MovieDetailsScreen(
                                 .padding(horizontal = 8.dp)
                                 .padding(top = 8.dp),
                             title = "Tagline: ",
-                            message = tagline,
+                            message = tagline.ifEmpty { "-" },
                             textStyle = MaterialTheme.typography.bodyMedium
                         )
                     }

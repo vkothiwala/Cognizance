@@ -44,6 +44,13 @@ interface MoviesApi {
         @Query("language") language: String = EN_US
     ): ApiMovieVideos
 
+    @GET("search/movie")
+    suspend fun searchMovie(
+        @Query("query") query: String,
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("language") language: String = EN_US
+    ): ApiMoviesResponse
+
     companion object {
         const val API_KEY = "ad35eeedf999e78fd5e38d13c53f5ad8"
         const val EN_US = "en-US"

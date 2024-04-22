@@ -1,5 +1,7 @@
 package com.example.cognizance.ui.composables
 
+import androidx.compose.foundation.background
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -18,10 +20,11 @@ fun MoviePoster(modifier: Modifier = Modifier, url: String?) {
             .data("$PATH$url")
             .crossfade(true)
             .build(),
+        error = painterResource(R.drawable.ic_launcher_foreground),
         fallback = painterResource(R.drawable.ic_launcher_foreground),
         placeholder = painterResource(R.drawable.ic_launcher_foreground),
         contentDescription = null,
         contentScale = ContentScale.Crop,
-        modifier = modifier
+        modifier = modifier.background(MaterialTheme.colorScheme.outlineVariant)
     )
 }

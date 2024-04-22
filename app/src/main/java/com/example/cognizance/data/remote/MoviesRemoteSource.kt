@@ -55,4 +55,13 @@ class MoviesRemoteSource @Inject constructor(
             Response.Error(e)
         }
     }
+
+    suspend fun searchMovie(query: String): Response<ApiMoviesResponse> {
+        return try {
+            val searchMoviesResponse = moviesApi.searchMovie(query = query)
+            Response.Success(searchMoviesResponse)
+        } catch (e: Exception) {
+            Response.Error(e)
+        }
+    }
 }

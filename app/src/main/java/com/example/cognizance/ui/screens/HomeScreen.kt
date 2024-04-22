@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -27,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -37,11 +39,15 @@ import com.example.cognizance.domain.models.Movie
 import com.example.cognizance.ui.NavGraph
 import com.example.cognizance.ui.composables.MovieCard
 import com.example.cognizance.ui.composables.MoviePoster
+import com.example.cognizance.ui.composables.MovieRow
 import com.example.cognizance.ui.models.HomeUiState
+import com.example.cognizance.ui.models.SearchMovieUiState
 import com.example.cognizance.ui.viewmodels.HomeViewModel
+import com.example.cognizance.ui.viewmodels.SearchMovieViewModel
 import com.example.ui.composables.WingEmptyState
 import com.example.ui.composables.WingProgressIndicator
 import com.example.ui.composables.WingScaffold
+import com.example.ui.composables.WingSearchBar
 import com.example.ui.models.WingTopAppBarActionProps
 import com.example.ui.models.WingTopAppBarNavigationProps
 import com.example.ui.models.WingTopAppBarProps
@@ -49,14 +55,24 @@ import com.example.ui.utils.LocalNavController
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    searchMovieViewModel: SearchMovieViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-    HomeContent(uiState = uiState)
+    val homeUiState by homeViewModel.uiState.collectAsState()
+    val searchMovieUiState by searchMovieViewModel.uiState.collectAsState()
+    HomeContent(
+        homeUiState = homeUiState,
+        searchMovieUiState = searchMovieUiState,
+        onQueryChange = searchMovieViewModel::onQueryChange
+    )
 }
 
 @Composable
-private fun HomeContent(uiState: HomeUiState) {
+private fun HomeContent(
+    homeUiState: HomeUiState,
+    searchMovieUiState: SearchMovieUiState,
+    onQueryChange: (String) -> Unit
+) {
     val navController = LocalNavController.current
     WingScaffold(
         topAppBarProps = WingTopAppBarProps(
@@ -75,36 +91,64 @@ private fun HomeContent(uiState: HomeUiState) {
             )
         )
     ) { paddingValues ->
+        val focusManager = LocalFocusManager.current
+        WingSearchBar(
+            query = searchMovieUiState.query,
+            onQueryChange = onQueryChange,
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+                modifier = Modifier.padding(vertical = 2.dp)
+            ) {
+                items(searchMovieUiState.movies) { movie ->
+                    MovieRow(
+                        movie = movie,
+                        bookmarkIconProps = null,
+                        onCardClick = {
+                            navController.navigate(
+                                NavGraph.Details.getRouteWithParam(
+                                    movie.id
+                                )
+                            )
+                            focusManager.clearFocus()
+                        }
+                    )
+                }
+            }
+        }
+
         Column(
             modifier = Modifier
                 .padding(paddingValues)
+                .padding(top = 64.dp)
                 .padding(horizontal = 8.dp, vertical = 8.dp)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             CategorySection(
                 sectionTitle = stringResource(id = R.string.upcoming),
-                movies = uiState.upcomingMovies,
+                movies = homeUiState.upcomingMovies,
                 onViewMoreClick = {
                     navController.navigate(NavGraph.Upcoming.route)
                 }
             )
             CategorySection(
                 sectionTitle = stringResource(id = R.string.popular),
-                movies = uiState.popularMovies,
+                movies = homeUiState.popularMovies,
                 onViewMoreClick = {
                     navController.navigate(NavGraph.Popular.route)
                 }
             )
             CategorySection(
                 sectionTitle = stringResource(id = R.string.top_rated),
-                movies = uiState.topRatedMovies,
+                movies = homeUiState.topRatedMovies,
                 onViewMoreClick = {
                     navController.navigate(NavGraph.TopRated.route)
                 }
             )
         }
-        if (uiState.isLoading) {
+        if (homeUiState.isLoading) {
             WingProgressIndicator(
                 modifier = Modifier
                     .padding(paddingValues)
@@ -171,13 +215,13 @@ private fun MoviesCarousel(movies: List<Movie>) {
         modifier = Modifier
     ) {
         items(movies) { movie ->
-            MovieCard(movie = movie)
+            MovieCarouselCard(movie = movie)
         }
     }
 }
 
 @Composable
-private fun MovieCard(movie: Movie) {
+private fun MovieCarouselCard(movie: Movie) {
     val navController = LocalNavController.current
     MovieCard(
         modifier = Modifier

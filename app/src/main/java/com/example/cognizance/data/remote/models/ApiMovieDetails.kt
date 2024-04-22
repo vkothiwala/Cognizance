@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ApiMovieDetails(
     val adult: Boolean,
-    @SerializedName("backdrop_path") val backdropPath: String,
+    @SerializedName("backdrop_path") val backdropPath: String?,
     val budget: Long,
     val genres: List<ApiGenre>,
     val homepage: String,
