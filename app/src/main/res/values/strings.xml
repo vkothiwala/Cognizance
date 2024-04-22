@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MoviePy</string>
+    <string name="app_name">Movie Muster</string>
 
     <!-- Title -->
     <string name="home">Home</string>

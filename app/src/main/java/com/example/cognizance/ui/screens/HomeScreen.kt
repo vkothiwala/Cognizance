@@ -25,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,6 +53,7 @@ import com.example.ui.models.WingTopAppBarActionProps
 import com.example.ui.models.WingTopAppBarNavigationProps
 import com.example.ui.models.WingTopAppBarProps
 import com.example.ui.utils.LocalNavController
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
@@ -74,12 +76,19 @@ private fun HomeContent(
     onQueryChange: (String) -> Unit
 ) {
     val navController = LocalNavController.current
+    val focusManager = LocalFocusManager.current
+    val moviesScrollState = rememberScrollState()
+    val coroutineScope = rememberCoroutineScope()
     WingScaffold(
         topAppBarProps = WingTopAppBarProps(
             title = stringResource(R.string.home),
             navigationProps = WingTopAppBarNavigationProps(
                 imageVector = Icons.Default.Home,
-                onClick = {}
+                onClick = {
+                    coroutineScope.launch {
+                        moviesScrollState.animateScrollTo(0)
+                    }
+                }
             ),
             actionProps = listOf(
                 WingTopAppBarActionProps(
@@ -91,7 +100,6 @@ private fun HomeContent(
             )
         )
     ) { paddingValues ->
-        val focusManager = LocalFocusManager.current
         WingSearchBar(
             query = searchMovieUiState.query,
             onQueryChange = onQueryChange,
@@ -123,7 +131,7 @@ private fun HomeContent(
                 .padding(paddingValues)
                 .padding(top = 64.dp)
                 .padding(horizontal = 8.dp, vertical = 8.dp)
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(moviesScrollState),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             CategorySection(
