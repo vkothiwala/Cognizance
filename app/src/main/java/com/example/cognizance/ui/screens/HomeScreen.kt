@@ -127,6 +127,13 @@ private fun HomeContent(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             CategorySection(
+                sectionTitle = stringResource(id = R.string.now_playing),
+                movies = homeUiState.nowPlayingMovies,
+                onViewMoreClick = {
+                    navController.navigate(NavGraph.NowPlaying.route)
+                }
+            )
+            CategorySection(
                 sectionTitle = stringResource(id = R.string.upcoming),
                 movies = homeUiState.upcomingMovies,
                 onViewMoreClick = {

@@ -27,6 +27,7 @@ class MoviesRepositoryImpl @Inject constructor(
     @Named(PagingSourceModule.POPULAR_MOVIES) popularMovies: Pager<Int, ApiMovie>,
     @Named(PagingSourceModule.UPCOMING_MOVIES) upcomingMovies: Pager<Int, EntityMovie>,
     @Named(PagingSourceModule.TOP_RATED_MOVIES) topRatedMovies: Pager<Int, ApiMovie>,
+    @Named(PagingSourceModule.NOW_PLAYING_MOVIES) nowPlayingMovies: Pager<Int, ApiMovie>,
     private val moviesRemoteSource: MoviesRemoteSource,
     private val moviesLocalSource: MoviesLocalSource
 ) : MoviesRepository {
@@ -52,11 +53,19 @@ class MoviesRepositoryImpl @Inject constructor(
             }
         }
 
+    override val nowPlayingMovies: Flow<PagingData<Movie>> = nowPlayingMovies.flow
+        .map { pagingData ->
+            pagingData.map {
+                it.toMovie()
+            }
+        }
+
     override suspend fun getMovies(category: MovieCategoryType): Response<List<Movie>> {
         return when (category) {
             MovieCategoryType.Upcoming -> moviesRemoteSource.getUpcomingMovies(1)
             MovieCategoryType.Popular -> moviesRemoteSource.getPopularMovies(1)
             MovieCategoryType.TopRated -> moviesRemoteSource.getTopRatedMovies(1)
+            MovieCategoryType.NowPlaying -> moviesRemoteSource.getNowPlayingMovies(1)
         }.map { response ->
             response.results.map { it.toMovie() }
         }

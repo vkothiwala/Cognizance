@@ -30,6 +30,13 @@ interface MoviesApi {
         @Query("language") language: String = EN_US
     ): ApiMoviesResponse
 
+    @GET("movie/now_playing")
+    suspend fun getNowPlayingMovies(
+        @Query("page") page: Int,
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("language") language: String = EN_US
+    ): ApiMoviesResponse
+
     @GET("movie/{movie_id}")
     suspend fun getMovieDetails(
         @Path("movie_id") movieId: Int,

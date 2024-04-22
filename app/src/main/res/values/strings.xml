@@ -8,6 +8,7 @@
     <string name="exo_player">Exo Player</string>
     <string name="popular">Popular</string>
     <string name="top_rated">Top Rated</string>
+    <string name="now_playing">Now Playing</string>
 
     <!-- Messages -->
     <string name="empty_bookmarks">No bookmarked movies found!</string>

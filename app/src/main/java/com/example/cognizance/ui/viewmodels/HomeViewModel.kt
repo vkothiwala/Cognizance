@@ -34,6 +34,9 @@ class HomeViewModel @Inject constructor(
             val topRatedMoviesResponse = async {
                 moviesRepository.getMovies(MovieCategoryType.TopRated)
             }
+            val nowPlayingMoviesResponse = async {
+                moviesRepository.getMovies(MovieCategoryType.NowPlaying)
+            }
             upcomingMoviesResponse.await()
                 .onSuccess { upcomingMovies ->
                     _uiState.update {
@@ -66,6 +69,19 @@ class HomeViewModel @Inject constructor(
                         it.copy(
                             isLoading = false,
                             topRatedMovies = topRatedMovies
+                        )
+                    }
+                }
+                .onError {
+                    _uiState.update { it.copy(isLoading = false) }
+                }
+
+            nowPlayingMoviesResponse.await()
+                .onSuccess { nowPlayingMovies ->
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            nowPlayingMovies = nowPlayingMovies
                         )
                     }
                 }

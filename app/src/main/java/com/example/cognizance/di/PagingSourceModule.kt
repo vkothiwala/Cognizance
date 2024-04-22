@@ -76,9 +76,26 @@ class PagingSourceModule {
         )
     }
 
+    @Provides
+    @Named(NOW_PLAYING_MOVIES)
+    fun provideNowPlayingMoviesPager(
+        moviesApi: MoviesApi
+    ): Pager<Int, ApiMovie> {
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = {
+                MoviesPagingSource(
+                    moviesApi = moviesApi,
+                    movieCategoryType = MovieCategoryType.NowPlaying
+                )
+            }
+        )
+    }
+
     companion object {
         const val UPCOMING_MOVIES = "upcoming_movies"
         const val POPULAR_MOVIES = "popular_movies"
         const val TOP_RATED_MOVIES = "top_rated_movies"
+        const val NOW_PLAYING_MOVIES = "now_playing_movies"
     }
 }

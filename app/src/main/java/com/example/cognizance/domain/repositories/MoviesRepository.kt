@@ -12,6 +12,7 @@ interface MoviesRepository {
     val upcomingMovies: Flow<PagingData<Movie>>
     val popularMovies: Flow<PagingData<Movie>>
     val topRatedMovies: Flow<PagingData<Movie>>
+    val nowPlayingMovies: Flow<PagingData<Movie>>
     suspend fun getMovies(category: MovieCategoryType): Response<List<Movie>>
     suspend fun getMovieDetails(movieId: Int): Response<MovieDetails>
     suspend fun getMovieById(movieId: Int): Response<Movie>

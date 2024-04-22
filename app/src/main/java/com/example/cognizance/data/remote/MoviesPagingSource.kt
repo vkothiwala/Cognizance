@@ -21,6 +21,7 @@ class MoviesPagingSource(
             val apiMovieResponse = when (movieCategoryType) {
                 is MovieCategoryType.Popular -> moviesApi.getPopularMovies(page = page)
                 is MovieCategoryType.TopRated -> moviesApi.getTopRatedMovies(page = page)
+                is MovieCategoryType.NowPlaying -> moviesApi.getNowPlayingMovies(page = page)
                 is MovieCategoryType.Upcoming -> throw IllegalStateException("Upcoming can not be type for MoviesPagingSource")
             }
             LoadResult.Page(

@@ -19,6 +19,7 @@ import com.example.cognizance.ui.screens.HomeScreen
 import com.example.cognizance.ui.screens.MediaPlayerScreen
 import com.example.cognizance.ui.screens.MovieDetailsScreen
 import com.example.cognizance.ui.screens.MovieVideosScreen
+import com.example.cognizance.ui.screens.NowPlayingMoviesScreen
 import com.example.cognizance.ui.screens.PopularMoviesScreen
 import com.example.cognizance.ui.screens.TopRatedMoviesScreen
 import com.example.cognizance.ui.screens.UpcomingMoviesScreen
@@ -63,6 +64,10 @@ class MovieActivity : ComponentActivity() {
                             // TopRated Screen
                             composable(NavGraph.TopRated.route) {
                                 TopRatedMoviesScreen()
+                            }
+                            // NowPlaying Screen
+                            composable(NavGraph.NowPlaying.route) {
+                                NowPlayingMoviesScreen()
                             }
                             // Movie Details Screen
                             composable(

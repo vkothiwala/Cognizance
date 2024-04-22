@@ -38,6 +38,15 @@ class MoviesRemoteSource @Inject constructor(
         }
     }
 
+    suspend fun getNowPlayingMovies(page: Int): Response<ApiMoviesResponse> {
+        return try {
+            val moviesResponse = moviesApi.getNowPlayingMovies(page)
+            Response.Success(moviesResponse)
+        } catch (e: Exception) {
+            Response.Error(e)
+        }
+    }
+
     suspend fun getMovieDetails(movieId: Int): Response<ApiMovieDetails> {
         return try {
             val apiMovieDetails = moviesApi.getMovieDetails(movieId)
