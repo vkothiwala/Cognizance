@@ -40,7 +40,7 @@ fun WingTopAppbar(
                 actionProps = topAppBarProps.actionProps
             )
         },
-        colors = TopAppBarDefaults.smallTopAppBarColors(
+        colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             navigationIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
             titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,

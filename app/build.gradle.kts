@@ -113,6 +113,9 @@ dependencies {
 
     // Accompanist lib for system ui controller
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
+
+    // Responsive layout helper
+    implementation("androidx.compose.material3:material3-window-size-class:1.3.1")
 }
 
 // Allow references to generated code

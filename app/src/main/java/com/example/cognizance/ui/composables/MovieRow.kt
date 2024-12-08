@@ -50,6 +50,8 @@ fun MovieRow(
             ) {
                 Text(
                     text = movie.title,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.titleLarge
                 )
                 WingSpacer(height = 2.dp)

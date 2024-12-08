@@ -4,7 +4,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -16,7 +17,9 @@ import com.example.cognizance.ui.models.BookmarkIconProps
 import com.example.cognizance.ui.models.MovieCardClickEvent
 import com.example.ui.composables.WingProgressIndicator
 import com.example.ui.composables.WingScaffold
+import com.example.ui.models.DeviceType
 import com.example.ui.models.WingTopAppBarProps
+import com.example.ui.utils.LocalDeviceType
 
 @Composable
 fun MovieListContent(
@@ -28,10 +31,17 @@ fun MovieListContent(
     WingScaffold(
         topAppBarProps = topAppBarProps
     ) { paddingValues ->
-        LazyColumn(
+        LazyVerticalGrid(
             modifier = Modifier.padding(paddingValues),
+            columns = GridCells.Fixed(
+                count = when (LocalDeviceType.current) {
+                    DeviceType.TABLET -> 2
+                    DeviceType.PHONE -> 1
+                }
+            ),
             contentPadding = PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(movies.itemCount) { index ->
                 movies[index]?.let { movie ->

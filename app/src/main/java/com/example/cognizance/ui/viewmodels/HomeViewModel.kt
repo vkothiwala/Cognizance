@@ -42,7 +42,7 @@ class HomeViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            upcomingMovies = upcomingMovies
+                            upcomingMovies = upcomingMovies.take(10)
                         )
                     }
                 }
@@ -55,7 +55,7 @@ class HomeViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            popularMovies = popularMovies
+                            popularMovies = popularMovies.take(10)
                         )
                     }
                 }
@@ -68,7 +68,7 @@ class HomeViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            topRatedMovies = topRatedMovies
+                            topRatedMovies = topRatedMovies.take(10)
                         )
                     }
                 }
@@ -81,7 +81,7 @@ class HomeViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            nowPlayingMovies = nowPlayingMovies
+                            nowPlayingMovies = nowPlayingMovies.take(10)
                         )
                     }
                 }

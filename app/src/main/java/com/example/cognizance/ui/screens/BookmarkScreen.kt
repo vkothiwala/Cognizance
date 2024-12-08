@@ -4,8 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -24,8 +25,10 @@ import com.example.cognizance.ui.models.MovieCardClickEvent
 import com.example.cognizance.ui.viewmodels.BookmarksViewModel
 import com.example.ui.composables.WingEmptyState
 import com.example.ui.composables.WingScaffold
+import com.example.ui.models.DeviceType
 import com.example.ui.models.WingTopAppBarNavigationProps
 import com.example.ui.models.WingTopAppBarProps
+import com.example.ui.utils.LocalDeviceType
 import com.example.ui.utils.LocalNavController
 
 @Composable
@@ -63,10 +66,17 @@ private fun Content(
                 message = stringResource(R.string.empty_bookmarks)
             )
         } else {
-            LazyColumn(
+            LazyVerticalGrid(
                 modifier = Modifier.padding(paddingValues),
+                columns = GridCells.Fixed(
+                    count = when (LocalDeviceType.current) {
+                        DeviceType.TABLET -> 2
+                        DeviceType.PHONE -> 1
+                    }
+                ),
                 contentPadding = PaddingValues(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(bookmarkedMovies) { movie ->
                     MovieRow(

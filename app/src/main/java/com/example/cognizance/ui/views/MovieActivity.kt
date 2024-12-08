@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+
 package com.example.cognizance.ui.views
 
 import android.os.Bundle
@@ -6,6 +8,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
@@ -24,7 +29,9 @@ import com.example.cognizance.ui.screens.PopularMoviesScreen
 import com.example.cognizance.ui.screens.TopRatedMoviesScreen
 import com.example.cognizance.ui.screens.UpcomingMoviesScreen
 import com.example.cognizance.ui.screens.YoutubePlayerScreen
+import com.example.ui.models.DeviceType
 import com.example.ui.theme.WingTheme
+import com.example.ui.utils.LocalDeviceType
 import com.example.ui.utils.LocalNavController
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,7 +47,18 @@ class MovieActivity : ComponentActivity() {
                     contentColor = MaterialTheme.colorScheme.onSurface
                 ) {
                     val navController = rememberNavController()
-                    CompositionLocalProvider(LocalNavController provides navController) {
+                    val sizeClass = calculateWindowSizeClass(activity = this)
+
+                    val deviceType = when (sizeClass.widthSizeClass) {
+                        WindowWidthSizeClass.Compact -> DeviceType.PHONE
+                        WindowWidthSizeClass.Medium -> DeviceType.TABLET
+                        WindowWidthSizeClass.Expanded -> DeviceType.TABLET
+                        else -> DeviceType.PHONE
+                    }
+                    CompositionLocalProvider(
+                        LocalNavController provides navController,
+                        LocalDeviceType provides deviceType
+                    ) {
                         NavHost(
                             navController = navController,
                             startDestination = NavGraph.Home.route
