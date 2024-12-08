@@ -35,7 +35,6 @@ fun MovieListContent(
             modifier = Modifier.padding(paddingValues),
             columns = GridCells.Fixed(
                 count = when (LocalDeviceType.current) {
-                    // 2 columns defined for Tablet
                     DeviceType.TABLET -> 2
                     DeviceType.PHONE -> 1
                 }
