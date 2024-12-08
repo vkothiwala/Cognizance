@@ -63,6 +63,7 @@ fun MovieListContent(
                     )
                 }
             }
+
             if (movies.loadState.append is LoadState.Loading) {
                 item {
                     WingProgressIndicator(
